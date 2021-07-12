@@ -6,6 +6,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "bootstrap": "^5.0.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
@@ -16,6 +17,7 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.0.17",
     "@types/cookie-parser": "^1.4.2",
     "@types/debug": "^4.1.6",
     "@types/http-errors": "^1.8.1",
