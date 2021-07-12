@@ -45,7 +45,7 @@ a {
 }
 
 #carousel {
-  margin-bottom: 500px;
+  margin-bottom: 5rem;
 }
 
 .home-title {
@@ -55,4 +55,42 @@ a {
 
 .carousel-indicators {
   bottom: -5rem;
+}
+
+.col {
+  text-align: center;
+}
+
+.fa-dark {
+  color: #d21122;
+}
+
+.fa-light {
+  color: #000000;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.btn-xl {
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #d21122;
+}
+.btn-start-here {
+  text-align: center;
+}
+
+.footer-text {
+  text-align: center;
+  font-family: Poppins;
+  font-size: small;
+}
+.nav-item-black {
+  color: rgba(255, 255, 255, 0.55);
 }
