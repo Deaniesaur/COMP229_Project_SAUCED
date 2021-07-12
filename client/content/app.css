@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #828282;
 }
 
 a {
@@ -20,14 +21,20 @@ a {
   }
 }
 
-.nav-title {
+.nav-title-top {
   color: rgba(255, 255, 255, 0.55);
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: absolute;
-  left: 45%;
+  width: 100%;
   top: 5%;
-  margin-left: -50px !important; /* 50% of your logo width */
   display: block;
+  text-align: center;
+}
+
+.nav-title-bottom {
+  color: rgba(255, 255, 255, 0.55);
+  width: 100%;
+  top: 7%;
   text-align: center;
 }
 
