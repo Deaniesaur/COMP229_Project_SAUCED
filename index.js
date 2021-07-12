@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./server/config/app"));
-var debug = require('debug')('comp229-project:server');
+const debug_1 = __importDefault(require("debug"));
+debug_1.default('comp229-project:server');
 const http_1 = __importDefault(require("http"));
-var port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || '3000');
 app_1.default.set('port', port);
 var server = http_1.default.createServer(app_1.default);
 server.listen(port);
@@ -48,6 +49,6 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    debug_1.default('Listening on ' + bind);
 }
 //# sourceMappingURL=index.js.map

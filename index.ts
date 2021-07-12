@@ -6,14 +6,15 @@
 
 import createError from 'http-errors';
 import app from './server/config/app';
-var debug = require('debug')('comp229-project:server');
+import debug from 'debug';
+debug('comp229-project:server');
 import http from 'http';
  
  /**
   * Get port from environment and store in Express.
   */
  
- var port = normalizePort(process.env.PORT || '3000');
+ let port = normalizePort(process.env.PORT || '3000');
  app.set('port', port);
  
  /**
@@ -34,7 +35,7 @@ import http from 'http';
   * Normalize a port into a number, string, or false.
   */
  
- function normalizePort(val) {
+ function normalizePort(val: string): number | string | boolean {
    var port = parseInt(val, 10);
  
    if (isNaN(port)) {
@@ -54,7 +55,7 @@ import http from 'http';
   * Event listener for HTTP server "error" event.
   */
  
- function onError(error) {
+ function onError(error: createError.HttpError): void {
    if (error.syscall !== 'listen') {
      throw error;
    }
