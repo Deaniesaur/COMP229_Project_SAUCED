@@ -2,11 +2,17 @@ import express from 'express';
 const router = express.Router();
 export default router;
 
-//Create Survey controller instance
-import { AddQuestionWithSurveyId, GetQuestionsBySurveyId } from '../controllers/question';
+//Create Question controller instance
+import { AddQuestionWithSurveyId, GetQuestionsBySurveyId, UpdateQuestionWithId } from '../controllers/question';
 
-//GET All Surveys
+//GET All Questions
 router.get('/:id', GetQuestionsBySurveyId);
 
-//POST Create Survey
+//POST Create Question
 router.post('/add/:id', AddQuestionWithSurveyId);
+
+//POST Update Question
+router.post('/update/:id', UpdateQuestionWithId);
+
+//POST Delete Question
+router.post('/delete/:id');

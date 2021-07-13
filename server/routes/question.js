@@ -9,4 +9,6 @@ exports.default = router;
 const question_1 = require("../controllers/question");
 router.get('/:id', question_1.GetQuestionsBySurveyId);
 router.post('/add/:id', question_1.AddQuestionWithSurveyId);
+router.post('/update/:id', question_1.UpdateQuestionWithId);
+router.post('/delete/:id');
 //# sourceMappingURL=question.js.map
