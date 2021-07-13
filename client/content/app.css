@@ -1,5 +1,8 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+  background-color: #212529;
+  color: #ecebe8;
+  padding: 3rem;
 }
 
 a {
@@ -20,17 +23,74 @@ a {
   }
 }
 
-.nav-title {
+.nav-title-top {
   color: rgba(255, 255, 255, 0.55);
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: absolute;
-  left: 45%;
+  width: 100%;
   top: 5%;
-  margin-left: -50px !important; /* 50% of your logo width */
   display: block;
+  text-align: center;
+}
+
+.nav-title-bottom {
+  color: rgba(255, 255, 255, 0.55);
+  width: 100%;
+  top: 7%;
   text-align: center;
 }
 
 #navbar-main-menu {
   margin-top: 5rem;
+}
+
+#carousel {
+  margin-bottom: 5rem;
+}
+
+.home-title {
+  text-align: center;
+  font: 14px "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+}
+
+.carousel-indicators {
+  bottom: -5rem;
+}
+
+.col {
+  text-align: center;
+}
+
+.fa-dark {
+  color: #d21122;
+}
+
+.fa-light {
+  color: #000000;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.btn-xl {
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #d21122;
+}
+.btn-start-here {
+  text-align: center;
+}
+
+.footer-text {
+  text-align: center;
+  font-family: Poppins;
+  font-size: small;
+}
+.nav-item-black {
+  color: rgba(255, 255, 255, 0.55);
 }
