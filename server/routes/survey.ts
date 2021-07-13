@@ -18,3 +18,8 @@ router.post('/update/:id', UpdateSurvey);
 
 //Todo: Delete Survey
 router.post('/delete/:id', DeleteSurvey);
+
+//Add Question Routes
+import questionRouter from './question';
+
+router.use('/question', questionRouter);
