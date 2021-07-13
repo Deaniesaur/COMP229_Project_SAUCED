@@ -40,36 +40,67 @@ Put a short description of your survey here.
             </div>
           </div>
         </div>
+        <br />
+        <br />
         <p class="text-center">
           Start by selecting the plus (+) button and the type of question you
           wish to add to your new survey.
         </p>
         <br /><br />
         <p class="text-center"><i class="fas fa-plus fa-2x"></i></p>
-        <div id="question-type">
+        <div
+          id="question-type"
+          class="text-center justify-content-center align-items-center"
+        >
           <div class="form-check form-check-inline">
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
+              name="inlineRadioOptions"
+              id="inlineRadio1"
+              value="option1"
             />
-            <label class="form-check-label" for="flexRadioDefault1">
-              Default radio
-            </label>
+            <label class="form-check-label" for="inlineRadio1"
+              >MULTIPLE CHOICE</label
+            >
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              checked
+              name="inlineRadioOptions"
+              id="inlineRadio2"
+              value="option2"
             />
-            <label class="form-check-label" for="flexRadioDefault2">
-              Default checked radio
-            </label>
+            <label class="form-check-label" for="inlineRadio2"
+              >LONG ANSWER</label
+            >
           </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio3"
+              value="option3"
+            />
+            <label class="form-check-label" for="inlineRadio3"
+              >CHECK BOXES</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio3"
+              value="option3"
+            />
+            <label class="form-check-label" for="inlineRadio3">RATING</label>
+          </div>
+          <br />
+          <br />
+          <button type="button" class="btn btn-secondary">ADD</button>
         </div>
       </div>
     </div>
