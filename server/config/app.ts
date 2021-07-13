@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import mongoose, { mongo } from 'mongoose';
 
 import indexRouter from '../routes/index';
 import usersRouter from '../routes/users';
@@ -10,6 +11,16 @@ import usersRouter from '../routes/users';
 //App Configuration
 const app = express();
 export default app;
+
+//DB Configuration
+import * as DBConfig from './db';
+mongoose.connect(DBConfig.MongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function(){
+  console.log(`Connected to MongoDB at ${DBConfig.Host}`);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
