@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
+exports.DisplaySurveyPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
 function DisplayHomePage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Homepage",
@@ -15,4 +15,11 @@ function DisplayAboutPage(req, res, next) {
     });
 }
 exports.DisplayAboutPage = DisplayAboutPage;
+function DisplaySurveyPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | New Survey",
+        page: "newSurvey",
+    });
+}
+exports.DisplaySurveyPage = DisplaySurveyPage;
 //# sourceMappingURL=index.js.map

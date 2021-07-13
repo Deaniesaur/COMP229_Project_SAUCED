@@ -21,3 +21,14 @@ export function DisplayAboutPage(
     page: "about",
   });
 }
+
+export function DisplaySurveyPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | New Survey",
+    page: "newSurvey",
+  });
+}

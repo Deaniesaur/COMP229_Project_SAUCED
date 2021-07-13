@@ -3,7 +3,11 @@ const router = express.Router();
 export default router;
 
 // create an index controller instance
-import { DisplayAboutPage, DisplayHomePage } from "../controllers/index";
+import {
+  DisplayAboutPage,
+  DisplayHomePage,
+  DisplaySurveyPage,
+} from "../controllers/index";
 
 /* GET home page. */
 router.get("/", DisplayHomePage);
@@ -13,3 +17,6 @@ router.get("/home", DisplayHomePage);
 
 /* GET about page. */
 router.get("/about", DisplayAboutPage);
+
+/* GET new survey page. */
+router.get("/new-survey", DisplaySurveyPage);
