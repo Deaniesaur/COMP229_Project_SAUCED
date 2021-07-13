@@ -94,3 +94,24 @@ a {
 .nav-item-black {
   color: rgba(255, 255, 255, 0.55);
 }
+
+.normal-text {
+  font-size: medium;
+}
+
+.card {
+  background-color: transparent;
+  border: none;
+}
+
+.mapouter {
+  margin: 2rem auto;
+}
+
+.gmap_canvas {
+  margin-bottom: 2rem;
+}
+
+p {
+  line-height: 1.6;
+}

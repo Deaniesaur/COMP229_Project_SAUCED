@@ -6,7 +6,18 @@ export function DisplayHomePage(
   next: NextFunction
 ): void {
   res.render("index", {
-    title: "Home",
+    title: "SAUCED | Homepage",
     page: "home",
+  });
+}
+
+export function DisplayAboutPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | About Us",
+    page: "about",
   });
 }
