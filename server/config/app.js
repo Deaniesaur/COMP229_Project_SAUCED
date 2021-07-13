@@ -30,6 +30,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const index_1 = __importDefault(require("../routes/index"));
 const users_1 = __importDefault(require("../routes/users"));
+const survey_1 = __importDefault(require("../routes/survey"));
 const app = express_1.default();
 exports.default = app;
 const DBConfig = __importStar(require("./db"));
@@ -49,7 +50,8 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '../../client'))
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../node_modules')));
 app.use('/', index_1.default);
 app.use('/users', users_1.default);
-app.use(function (req, res, next) {
+app.use('/survey', survey_1.default);
+app.use(function (err, req, res, next) {
     next(http_errors_1.default(404));
 });
 app.use(function (err, req, res, next) {
