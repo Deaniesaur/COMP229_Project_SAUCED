@@ -8,6 +8,7 @@ import mongoose, { mongo } from 'mongoose';
 import indexRouter from '../routes/index';
 import usersRouter from '../routes/users';
 import surveyRouter from '../routes/survey';
+import questionRouter from '../routes/question';
 
 //App Configuration
 const app = express();
@@ -16,6 +17,7 @@ export default app;
 //DB Configuration
 import * as DBConfig from './db';
 mongoose.connect(DBConfig.MongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useCreateIndex', true);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
