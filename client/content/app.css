@@ -99,7 +99,7 @@ a {
   font-size: medium;
 }
 
-.card {
+#member-card {
   background-color: transparent;
   border: none;
 }
@@ -114,4 +114,22 @@ a {
 
 p {
   line-height: 1.6;
+}
+
+#survey-information {
+  background-color: grey;
+  position: absolute;
+  top: 14.2rem;
+  left: 4%;
+  width: 300px;
+}
+
+.btn-thumbnail {
+  background-color: rgba(128, 128, 128, 0.295);
+  height: 10rem;
+  border: none;
+}
+
+.btn-thumbnail:hover {
+  background-color: rgb(46, 46, 46);
 }
