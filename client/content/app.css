@@ -1,8 +1,36 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.navbar.center .navbar-inner {
+  text-align: center;
+}
+
+.border-md-right {
+  border-right: 1px solid silver;
+}
+
+@media (max-width: 768px) {
+  .border-md-right {
+    border-right: none;
+  }
+}
+
+.nav-title {
+  color: rgba(255, 255, 255, 0.55);
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  position: absolute;
+  left: 45%;
+  top: 5%;
+  margin-left: -50px !important; /* 50% of your logo width */
+  display: block;
+  text-align: center;
+}
+
+#navbar-main-menu {
+  margin-top: 5rem;
 }
