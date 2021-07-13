@@ -9,4 +9,5 @@ exports.default = router;
 const index_1 = require("../controllers/index");
 router.get("/", index_1.DisplayHomePage);
 router.get("/home", index_1.DisplayHomePage);
+router.get("/about", index_1.DisplayAboutPage);
 //# sourceMappingURL=index.js.map
