@@ -117,17 +117,19 @@ p {
 }
 
 #survey-information {
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.295);
   position: absolute;
   top: 16.5rem;
   left: 4%;
   width: 300px;
+  border-radius: 1rem;
 }
 
 .btn-thumbnail {
   background-color: rgba(128, 128, 128, 0.295);
-  height: 10rem;
+  height: 12rem;
   border: none;
+  border-radius: 1rem;
 }
 
 .btn-thumbnail:hover {
@@ -138,9 +140,14 @@ p {
   padding: 2rem;
   height: 150px;
   width: fit-content;
-  border: rgb(146, 146, 146);
+  border: rgba(128, 128, 128, 0.295);
   border-width: 0.2rem;
   border-style: solid;
   margin: 2rem auto;
   border-radius: 2rem;
+}
+
+textarea {
+  border-radius: 1rem;
+  padding: 1.2rem;
 }
