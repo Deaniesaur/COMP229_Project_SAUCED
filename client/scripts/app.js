@@ -157,20 +157,27 @@ addNewQuestionButton();
 function displaySubmitButton() {
   let div = document.createElement("div");
   div.className = "text-center";
+  div.id = "btn-submit-survey";
   div.innerHTML = submitSurveyButton;
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
 }
 
 function addNewQuestionType() {
+  if (counter > 4) {
+    window.alert(
+      "You can have a maximum of 5 questions in the current version."
+    );
+    return;
+  }
   console.log("Add new question.");
   let div = document.createElement("div");
   div.id = "question-type";
   div.innerHTML = questionTypeDiv;
-  div.className = "text-center justify-content-center align-items-center";
+  div.className = "text-center";
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
-
+  if (counter !== 0) document.getElementById("btn-submit-survey").remove();
   document.getElementById("btn-new-question").remove();
 }
 
@@ -189,7 +196,6 @@ function chooseNewQuestionType() {
   let isChecked = false;
   let options = document.querySelectorAll(".form-check-input"),
     i;
-  console.log(options);
   for (i = 0; i < options.length; i++) {
     if (options[i].checked) response = i;
   }
@@ -197,8 +203,7 @@ function chooseNewQuestionType() {
   displayQuestionOptions(response);
   document.getElementById("question-type").remove();
   addNewQuestionButton();
-  //check if this is the first time user clicks add new question
-  if (true) displaySubmitButton();
+  displaySubmitButton();
 }
 
 function displayMultipleChoice() {
