@@ -23,6 +23,7 @@ export function DisplayAboutPage(
 }
 
 export function DisplaySurveyPage(
+
   req: Request,
   res: Response,
   next: NextFunction
@@ -30,5 +31,16 @@ export function DisplaySurveyPage(
   res.render("index", {
     title: "SAUCED | New Survey",
     page: "newSurvey",
+  });
+}
+
+export function DisplayRecentPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | Recent Survey",
+    page: "recent",
   });
 }
