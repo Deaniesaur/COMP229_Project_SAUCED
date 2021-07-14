@@ -5,9 +5,12 @@ const Schema = mongoose.Schema;
 
 const SurveySchema = new Schema({
     title: String,
+    description: String,
+    thumbnail: Buffer,
     owner: String,
     created: Date,
-    updated: Date
+    updated: Date,
+    expiry: Date
 },
 {
     collection: 'surveys'

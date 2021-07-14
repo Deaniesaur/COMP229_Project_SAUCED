@@ -3,7 +3,7 @@ const router = express.Router();
 export default router;
 
 //Create Survey controller instance
-import { DisplayAllSurveys, CreateSurvey, DeleteSurvey, UpdateSurvey } from '../controllers/survey';
+import { DisplayAllSurveys, CreateSurvey, DeleteSurvey, UpdateSurveyById, GetSurveyById } from '../controllers/survey';
 
 //GET All Surveys
 router.get('/', DisplayAllSurveys);
@@ -12,9 +12,10 @@ router.get('/', DisplayAllSurveys);
 router.post('/create', CreateSurvey);
 
 //Todo: Read Survey
+router.get('/:id', GetSurveyById);
 
-//Todo: Update Survey
-router.post('/update/:id', UpdateSurvey);
+//POST Update Survey By Id
+router.post('/update/:id', UpdateSurveyById);
 
 //Todo: Delete Survey
 router.post('/delete/:id', DeleteSurvey);
