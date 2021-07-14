@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DisplayRecentPage = exports.DisplaySurveyPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
+const survey_1 = __importDefault(require("../models/survey"));
 function DisplayHomePage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Homepage",
@@ -23,9 +27,16 @@ function DisplaySurveyPage(req, res, next) {
 }
 exports.DisplaySurveyPage = DisplaySurveyPage;
 function DisplayRecentPage(req, res, next) {
-    res.render("index", {
-        title: "SAUCED | Recent Survey",
-        page: "recent",
+    survey_1.default.find(function (err, surveys) {
+        if (err) {
+            return console.error(err);
+        }
+        console.log('Surveys', surveys);
+        res.render("index", {
+            title: "SAUCED | New Survey",
+            page: "recent",
+            surveys: surveys
+        });
     });
 }
 exports.DisplayRecentPage = DisplayRecentPage;

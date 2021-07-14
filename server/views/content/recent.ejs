@@ -11,7 +11,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-offset-1 col-md-10">
-      h1><%= title %></h1>
+      <h1><%= title %></h1>
       
       <br>
       <div class="table-responsive">
@@ -28,13 +28,12 @@
             </thead>
             <tbody>
             <!-- Template Row -->
-            <% for (let count = 0; count < Surveys.length; count++) { %>
+            <% for (let count = 0; count < surveys.length; count++) { %>
             <tr>
-              <td><%= Surveys[count].title %></td>
-              <td class="text-center">$<%= Surveys[count].owner %></td>
-              <td class="text-center"><%= Surveys[count].created %></td>
-              <td class="text-center"><%= Surveys[count].updated %></td>
-
+              <td><%= surveys[count].title %></td>
+              <td class="text-center">$<%= surveys[count].owner %></td>
+              <td class="text-center"><%= surveys[count].created %></td>
+              <td class="text-center"><%= surveys[count].updated %></td>
             </tr>
             <% } %>
           </tbody>

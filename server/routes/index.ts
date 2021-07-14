@@ -6,6 +6,7 @@ export default router;
 import {
   DisplayAboutPage,
   DisplayHomePage,
+  DisplayRecentPage,
   DisplaySurveyPage,
 } from "../controllers/index";
 
@@ -20,3 +21,5 @@ router.get("/about", DisplayAboutPage);
 
 /* GET new survey page. */
 router.get("/new-survey", DisplaySurveyPage);
+
+router.get('/recent', DisplayRecentPage);

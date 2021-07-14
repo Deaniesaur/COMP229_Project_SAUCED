@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 exports.default = router;
 const survey_1 = require("../controllers/survey");
-router.get('/', survey_1.DisplayAllSurveys);
 router.post('/create', survey_1.CreateSurvey);
 router.get('/:id', survey_1.GetSurveyById);
 router.post('/update/:id', survey_1.UpdateSurveyById);

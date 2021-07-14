@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import {DisplayAllSurveys} from "./survey";
+import Survey from '../models/survey';
 
 export function DisplayHomePage(
   req: Request,
@@ -41,9 +41,17 @@ export function DisplayRecentPage(
   res: Response,
   next: NextFunction
 ): void {
-  // let surveys = DisplayAllSurveys(res, req, next);
-  res.render("index", {
-    title: "SAUCED | Recent Survey",
-    page: "recent",
-  });
+  Survey.find(function(err, surveys){
+    if(err){
+      return console.error(err);
+    }
+
+    console.log('Surveys', surveys);
+
+    res.render("index", {
+      title: "SAUCED | New Survey",
+      page: "recent",
+      surveys: surveys
+    });
+  })
 }
