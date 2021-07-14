@@ -68,6 +68,15 @@ const newQuestionButton = `<a href="javascript:addNewQuestionType()">
 <p class="text-center"><i class="fas fa-plus fa-2x"></i></p
 ></a>`;
 
+const submitSurveyButton = `
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="submitSurveyQuestions()"
+          >
+            SUBMIT SURVEY
+          </button>`;
+
 function addNewQuestionButton() {
   let div = document.createElement("div");
   div.id = "btn-new-question";
@@ -77,6 +86,14 @@ function addNewQuestionButton() {
 }
 
 addNewQuestionButton();
+
+function displaySubmitButton() {
+  let div = document.createElement("div");
+  div.className = "text-center";
+  div.innerHTML = submitSurveyButton;
+  document.getElementById("main-section").appendChild(div);
+  $(div).hide().fadeIn(1000);
+}
 
 function addNewQuestionType() {
   console.log("Add new question.");
@@ -102,6 +119,8 @@ function chooseNewQuestionType() {
   displayQuestionOptions(1);
   document.getElementById("question-type").remove();
   addNewQuestionButton();
+  //this is the first time user clicks add new question
+  if (true) displaySubmitButton();
 }
 
 function displayQuestionOptions(i) {
