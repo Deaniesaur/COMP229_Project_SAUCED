@@ -118,11 +118,11 @@ p {
 
 #survey-information {
   background-color: rgba(128, 128, 128, 0.295);
-  position: absolute;
-  top: 16.5rem;
-  left: 4%;
-  width: 300px;
+  margin-left: -10%;
+  margin-right: 10%;
+  margin-top: 3rem;
   border-radius: 1rem;
+  top: 2rem;
 }
 
 .btn-thumbnail {
@@ -150,4 +150,9 @@ p {
 textarea {
   border-radius: 1rem;
   padding: 1.2rem;
+}
+
+#short-answer {
+  width: 20rem;
+  margin: 0 auto;
 }
