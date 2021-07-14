@@ -151,3 +151,8 @@ textarea {
   border-radius: 1rem;
   padding: 1.2rem;
 }
+
+#short-answer {
+  width: 20rem;
+  margin: 0 auto;
+}
