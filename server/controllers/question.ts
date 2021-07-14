@@ -40,7 +40,6 @@ export function AddQuestionWithSurveyId(req: Request, res: Response, next: NextF
 }
 
 export function UpdateQuestionWithId(req: Request, res: Response, next: NextFunction): void{
-    
     let id = req.params.id;
 
     let update = {
@@ -56,6 +55,20 @@ export function UpdateQuestionWithId(req: Request, res: Response, next: NextFunc
         }
 
         console.log(question._id);
+        res.end();
+    })
+}
+
+export function DeleteQuestionWithId(req: Request, res: Response, next: NextFunction): void{
+    let id = req.params.id;
+
+    Question.deleteOne({_id: id}, {}, (err: any) => {
+        if(err){
+            console.error(err);
+            res.end(err);
+        }
+
+        console.log(`Question: ${id} DELETED`);
         res.end();
     })
 }

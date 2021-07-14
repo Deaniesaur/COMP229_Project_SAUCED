@@ -10,5 +10,5 @@ const question_1 = require("../controllers/question");
 router.get('/:id', question_1.GetQuestionsBySurveyId);
 router.post('/add/:id', question_1.AddQuestionWithSurveyId);
 router.post('/update/:id', question_1.UpdateQuestionWithId);
-router.post('/delete/:id');
+router.post('/delete/:id', question_1.DeleteQuestionWithId);
 //# sourceMappingURL=question.js.map

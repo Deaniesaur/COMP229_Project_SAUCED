@@ -3,7 +3,7 @@ const router = express.Router();
 export default router;
 
 //Create Question controller instance
-import { AddQuestionWithSurveyId, GetQuestionsBySurveyId, UpdateQuestionWithId } from '../controllers/question';
+import { AddQuestionWithSurveyId, GetQuestionsBySurveyId, UpdateQuestionWithId, DeleteQuestionWithId } from '../controllers/question';
 
 //GET All Questions
 router.get('/:id', GetQuestionsBySurveyId);
@@ -15,4 +15,4 @@ router.post('/add/:id', AddQuestionWithSurveyId);
 router.post('/update/:id', UpdateQuestionWithId);
 
 //POST Delete Question
-router.post('/delete/:id');
+router.post('/delete/:id', DeleteQuestionWithId);
