@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.UpdateSurvey = exports.CreateSurvey = exports.DisplayAllSurveys = void 0;
+exports.DeleteSurvey = exports.UpdateSurveyById = exports.GetSurveyById = exports.CreateSurvey = exports.DisplayAllSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
+const question_1 = __importDefault(require("../models/question"));
 function DisplayAllSurveys(req, res, next) {
     survey_1.default.find(function (err, surveys) {
         if (err) {
@@ -39,7 +40,27 @@ function CreateSurvey(req, res, next) {
     });
 }
 exports.CreateSurvey = CreateSurvey;
-function UpdateSurvey(req, res, next) {
+function GetSurveyById(req, res, next) {
+    let surveyId = req.params.id;
+    let surveyFound;
+    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
+        if (err) {
+            return console.error(err);
+        }
+        surveyFound = survey.toObject();
+    }).then(() => {
+        question_1.default.find({ surveyId: surveyId }, function (err, questions) {
+            if (err) {
+                return console.error(err);
+            }
+            surveyFound.questions = questions;
+            console.log('Survey', surveyFound);
+            res.end();
+        });
+    });
+}
+exports.GetSurveyById = GetSurveyById;
+function UpdateSurveyById(req, res, next) {
     let id = req.params.id;
     let update = {
         title: req.body.title,
@@ -54,7 +75,7 @@ function UpdateSurvey(req, res, next) {
         res.end();
     });
 }
-exports.UpdateSurvey = UpdateSurvey;
+exports.UpdateSurveyById = UpdateSurveyById;
 function DeleteSurvey(req, res, next) {
     let id = req.params.id;
     survey_1.default.deleteOne({ _id: id }, {}, (err) => {
