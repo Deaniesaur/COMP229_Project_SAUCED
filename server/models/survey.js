@@ -7,9 +7,12 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 const SurveySchema = new Schema({
     title: String,
+    description: String,
+    thumbnail: Buffer,
     owner: String,
     created: Date,
-    updated: Date
+    updated: Date,
+    expiry: Date
 }, {
     collection: 'surveys'
 });

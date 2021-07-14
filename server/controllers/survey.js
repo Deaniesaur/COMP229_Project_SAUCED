@@ -16,11 +16,18 @@ function DisplayAllSurveys(req, res, next) {
 }
 exports.DisplayAllSurveys = DisplayAllSurveys;
 function CreateSurvey(req, res, next) {
+    let today = new Date();
+    let expiryDate = new Date();
+    expiryDate.setDate(today.getDate() + 2);
+    let surveyThumbnail = null;
     let newSurvey = new survey_1.default({
-        title: "Test Title",
-        owner: "Dean",
-        created: new Date(),
-        updated: new Date()
+        title: req.body.title,
+        description: req.body.description,
+        thumbnail: surveyThumbnail,
+        owner: "User",
+        created: today,
+        updated: today,
+        expiry: expiryDate
     });
     survey_1.default.create(newSurvey, (err, survey) => {
         if (err) {
