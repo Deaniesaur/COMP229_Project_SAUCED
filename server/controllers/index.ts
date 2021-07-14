@@ -21,3 +21,26 @@ export function DisplayAboutPage(
     page: "about",
   });
 }
+
+
+export function DisplayNewPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | New",
+    page: "new",
+  });
+}
+
+export function DisplayRecentPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | Recent Survey",
+    page: "recent",
+  });
+}
