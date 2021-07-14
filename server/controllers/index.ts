@@ -22,15 +22,15 @@ export function DisplayAboutPage(
   });
 }
 
+export function DisplaySurveyPage(
 
-export function DisplayNewPage(
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
   res.render("index", {
-    title: "SAUCED | New",
-    page: "new",
+    title: "SAUCED | New Survey",
+    page: "newSurvey",
   });
 }
 
