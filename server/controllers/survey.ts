@@ -10,7 +10,13 @@ export function DisplayAllSurveys(req: Request, res: Response, next: NextFunctio
         }
 
         console.log(surveys);
-        res.end();
+        // res.render("index", {
+        //     title: "Recent Surveys",
+        //     page: "recent",
+        //     Surveys: surveys      
+        //   });
+        // res.end();
+        return surveys;
     })
 }
 

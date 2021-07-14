@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import {DisplayAllSurveys} from "./survey";
 
 export function DisplayHomePage(
   req: Request,
@@ -34,11 +35,13 @@ export function DisplaySurveyPage(
   });
 }
 
+
 export function DisplayRecentPage(
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
+  // let surveys = DisplayAllSurveys(res, req, next);
   res.render("index", {
     title: "SAUCED | Recent Survey",
     page: "recent",
