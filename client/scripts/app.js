@@ -1,5 +1,7 @@
 "use strict";
 
+let counter = 0;
+
 const questionTypeDiv = `
 <div class="form-check form-check-inline">
   <input
@@ -56,13 +58,17 @@ const questionTypeDiv = `
 </button>
 `;
 
-const mainQuestionDiv = `<div class="text-center">
-<p>QUESTION 1</p>
-<textarea id="question" name="question" rows="2" cols="63">
-WHAT DO YOU THINK ABOUT OUR WEBSITE?
-                    </textarea
->
-</div>`;
+function getQuestionBody() {
+  const mainQuestionDiv = `<div class="text-center">
+  <p>QUESTION ${counter + 1}</p>
+  <textarea id="question" name="question" rows="2" cols="63">
+  WHAT DO YOU THINK ABOUT OUR WEBSITE?
+                      </textarea
+  >
+  </div>`;
+
+  return mainQuestionDiv;
+}
 
 const newQuestionButton = `<a href="javascript:addNewQuestionType()">
 <p class="text-center"><i class="fas fa-plus fa-2x"></i></p
@@ -174,7 +180,8 @@ function chooseNewQuestionType() {
   console.log("Choose new question.");
   let div = document.createElement("div");
   div.id = "question-main";
-  div.innerHTML = mainQuestionDiv;
+  div.innerHTML = getQuestionBody();
+  counter++;
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
 
