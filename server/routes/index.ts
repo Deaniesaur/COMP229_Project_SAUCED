@@ -6,8 +6,7 @@ export default router;
 import {
   DisplayAboutPage,
   DisplayHomePage,
-  DisplayRecentPage,
-  DisplaySurveyPage,
+  DisplayNewSurveyPage,
   DisplayLoginPage,
 } from "../controllers/index";
 
@@ -20,12 +19,8 @@ router.get("/home", DisplayHomePage);
 /* GET about page. */
 router.get("/about", DisplayAboutPage);
 
-/* GET Recent Page. */
-router.get("/recent", DisplayRecentPage);
-
 /* GET new survey page. */
-router.get("/new-survey", DisplaySurveyPage);
+router.get("/survey/create", DisplayNewSurveyPage);
 
 /* GET Login Page. */
 router.get("/login", DisplayLoginPage);
-
