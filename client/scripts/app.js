@@ -94,49 +94,36 @@ const submitSurveyButton = `
 function getMultipleChoiceQuestion(i) {
   return `
 <div class="form-check form-check-inline" id="option-${i}">
-<input
-  class="form-check-input"
-  type="radio"
-  name="inlineRadioOptions"
-  id="question${counter}"
-  value="1"
-  disabled
-/>
 <label class="form-check-label" for="question${counter}">
-  Option ${i}
+<input type="text" class="form-control" id="question${counter}" placeholder="Option ${i}">
   <a href="javascript:editOption(${counter - 1}, ${i})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
 ></a>
 <a href="javascript:deleteOption(${counter - 1}, ${i})">
 <p class="text-center" id="edit-icon"><i class="fas fa-trash"></i></p
 ></a>
-</label>
+</label><br>
 </div>`;
 }
 
 function getMultipleChoiceOption(i, j) {
-  return `<input
-  class="form-check-input"
-  type="radio"
-  name="inlineRadioOptions"
-  id="question${i}"
-  value="1"
-  disabled
-/>
+  return `
 <label class="form-check-label" for="question${i}">
-  Option ${j}
+<input type="text" class="form-control" id="question${i}" placeholder="Option ${j}" enabled>
+ 
   <a href="javascript:editOption(${i - 1}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
 ></a>
 <a href="javascript:deleteOption(${i - 1}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-trash"></i></p
 ></a>
-</label>`;
+</label> <br>`;
 }
 
 const shortAnswerQuestion = `
 <br />
 <br />
+<label class="form-check-label" for=""></label>
 <input class="form-control" type="text" placeholder="The participants will fill-in this area." disabled>
 <br />
 <br />`;
@@ -180,6 +167,20 @@ function addNewQuestionType() {
 /* END OF THE ADD NEW QUESTION TYPE BUTTON */
 
 function chooseNewQuestionType() {
+  let response;
+  let options = document
+      .querySelector("#question-type")
+      .querySelectorAll(".form-check-input"),
+    i;
+  for (i = 0; i < options.length; i++) {
+    if (options[i].checked) response = parseInt(options[i].value);
+  }
+
+  if (response == undefined) {
+    window.alert("Please choose a question type.");
+    return;
+  }
+
   let div = document.createElement("div");
   div.id = `question-main-${counter}`;
   div.innerHTML = getQuestionBody();
@@ -187,16 +188,8 @@ function chooseNewQuestionType() {
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
 
-  let response;
-  let isChecked = false;
-  let options = document
-      .querySelector("#question-type")
-      .querySelectorAll(".form-check-input"),
-    i;
   counter++;
-  for (i = 0; i < options.length; i++) {
-    if (options[i].checked) displayQuestionOptions(parseInt(options[i].value));
-  }
+  displayQuestionOptions(response);
 
   document.getElementById("question-type").remove();
   addNewQuestionButton();
@@ -290,9 +283,10 @@ function deleteQuestion(i) {
     parent.querySelector("a").href = `javascript:deleteQuestion(${j - 1})`;
     parent = document.getElementById(`answer-${j}`);
     parent.id = `answer-${j - 1}`;
+    console.log(parent);
     [...parent.querySelectorAll(`#question${j + 1}`)].forEach((e) => {
       e.id = `question${j}`;
-      e.parentElement.querySelector("label").htmlFor = `question${j}`;
+      e.parentElement.htmlFor = `question${j}`;
     });
     for (let k = 1; k < 10; k++) {
       let child = parent.querySelectorAll("div")[k - 1];
@@ -313,6 +307,14 @@ function deleteQuestion(i) {
     }
   }
   counter--;
+}
+
+function editOption(i, j) {
+  let questionDiv = document.getElementById(`answer-${i}`);
+  questionDiv = questionDiv.querySelectorAll("div")[j - 1];
+  let optionText = questionDiv.querySelectorAll("p")[0];
+  optionText.textContent = "Hello World";
+  console.log(optionText);
 }
 
 function deleteOption(i, j) {
