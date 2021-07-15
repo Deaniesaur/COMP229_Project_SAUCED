@@ -88,8 +88,14 @@ function DeleteSurvey(req, res, next) {
             console.error(err);
             res.end(err);
         }
-        console.log(`Survey: ${id} DELETED`);
-        res.end();
+    }).then(() => {
+        question_1.default.deleteMany({ surveyId: id }, {}, (err) => {
+            if (err) {
+                res.end();
+            }
+            console.log(`Survey: ${id} DELETED`);
+            res.redirect('/recent');
+        });
     });
 }
 exports.DeleteSurvey = DeleteSurvey;
