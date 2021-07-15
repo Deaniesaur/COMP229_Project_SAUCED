@@ -49,7 +49,7 @@ export function DisplayRecentPage(
     console.log('Surveys', surveys);
 
     res.render("index", {
-      title: "SAUCED | New Survey",
+      title: "SAUCED | Recent Surveys",
       page: "recent",
       surveys: surveys
     });

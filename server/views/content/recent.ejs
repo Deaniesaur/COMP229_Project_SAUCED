@@ -1,39 +1,47 @@
 <hr id="bootstrap-overrides" />
 
 <!--mission statement-->
-<p class="home-title">
+<!-- <p class="home-title">
   Recent surveys<br />
   <br />
-
-</p>
+</p> -->
 
 <!-- MAIN CONTENT -->
 <div class="container">
   <div class="row">
-    <div class="col-md-offset-1 col-md-10">
+    <div class="col-offset-1 col-md-10">
       <h1><%= title %></h1>
       
       <br>
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
           <thead>
-            <tr>
+            <tr class="text-light bg-dark">
               <th>Survey Title</th>
-              <th class="text-center">Creator</th>
-              <th class="text-center">Date of Creation</th>
-              <th class="text-center">Date of Update</th>
-              <!-- <th class="text-center"></th>
-              <th class="text-center"></th> -->
+              <th class="text-center"  >Creator</th>
+              <th class="text-center">Description</th>
+              <th class="text-center"></th>
+              <th class="text-center"></th>
             </tr>
             </thead>
             <tbody>
             <!-- Template Row -->
             <% for (let count = 0; count < surveys.length; count++) { %>
-            <tr>
+            <tr class="text-light bg-dark">
               <td><%= surveys[count].title %></td>
               <td class="text-center">$<%= surveys[count].owner %></td>
-              <td class="text-center"><%= surveys[count].created %></td>
-              <td class="text-center"><%= surveys[count].updated %></td>
+              <td class="text-center"><%= surveys[count].description %></td>
+             
+             <td class="text-center">
+                <a href="/surveys/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                  <i class="fas fa-pencil-alt"></i> Edit</a>
+              </td>
+
+              <td class="text-center">
+                <a href="/surveys/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Delete</a>
+              </td> 
+
             </tr>
             <% } %>
           </tbody>
