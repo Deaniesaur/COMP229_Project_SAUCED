@@ -216,7 +216,10 @@ function chooseNewQuestionType() {
   document.getElementById("question-type").remove();
   addNewQuestionButton();
   displaySubmitButton();
+<<<<<<< HEAD
   counter++;
+=======
+>>>>>>> new-question-frontend-logic
 }
 
 function displayMultipleChoice() {
