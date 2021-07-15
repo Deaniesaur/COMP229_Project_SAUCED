@@ -5,5 +5,5 @@ const RemoteURI = `mongodb+srv://admin:admin@${remoteHost}/${database}?retryWrit
 export const Secret = "someSecret";
 
 export const Host = remoteHost;
-export const MongoURI = LocalURI;
-//export const MongoURI = RemoteURI;
+//export const MongoURI = LocalURI;
+export const MongoURI = RemoteURI;
