@@ -96,7 +96,7 @@ function DeleteSurvey(req, res, next) {
                 res.end();
             }
             console.log(`Survey: ${id} DELETED`);
-            res.redirect("/recent");
+            res.redirect("/survey");
         });
     });
 }

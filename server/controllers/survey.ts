@@ -130,7 +130,7 @@ export function DeleteSurvey(
       }
 
       console.log(`Survey: ${id} DELETED`);
-      res.redirect("/recent");
+      res.redirect("/survey");
     });
   });
 }
