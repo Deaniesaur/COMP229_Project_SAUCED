@@ -3,10 +3,12 @@ const router = express.Router();
 export default router;
 
 //Create Survey controller instance
+
 import { DisplayAllSurveys, CreateSurvey, DeleteSurvey, UpdateSurveyById, DisplaySurveyById } from '../controllers/survey';
 
 //GET All Surveys
 router.get('/', DisplayAllSurveys);
+
 
 //GET Display Answer Survey
 router.get('/answer/:id', DisplaySurveyById);

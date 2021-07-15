@@ -6,6 +6,7 @@ export default router;
 import {
   DisplayAboutPage,
   DisplayHomePage,
+  DisplayRecentPage,
   DisplaySurveyPage,
   DisplayLoginPage,
   DisplayRecentPage,
@@ -25,6 +26,9 @@ router.get("/recent", DisplayRecentPage);
 
 /* GET new survey page. */
 router.get("/new-survey", DisplaySurveyPage);
+
+
+router.get('/recent', DisplayRecentPage);
 
 /* GET Login Page. */
 router.get("/login", DisplayLoginPage);

@@ -3,15 +3,18 @@ import express, {Request , Response, NextFunction} from 'express';
 import Survey from '../models/survey';
 import Question from '../models/question';
 
-export function DisplayAllSurveys(req: Request, res: Response, next: NextFunction): void{
+export function DisplayAllSurveys(req: Request, res: Response, next: NextFunction): Array<any>{
     Survey.find(function(err, surveys){
         if(err){
             return console.error(err);
         }
 
         console.log(surveys);
-        res.end();
+
+        return surveys;
     })
+
+    return null;
 }
 
 export function CreateSurvey(req: Request, res: Response, next: NextFunction): void{

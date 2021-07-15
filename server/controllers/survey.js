@@ -12,8 +12,9 @@ function DisplayAllSurveys(req, res, next) {
             return console.error(err);
         }
         console.log(surveys);
-        res.end();
+        return surveys;
     });
+    return null;
 }
 exports.DisplayAllSurveys = DisplayAllSurveys;
 function CreateSurvey(req, res, next) {
