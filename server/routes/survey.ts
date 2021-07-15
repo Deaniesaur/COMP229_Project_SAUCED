@@ -9,7 +9,6 @@ import { DisplayAllSurveys, CreateSurvey, DeleteSurvey, UpdateSurveyById, Displa
 //GET All Surveys
 router.get("/", DisplayAllSurveys);
 
-
 //GET Display Answer Survey
 router.get('/answer/:id', DisplaySurveyById);
 
@@ -20,7 +19,7 @@ router.post("/create", CreateSurvey);
 router.post('/update/:id', UpdateSurveyById);
 
 //Todo: Delete Survey
-router.post("/delete/:id", DeleteSurvey);
+router.get('/delete/:id', DeleteSurvey);
 
 //Add Question Routes
 import questionRouter from "./question";

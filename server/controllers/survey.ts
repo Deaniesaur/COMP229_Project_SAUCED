@@ -106,7 +106,14 @@ export function DeleteSurvey(
       res.end(err);
     }
 
-    console.log(`Survey: ${id} DELETED`);
-    res.end();
-  });
+    }).then(() => {
+        Question.deleteMany({surveyId: id}, {}, (err) => {
+            if(err){
+                res.end();
+            }
+
+            console.log(`Survey: ${id} DELETED`);
+            res.redirect('/recent');
+        })
+    })
 }
