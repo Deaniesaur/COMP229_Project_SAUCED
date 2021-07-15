@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 
 import Survey from "../models/survey";
 import Question from "../models/question";
+import SurveyResponse from "../models/response";
 
 export function DisplayRecentSurveys(
   req: Request,
@@ -144,4 +145,30 @@ export function DisplayNewSurveyPage(
     title: "SAUCED | New Survey",
     page: "newSurvey",
   });
+}
+
+export function SubmitResponse(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  let surveyId = req.params.id;
+
+  //TODO: Insert Code to retrieve answers here as an Array
+
+  let newResponse = new SurveyResponse({
+    surveyId: surveyId,
+    surveyOwner: "User",
+    answers: [],
+    created: new Date()
+  });
+
+  SurveyResponse.create(newResponse, (err, response) => {
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
+  });
+
+  res.redirect("/survey");
 }
