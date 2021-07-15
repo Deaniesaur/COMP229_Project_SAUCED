@@ -22,7 +22,7 @@ router.get("/answer/:id", DisplaySurveyById);
 router.post("/create", CreateSurvey);
 
 //POST Update Survey By Id
-router.post("/update/:id", UpdateSurveyById);
+router.post("/edit/:id", UpdateSurveyById);
 
 //Todo: Delete Survey
 router.get("/delete/:id", DeleteSurvey);

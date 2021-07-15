@@ -13,7 +13,7 @@ export function DisplayRecentSurveys(
       return console.error(err);
     }
 
-    console.log("Surveys", surveys);
+    //console.log("Surveys", surveys);
 
     res.render("index", {
       title: "SAUCED | Recent Surveys",
@@ -33,6 +33,8 @@ export function CreateSurvey(
   expiryDate.setDate(today.getDate() + 2);
   let surveyThumbnail = null;
 
+  console.log(req.body.orem);
+
   //instantiate a new survey object
   let newSurvey = new Survey({
     title: req.body.title,
@@ -49,10 +51,8 @@ export function CreateSurvey(
       console.error(err);
       res.end(err);
     }
-
-    console.log(survey._id);
-    res.end();
   });
+  res.redirect("/survey");
 }
 
 export function DisplaySurveyById(

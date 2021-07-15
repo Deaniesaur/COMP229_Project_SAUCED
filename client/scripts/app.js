@@ -286,41 +286,37 @@ function deleteQuestion(i) {
   counter--;
 }
 
-// function submitSurveyQuestions() {
-//   let http = new XMLHttpRequest();
-//   let url = "/home";
-//   let params = "orem=ipsum&name=binny";
-//   http.open("POST", url, true);
-
-//   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-//   http.onreadystatechange = function () {
-//     if (http.readyState == 4 && http.status == 200) {
-//       alert(http.responseText);
-//     }
-//   };
-//   http.send(params);
-// }
-
 function submitSurveyQuestions() {
-  console.log("Hello");
+  let http = new XMLHttpRequest();
+  let url = "/survey/create";
+  let params = "title=sampleTitle&description=sampledescription";
+  http.open("POST", url, true);
+
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+      window.location = http.responseURL;
+    }
+  };
+  http.send(params);
 }
 
 // Testing Axios Calls
-async function testAxios(){
+async function testAxios() {
   let baseUrl = window.location.origin;
-  console.log(baseUrl)
+  console.log(baseUrl);
 
-  console.log('Test Axios');
+  console.log("Test Axios");
 
   let payload = {
-    title: 'Axios Test',
-    description: 'description'
-  }
+    title: "Axios Test",
+    description: "description",
+  };
 
-  axios.defaults.headers.post['Content-Type'] ='application/json';
-  
-  let res = await axios.post(baseUrl + '/survey/create', payload);
+  axios.defaults.headers.post["Content-Type"] = "application/json";
+
+  let res = await axios.post(baseUrl + "/survey/create", payload);
   let data = res.data;
   console.log(data);
 }

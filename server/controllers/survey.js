@@ -11,7 +11,6 @@ function DisplayRecentSurveys(req, res, next) {
         if (err) {
             return console.error(err);
         }
-        console.log("Surveys", surveys);
         res.render("index", {
             title: "SAUCED | Recent Surveys",
             page: "recent",
@@ -25,6 +24,7 @@ function CreateSurvey(req, res, next) {
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 2);
     let surveyThumbnail = null;
+    console.log(req.body.orem);
     let newSurvey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
@@ -39,9 +39,8 @@ function CreateSurvey(req, res, next) {
             console.error(err);
             res.end(err);
         }
-        console.log(survey._id);
-        res.end();
     });
+    res.redirect("/survey");
 }
 exports.CreateSurvey = CreateSurvey;
 function DisplaySurveyById(req, res, next) {
