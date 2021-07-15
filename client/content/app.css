@@ -161,7 +161,18 @@ textarea {
   margin: 0 auto;
 }
 
+#trash-icon {
+  line-height: 12rem;
+  color: #d21122;
+}
 
+#btn-new-question * {
+  color: #d21122;
+}
+
+#question-body {
+  height: 10rem;
+}
 
 .login-dark form {
   max-width:320px;
@@ -227,4 +238,3 @@ textarea {
 .login-dark form .btn-primary:active {
   transform:translateY(1px);
 }
-

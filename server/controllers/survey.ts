@@ -1,4 +1,4 @@
-import express, {Request , Response, NextFunction} from 'express';
+import express, { Request, Response, NextFunction } from "express";
 
 import Survey from '../models/survey';
 import Question from '../models/question';
@@ -34,15 +34,15 @@ export function CreateSurvey(req: Request, res: Response, next: NextFunction): v
         expiry: expiryDate
     });
 
-    Survey.create(newSurvey, (err, survey) => {
-        if(err){
-            console.error(err);
-            res.end(err);
-        }
+  Survey.create(newSurvey, (err, survey) => {
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
 
-        console.log(survey._id);
-        res.end();
-    })
+    console.log(survey._id);
+    res.end();
+  });
 }
 
 export function DisplaySurveyById(req: Request, res: Response, next: NextFunction): void {
@@ -76,31 +76,35 @@ export function DisplaySurveyById(req: Request, res: Response, next: NextFunctio
 export function UpdateSurveyById(req: Request, res: Response, next: NextFunction): void{
     let id = req.params.id;
 
-    //instantiate a new survey object
-    let update = {
-        title: req.body.title,
-        updated: new Date()
+  //instantiate a new survey object
+  let update = {
+    title: req.body.title,
+    updated: new Date(),
+  };
+
+  Survey.updateOne({ _id: id }, update, {}, (err, survey) => {
+    if (err) {
+      console.error(err);
+      res.end(err);
     }
 
-    Survey.updateOne({_id: id}, update, {}, (err, survey) => {
-        if(err){
-            console.error(err);
-            res.end(err);
-        }
-
-        console.log(survey._id);
-        res.end();
-    })
+    console.log(survey._id);
+    res.end();
+  });
 }
 
-export function DeleteSurvey(req: Request, res: Response, next: NextFunction): void{
-    let id = req.params.id;
+export function DeleteSurvey(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  let id = req.params.id;
 
-    Survey.deleteOne({_id: id}, {}, (err) => {
-        if(err){
-            console.error(err);
-            res.end(err);
-        }
+  Survey.deleteOne({ _id: id }, {}, (err) => {
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
 
     }).then(() => {
         Question.deleteMany({surveyId: id}, {}, (err) => {
