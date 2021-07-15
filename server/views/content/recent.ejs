@@ -1,20 +1,51 @@
-<hr id="bootstrap-overrides" />
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="row">
+    <div class="col-offset-1 col-md-10">
+      <h1><%= title %></h1>
+      
+      <br>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <tr class="text-light bg-dark">
+              <th>Survey Title</th>
+              <th class="text-center"  >Creator</th>
+              <th class="text-center">Description</th>
+              <th class="text-center"></th>
+              <th class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Template Row -->
+            <% for (let count = 0; count < surveys.length; count++) { %>
+            <tr class="text-light bg-dark">
+              <td><%= surveys[count].title %></td>
+              <td class="text-center">$<%= surveys[count].owner %></td>
+              <td class="text-center"><%= surveys[count].description %></td>
+             
+             <td class="text-center">
+                <a href="/surveys/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                  <i class="fas fa-pencil-alt"></i> Edit</a>
+              </td>
 
-<!--mission statement-->
-<p class="home-title">
-  Recent surveys<br />
-  <br />
+              <td class="text-center">
+                <a href="/surveys/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i> Delete</a>
+              </td> 
 
-</p>
-
-
-
-<p class="fw-bolder text-center">Why SAUCED?</p>
-
-
-
-<br /><br />
-<div class="btn-start-here">
-  <button type="button" class="btn btn-secondary btn-xl">START HERE!</button>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+       <div class="col-md-offset-1 col-md-10 text-center">
+        <ul class="pagination pagination-lg pager" id="myPager"></ul>
+      </div>
+    </div>
+  </div>
 </div>
+
 <br /><br />
+</div>
+

@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import Survey from '../models/survey';
 
 export function DisplayHomePage(
   req: Request,
@@ -34,13 +35,34 @@ export function DisplaySurveyPage(
   });
 }
 
+
 export function DisplayRecentPage(
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
+  Survey.find(function(err, surveys){
+    if(err){
+      return console.error(err);
+    }
+
+    console.log('Surveys', surveys);
+
+    res.render("index", {
+      title: "SAUCED | Recent Surveys",
+      page: "recent",
+      surveys: surveys
+    });
+  })
+}
+
+export function DisplayLoginPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
   res.render("index", {
-    title: "SAUCED | Recent Survey",
-    page: "recent",
+    title: "SAUCED | Login",
+    page: "login",
   });
 }
