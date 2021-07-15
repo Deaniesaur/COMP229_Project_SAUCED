@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ResponseSchema = new Schema({
     surveyId: mongodb.ObjectId,
     surveyOwner: String,
-    question: [],
+    answers: [],
     created: Date
 },
 {

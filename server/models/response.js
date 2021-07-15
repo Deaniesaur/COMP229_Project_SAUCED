@@ -9,7 +9,7 @@ const Schema = mongoose_1.default.Schema;
 const ResponseSchema = new Schema({
     surveyId: mongodb_1.default.ObjectId,
     surveyOwner: String,
-    question: [],
+    answers: [],
     created: Date
 }, {
     collection: 'responses'
