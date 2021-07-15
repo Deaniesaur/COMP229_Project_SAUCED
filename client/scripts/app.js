@@ -216,10 +216,7 @@ function chooseNewQuestionType() {
   document.getElementById("question-type").remove();
   addNewQuestionButton();
   displaySubmitButton();
-<<<<<<< HEAD
   counter++;
-=======
->>>>>>> new-question-frontend-logic
 }
 
 function displayMultipleChoice() {
@@ -305,4 +302,25 @@ function deleteQuestion(i) {
 //   http.send(params);
 // }
 
-function submitSurveyQuestions() {}
+function submitSurveyQuestions() {
+  console.log("Hello");
+}
+
+// Testing Axios Calls
+async function testAxios(){
+  let baseUrl = window.location.origin;
+  console.log(baseUrl)
+
+  console.log('Test Axios');
+
+  let payload = {
+    title: 'Axios Test',
+    description: 'description'
+  }
+
+  axios.defaults.headers.post['Content-Type'] ='application/json';
+  
+  let res = await axios.post(baseUrl + '/survey/create', payload);
+  let data = res.data;
+  console.log(data);
+}
