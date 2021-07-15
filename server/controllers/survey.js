@@ -3,25 +3,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayAllSurveys = void 0;
+exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const question_1 = __importDefault(require("../models/question"));
-function DisplayAllSurveys(req, res, next) {
+function DisplayRecentSurveys(req, res, next) {
     survey_1.default.find(function (err, surveys) {
         if (err) {
             return console.error(err);
         }
-        console.log(surveys);
-        return surveys;
+        res.render("index", {
+            title: "SAUCED | Recent Surveys",
+            page: "recent",
+            surveys: surveys,
+        });
     });
-    return null;
 }
-exports.DisplayAllSurveys = DisplayAllSurveys;
+exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function CreateSurvey(req, res, next) {
     let today = new Date();
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 2);
     let surveyThumbnail = null;
+    console.log(req.body.title);
     let newSurvey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
@@ -29,16 +32,15 @@ function CreateSurvey(req, res, next) {
         owner: "User",
         created: today,
         updated: today,
-        expiry: expiryDate
+        expiry: expiryDate,
     });
     survey_1.default.create(newSurvey, (err, survey) => {
         if (err) {
             console.error(err);
             res.end(err);
         }
-        console.log(survey._id);
-        res.end();
     });
+    res.redirect("/");
 }
 exports.CreateSurvey = CreateSurvey;
 function DisplaySurveyById(req, res, next) {
@@ -55,11 +57,11 @@ function DisplaySurveyById(req, res, next) {
                 return console.error(err);
             }
             surveyFound.questions = questions;
-            console.log('Survey', surveyFound);
+            console.log("Survey", surveyFound);
             res.render("index", {
                 title: "SAUCED | Answer Survey",
                 page: "respondSurvey",
-                survey: surveyFound
+                survey: surveyFound,
             });
         });
     });
@@ -94,9 +96,16 @@ function DeleteSurvey(req, res, next) {
                 res.end();
             }
             console.log(`Survey: ${id} DELETED`);
-            res.redirect('/recent');
+            res.redirect("/recent");
         });
     });
 }
 exports.DeleteSurvey = DeleteSurvey;
+function DisplayNewSurveyPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | New Survey",
+        page: "newSurvey",
+    });
+}
+exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
 //# sourceMappingURL=survey.js.map

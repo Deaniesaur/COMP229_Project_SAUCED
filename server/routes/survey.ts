@@ -4,22 +4,32 @@ export default router;
 
 //Create Survey controller instance
 
-import { DisplayAllSurveys, CreateSurvey, DeleteSurvey, UpdateSurveyById, DisplaySurveyById } from '../controllers/survey';
+import {
+  DisplayRecentSurveys,
+  CreateSurvey,
+  DeleteSurvey,
+  UpdateSurveyById,
+  DisplaySurveyById,
+  DisplayNewSurveyPage,
+} from "../controllers/survey";
 
 //GET All Surveys
-router.get("/", DisplayAllSurveys);
+router.get("/", DisplayRecentSurveys);
 
 //GET Display Answer Survey
-router.get('/answer/:id', DisplaySurveyById);
+router.get("/answer/:id", DisplaySurveyById);
 
 //POST Create Survey
 router.post("/create", CreateSurvey);
 
+//GET Create Survey
+router.get("/create", DisplayNewSurveyPage);
+
 //POST Update Survey By Id
-router.post('/update/:id', UpdateSurveyById);
+router.post("/edit/:id", UpdateSurveyById);
 
 //Todo: Delete Survey
-router.get('/delete/:id', DeleteSurvey);
+router.get("/delete/:id", DeleteSurvey);
 
 //Add Question Routes
 import questionRouter from "./question";
