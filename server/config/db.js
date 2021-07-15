@@ -7,5 +7,5 @@ const LocalURI = `mongodb://localhost:27017/${database}`;
 const RemoteURI = `mongodb+srv://admin:admin@${remoteHost}/${database}?retryWrites=true&w=majority`;
 exports.Secret = "someSecret";
 exports.Host = remoteHost;
-exports.MongoURI = LocalURI;
+exports.MongoURI = RemoteURI;
 //# sourceMappingURL=db.js.map
