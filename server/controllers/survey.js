@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.UpdateSurveyById = exports.GetSurveyById = exports.CreateSurvey = exports.DisplayAllSurveys = void 0;
+exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayAllSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const question_1 = __importDefault(require("../models/question"));
 function DisplayAllSurveys(req, res, next) {
@@ -41,7 +41,7 @@ function CreateSurvey(req, res, next) {
     });
 }
 exports.CreateSurvey = CreateSurvey;
-function GetSurveyById(req, res, next) {
+function DisplaySurveyById(req, res, next) {
     let surveyId = req.params.id;
     let surveyFound;
     survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
@@ -56,11 +56,15 @@ function GetSurveyById(req, res, next) {
             }
             surveyFound.questions = questions;
             console.log('Survey', surveyFound);
-            res.end();
+            res.render("index", {
+                title: "SAUCED | Answer Survey",
+                page: "respondSurvey",
+                survey: surveyFound
+            });
         });
     });
 }
-exports.GetSurveyById = GetSurveyById;
+exports.DisplaySurveyById = DisplaySurveyById;
 function UpdateSurveyById(req, res, next) {
     let id = req.params.id;
     let update = {

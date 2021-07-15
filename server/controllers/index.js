@@ -3,8 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+
 exports.DisplayRecentPage = exports.DisplaySurveyPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
+
+exports.DisplayLoginPage = exports.DisplayRecentPage = exports.DisplaySurveyPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
+
 function DisplayHomePage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Homepage",
@@ -40,4 +44,11 @@ function DisplayRecentPage(req, res, next) {
     });
 }
 exports.DisplayRecentPage = DisplayRecentPage;
+function DisplayLoginPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | Login",
+        page: "login",
+    });
+}
+exports.DisplayLoginPage = DisplayLoginPage;
 //# sourceMappingURL=index.js.map

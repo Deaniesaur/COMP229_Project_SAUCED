@@ -55,3 +55,14 @@ export function DisplayRecentPage(
     });
   })
 }
+
+export function DisplayLoginPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | Login",
+    page: "login",
+  });
+}

@@ -45,7 +45,7 @@ export function CreateSurvey(req: Request, res: Response, next: NextFunction): v
     })
 }
 
-export function GetSurveyById(req: Request, res: Response, next: NextFunction): void{
+export function DisplaySurveyById(req: Request, res: Response, next: NextFunction): void {
     let surveyId = req.params.id;
     let surveyFound: any;
 
@@ -63,9 +63,14 @@ export function GetSurveyById(req: Request, res: Response, next: NextFunction): 
             
             surveyFound.questions = questions;
             console.log('Survey', surveyFound);
-            res.end();
+
+            res.render("index", {
+                title: "SAUCED | Answer Survey",
+                page: "respondSurvey",
+                survey: surveyFound
+            });
         });
-    })
+    });
 }
 
 export function UpdateSurveyById(req: Request, res: Response, next: NextFunction): void{
