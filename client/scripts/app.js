@@ -111,10 +111,10 @@ function getMultipleChoiceOption(i, j) {
 <label class="form-check-label" for="question${i}">
 <input type="text" class="form-control" id="question${i}" placeholder="Option ${j}" enabled>
  
-  <a href="javascript:editOption(${i - 1}, ${j})">
+  <a href="javascript:editOption(${i}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
 ></a>
-<a href="javascript:deleteOption(${i - 1}, ${j})">
+<a href="javascript:deleteOption(${i}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-trash"></i></p
 ></a>
 </label> <br>`;
@@ -269,6 +269,14 @@ function displayQuestionOptions(i) {
 
 function deleteQuestion(i) {
   i = parseInt(i);
+  if (
+    i == 0 &&
+    document.getElementById(`question-main-${i + 1}`) == undefined
+  ) {
+    $(`#btn-submit-survey`).fadeOut(1000, function () {
+      $(this).remove();
+    });
+  }
   $(`#question-main-${i}`).fadeOut(1000, function () {
     $(this).remove();
   });
@@ -310,6 +318,10 @@ function deleteQuestion(i) {
 }
 
 function editOption(i, j) {
+  window.alert(
+    "Enhanced edit is not implemented yet. You can enter your option inside the text area for now."
+  );
+  return;
   let questionDiv = document.getElementById(`answer-${i}`);
   questionDiv = questionDiv.querySelectorAll("div")[j - 1];
   let optionText = questionDiv.querySelectorAll("p")[0];
@@ -341,6 +353,7 @@ function deleteOption(i, j) {
 }
 
 function submitSurveyQuestions() {
+  let params = gatherSurveyInformation();
   let http = new XMLHttpRequest();
   let url = "/survey/create";
   let params = "title=sampleTitle&description=sampledescription";
@@ -355,3 +368,5 @@ function submitSurveyQuestions() {
   };
   http.send(params);
 }
+
+function gatherSurverInformation() {}
