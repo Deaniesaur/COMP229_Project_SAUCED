@@ -91,60 +91,27 @@ const submitSurveyButton = `
             SUBMIT SURVEY
           </button>`;
 
-function getMultipleChoiceQuestion() {
+function getMultipleChoiceQuestion(i) {
   return `
-<br />
-<br />
-<div class="form-check form-check-inline">
+<div class="form-check form-check-inline" id="option-${i}">
 <input
   class="form-check-input"
   type="radio"
   name="inlineRadioOptions"
   id="question${counter + 1}"
   value="1"
+  disabled
 />
 <label class="form-check-label" for="question${counter + 1}">
   Option 1
+  <a href="javascript:editOption(${counter}, ${i})">
+<p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
+></a>
+<a href="javascript:deleteOption(${counter}, ${i})">
+<p class="text-center" id="edit-icon"><i class="fas fa-trash"></i></p
+></a>
 </label>
-</div>
-<div class="form-check form-check-inline">
-<input
-  class="form-check-input"
-  type="radio"
-  name="inlineRadioOptions"
-  id="question${counter + 1}"
-  value="2"
-/>
-<label class="form-check-label" for="question${counter + 1}">
-Option 2
-</label>
-</div>
-<div class="form-check form-check-inline">
-<input
-  class="form-check-input"
-  type="radio"
-  name="inlineRadioOptions"
-  id="question${counter + 1}"
-  value="3"
-/>
-<label class="form-check-label" for="question${counter + 1}">
-Option 3
-</label>
-</div>
-<div class="form-check form-check-inline">
-<input
-  class="form-check-input"
-  type="radio"
-  name="inlineRadioOptions"
-  id="question${counter + 1}"
-  value="4"
-/>
-<label class="form-check-label" for="question${counter + 1}">
-Option 4
-</label>
-</div>
-<br />
-<br />`;
+</div>`;
 }
 
 const shortAnswerQuestion = `
@@ -219,11 +186,20 @@ function chooseNewQuestionType() {
   counter++;
 }
 
+function initMultipleChoiceOptions() {
+  let optionsHtml;
+  for (let i = 1; i < 5; i++) {
+    optionsHtml += getMultipleChoiceQuestion(i);
+  }
+  return optionsHtml;
+}
+
 function displayMultipleChoice() {
   console.log("Add multiple choice question.");
   let div = document.createElement("div");
   div.id = `answer-${counter}`;
-  div.innerHTML = getMultipleChoiceQuestion();
+
+  div.innerHTML = "<br /><br />" + initMultipleChoiceOptions() + "<br /><br />";
   div.className = "text-center";
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
@@ -300,24 +276,4 @@ function submitSurveyQuestions() {
     }
   };
   http.send(params);
-}
-
-// Testing Axios Calls
-async function testAxios() {
-  let baseUrl = window.location.origin;
-  console.log(baseUrl);
-
-  console.log("Test Axios");
-
-  let payload = {
-    title: "Axios Test",
-    description: "description",
-  };
-
-  axios.defaults.headers.post["Content-Type"] = "application/json";
-
-  let res = await axios.post(baseUrl + "/survey/create", payload);
-  //onsole.log(res.url());
-  let data = res.data;
-  console.log(data);
 }
