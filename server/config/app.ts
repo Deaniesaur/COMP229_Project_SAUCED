@@ -4,6 +4,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose, { mongo } from "mongoose";
+import cors from 'cors';
 
 import indexRouter from "../routes/index";
 import usersRouter from "../routes/users";
@@ -13,6 +14,9 @@ import questionRouter from "../routes/question";
 //App Configuration
 const app = express();
 export default app;
+
+//Enable CORS
+app.use(cors());
 
 //DB Configuration
 import * as DBConfig from "./db";
