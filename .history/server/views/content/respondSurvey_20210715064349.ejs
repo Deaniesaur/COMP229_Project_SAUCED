@@ -5,10 +5,10 @@
     <%= survey.description %>
 </div>
 <form>
-    <ol>
+    <ol class="list-group">
         <% for (var i=0; i < survey.questions.length; i++ ) { 
         const currentQuestion = survey.questions[i]; %>
-            <li class="list-group-item"> 
+            <li
                 <%= currentQuestion.question %>
                     <br> Answers:
                     <br>

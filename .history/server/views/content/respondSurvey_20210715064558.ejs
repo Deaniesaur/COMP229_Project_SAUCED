@@ -8,7 +8,7 @@
     <ol>
         <% for (var i=0; i < survey.questions.length; i++ ) { 
         const currentQuestion = survey.questions[i]; %>
-            <li class="list-group-item"> 
+            <ol class="list-group-item"> 
                 <%= currentQuestion.question %>
                     <br> Answers:
                     <br>
@@ -39,7 +39,7 @@
 
                                     <% break;                                                                
                 } %>
-            </li>
+            </ol>
             <% } %>
     </ol>
     <button class="btn btn-primary" type="submit">Submit Survey</button>

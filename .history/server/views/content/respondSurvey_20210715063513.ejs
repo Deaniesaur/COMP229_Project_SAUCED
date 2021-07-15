@@ -8,14 +8,14 @@
     <ol>
         <% for (var i=0; i < survey.questions.length; i++ ) { 
         const currentQuestion = survey.questions[i]; %>
-            <li class="list-group-item"> 
+            <li class="list-group-item"> Question:
                 <%= currentQuestion.question %>
                     <br> Answers:
                     <br>
                     <% switch (currentQuestion.type.toLowerCase()) {
                 case 'multiple choice':
                     for (var k =0; k < currentQuestion.choices.length;  k++ ) {
-                        var currentChoice = currentQuestion.choices[k];
+                        const currentChoice = currentQuestion.choices[k];
                     %>
                         <label for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label>
                         <input id="question<%= i %>_answer_<%= k %>" name="question<%= i %>" value="<%= currentChoice %>" type="radio">
