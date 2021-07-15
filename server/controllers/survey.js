@@ -69,7 +69,7 @@ function UpdateSurveyById(req, res, next) {
     let id = req.params.id;
     let update = {
         title: req.body.title,
-        updated: new Date()
+        updated: new Date(),
     };
     survey_1.default.updateOne({ _id: id }, update, {}, (err, survey) => {
         if (err) {
