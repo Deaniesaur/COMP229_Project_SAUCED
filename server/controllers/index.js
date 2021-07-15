@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DisplayLoginPage = exports.DisplayNewSurveyPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
+exports.DisplayLoginPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
 function DisplayHomePage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Homepage",
@@ -15,13 +15,6 @@ function DisplayAboutPage(req, res, next) {
     });
 }
 exports.DisplayAboutPage = DisplayAboutPage;
-function DisplayNewSurveyPage(req, res, next) {
-    res.render("index", {
-        title: "SAUCED | New Survey",
-        page: "newSurvey",
-    });
-}
-exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
 function DisplayLoginPage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Login",

@@ -23,17 +23,6 @@ export function DisplayAboutPage(
   });
 }
 
-export function DisplayNewSurveyPage(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  res.render("index", {
-    title: "SAUCED | New Survey",
-    page: "newSurvey",
-  });
-}
-
 export function DisplayLoginPage(
   req: Request,
   res: Response,

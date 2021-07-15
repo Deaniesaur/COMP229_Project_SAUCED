@@ -33,7 +33,7 @@ export function CreateSurvey(
   expiryDate.setDate(today.getDate() + 2);
   let surveyThumbnail = null;
 
-  console.log(req.body.orem);
+  console.log(req.body.title);
 
   //instantiate a new survey object
   let newSurvey = new Survey({
@@ -52,7 +52,7 @@ export function CreateSurvey(
       res.end(err);
     }
   });
-  res.redirect("/survey");
+  res.redirect("/");
 }
 
 export function DisplaySurveyById(
@@ -132,5 +132,16 @@ export function DeleteSurvey(
       console.log(`Survey: ${id} DELETED`);
       res.redirect("/recent");
     });
+  });
+}
+
+export function DisplayNewSurveyPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | New Survey",
+    page: "newSurvey",
   });
 }

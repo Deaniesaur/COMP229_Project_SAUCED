@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
+exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const question_1 = __importDefault(require("../models/question"));
 function DisplayRecentSurveys(req, res, next) {
@@ -24,7 +24,7 @@ function CreateSurvey(req, res, next) {
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 2);
     let surveyThumbnail = null;
-    console.log(req.body.orem);
+    console.log(req.body.title);
     let newSurvey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
@@ -40,7 +40,7 @@ function CreateSurvey(req, res, next) {
             res.end(err);
         }
     });
-    res.redirect("/survey");
+    res.redirect("/");
 }
 exports.CreateSurvey = CreateSurvey;
 function DisplaySurveyById(req, res, next) {
@@ -101,4 +101,11 @@ function DeleteSurvey(req, res, next) {
     });
 }
 exports.DeleteSurvey = DeleteSurvey;
+function DisplayNewSurveyPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | New Survey",
+        page: "newSurvey",
+    });
+}
+exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
 //# sourceMappingURL=survey.js.map

@@ -317,6 +317,7 @@ async function testAxios() {
   axios.defaults.headers.post["Content-Type"] = "application/json";
 
   let res = await axios.post(baseUrl + "/survey/create", payload);
+  //onsole.log(res.url());
   let data = res.data;
   console.log(data);
 }
