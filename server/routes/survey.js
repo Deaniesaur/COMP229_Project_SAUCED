@@ -7,10 +7,10 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 exports.default = router;
 const survey_1 = require("../controllers/survey");
-router.get('/', survey_1.DisplayAllSurveys);
-router.post('/create', survey_1.CreateSurvey);
-router.post('/update/:id', survey_1.UpdateSurvey);
-router.post('/delete/:id', survey_1.DeleteSurvey);
+router.get("/", survey_1.DisplayAllSurveys);
+router.post("/create", survey_1.CreateSurvey);
+router.post("/update/:id", survey_1.UpdateSurvey);
+router.post("/delete/:id", survey_1.DeleteSurvey);
 const question_1 = __importDefault(require("./question"));
-router.use('/question', question_1.default);
+router.use("/question", question_1.default);
 //# sourceMappingURL=survey.js.map

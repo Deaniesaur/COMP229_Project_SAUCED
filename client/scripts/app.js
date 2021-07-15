@@ -8,10 +8,10 @@ const questionTypeDiv = `
     class="form-check-input"
     type="radio"
     name="inlineRadioOptions"
-    id="inlineRadio1"
-    value="option1"
+    id="multipleChoice"
+    value="1"
   />
-  <label class="form-check-label" for="inlineRadio1">
+  <label class="form-check-label" for="multipleChoice">
     MULTIPLE CHOICE
   </label>
 </div>
@@ -20,10 +20,10 @@ const questionTypeDiv = `
     class="form-check-input"
     type="radio"
     name="inlineRadioOptions"
-    id="inlineRadio2"
-    value="option2"
+    id="shortAnswer"
+    value="2"
   />
-  <label class="form-check-label" for="inlineRadio2">
+  <label class="form-check-label" for="shortAnswer">
     SHORT ANSWER
   </label>
 </div>
@@ -32,10 +32,10 @@ const questionTypeDiv = `
     class="form-check-input"
     type="radio"
     name="inlineRadioOptions"
-    id="inlineRadio3"
-    value="option3"
+    id="checkBoxes"
+    value="3"
   />
-  <label class="form-check-label" for="inlineRadio3">
+  <label class="form-check-label" for="checkBoxes">
     CHECK BOXES
   </label>
 </div>
@@ -44,10 +44,10 @@ const questionTypeDiv = `
     class="form-check-input"
     type="radio"
     name="inlineRadioOptions"
-    id="inlineRadio3"
-    value="option3"
+    id="trueFalse"
+    value="4"
   />
-  <label class="form-check-label" for="inlineRadio3">
+  <label class="form-check-label" for="trueFalse">
     TRUE / FALSE
   </label>
 </div>
@@ -59,15 +59,22 @@ const questionTypeDiv = `
 `;
 
 function getQuestionBody() {
-  const mainQuestionDiv = `<div class="text-center">
+  return `
+  <div class="text-center row" id="question-body">
+  <div class="col-9">
   <p>QUESTION ${counter + 1}</p>
   <textarea id="question" name="question" rows="2" cols="63">
   WHAT DO YOU THINK ABOUT OUR WEBSITE?
                       </textarea
   >
+  </div>
+  <div class="col-3">
+  <a href="javascript:deleteQuestion(${counter})">
+<p class="text-center" id="trash-icon"><i class="fas fa-trash fa-4x"></i></p
+></a>
+  
+  </div>
   </div>`;
-
-  return mainQuestionDiv;
 }
 
 const newQuestionButton = `<a href="javascript:addNewQuestionType()">
@@ -75,6 +82,7 @@ const newQuestionButton = `<a href="javascript:addNewQuestionType()">
 ></a>`;
 
 const submitSurveyButton = `
+<br />
           <button
             type="button"
             class="btn btn-secondary"
@@ -83,7 +91,8 @@ const submitSurveyButton = `
             SUBMIT SURVEY
           </button>`;
 
-const multipleChoiceQuestion = `
+function getMultipleChoiceQuestion() {
+  return `
 <br />
 <br />
 <div class="form-check form-check-inline">
@@ -91,10 +100,10 @@ const multipleChoiceQuestion = `
   class="form-check-input"
   type="radio"
   name="inlineRadioOptions"
-  id="inlineRadio1"
-  value="option1"
+  id="question${counter + 1}"
+  value="1"
 />
-<label class="form-check-label" for="inlineRadio1">
+<label class="form-check-label" for="question${counter + 1}">
   Option 1
 </label>
 </div>
@@ -103,10 +112,10 @@ const multipleChoiceQuestion = `
   class="form-check-input"
   type="radio"
   name="inlineRadioOptions"
-  id="inlineRadio2"
-  value="option2"
+  id="question${counter + 1}"
+  value="2"
 />
-<label class="form-check-label" for="inlineRadio2">
+<label class="form-check-label" for="question${counter + 1}">
 Option 2
 </label>
 </div>
@@ -115,10 +124,10 @@ Option 2
   class="form-check-input"
   type="radio"
   name="inlineRadioOptions"
-  id="inlineRadio3"
-  value="option3"
+  id="question${counter + 1}"
+  value="3"
 />
-<label class="form-check-label" for="inlineRadio3">
+<label class="form-check-label" for="question${counter + 1}">
 Option 3
 </label>
 </div>
@@ -127,15 +136,16 @@ Option 3
   class="form-check-input"
   type="radio"
   name="inlineRadioOptions"
-  id="inlineRadio3"
-  value="option3"
+  id="question${counter + 1}"
+  value="4"
 />
-<label class="form-check-label" for="inlineRadio3">
+<label class="form-check-label" for="question${counter + 1}">
 Option 4
 </label>
 </div>
 <br />
 <br />`;
+}
 
 const shortAnswerQuestion = `
 <br />
@@ -186,31 +196,34 @@ function addNewQuestionType() {
 function chooseNewQuestionType() {
   console.log("Choose new question.");
   let div = document.createElement("div");
-  div.id = "question-main";
+  div.id = `question-main-${counter}`;
   div.innerHTML = getQuestionBody();
-  counter++;
+
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
 
   let response;
   let isChecked = false;
-  let options = document.querySelectorAll(".form-check-input"),
+  let options = document
+      .querySelector("#question-type")
+      .querySelectorAll(".form-check-input"),
     i;
   for (i = 0; i < options.length; i++) {
-    if (options[i].checked) response = i;
+    console.log(options[i].value);
+    if (options[i].checked) displayQuestionOptions(parseInt(options[i].value));
   }
 
-  displayQuestionOptions(response);
   document.getElementById("question-type").remove();
   addNewQuestionButton();
   displaySubmitButton();
+  counter++;
 }
 
 function displayMultipleChoice() {
   console.log("Add multiple choice question.");
   let div = document.createElement("div");
-  div.id = "multiple-choice";
-  div.innerHTML = multipleChoiceQuestion;
+  div.id = `answer-${counter}`;
+  div.innerHTML = getMultipleChoiceQuestion();
   div.className = "text-center";
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
@@ -219,7 +232,7 @@ function displayMultipleChoice() {
 function displayShortAnswer() {
   console.log("Add short answer question.");
   let div = document.createElement("div");
-  div.id = "short-answer";
+  div.id = `answer-${counter}`;
   div.innerHTML = shortAnswerQuestion;
   div.className = "text-center";
   document.getElementById("main-section").appendChild(div);
@@ -228,21 +241,65 @@ function displayShortAnswer() {
 
 function displayQuestionOptions(i) {
   switch (i) {
-    case 0:
+    case 1:
       console.log("Option 1 is selected.");
       displayMultipleChoice();
       break;
-    case 1:
+    case 2:
       console.log("Option 2 is selected.");
       displayShortAnswer();
       break;
-    case 2:
+    case 3:
       console.log("Option 3 is selected.");
       displayCheckBoxes();
       break;
-    case 3:
+    case 4:
       console.log("Option 4 is selected");
       displayTrueFalse();
       break;
   }
 }
+
+function deleteQuestion(i) {
+  i = parseInt(i);
+  $(`#question-main-${i}`).fadeOut(1000, function () {
+    $(this).remove();
+  });
+  $(`#answer-${i}`).fadeOut(1000, function () {
+    $(this).remove();
+  });
+  for (let j = i + 1; j < counter; j++) {
+    console.log(j);
+    let parent = document.getElementById(`question-main-${j}`);
+    console.log(parent);
+    parent.id = `question-main-${j - 1}`;
+    parent.querySelector("p").textContent =
+      parent.querySelector("p").textContent.substring(0, 9) + j;
+    parent.querySelector("a").href = `javascript:deleteQuestion(${j - 1})`;
+    parent = document.getElementById(`answer-${j}`);
+    parent.id = `answer-${j - 1}`;
+    [...parent.querySelectorAll(`#question${j + 1}`)].forEach((e) => {
+      e.id = `question${j}`;
+      e.parentElement.querySelector("label").htmlFor = `question${j}`;
+    });
+  }
+  counter--;
+}
+
+// function submitSurveyQuestions() {
+//   let http = new XMLHttpRequest();
+//   let url = "/home";
+//   let params = "orem=ipsum&name=binny";
+//   http.open("POST", url, true);
+
+//   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+//   http.onreadystatechange = function () {
+//     if (http.readyState == 4 && http.status == 200) {
+//       alert(http.responseText);
+//     }
+//   };
+//   http.send(params);
+// }
+
+function submitSurveyQuestions() {}

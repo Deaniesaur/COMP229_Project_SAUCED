@@ -156,3 +156,16 @@ textarea {
   width: 20rem;
   margin: 0 auto;
 }
+
+#trash-icon {
+  line-height: 12rem;
+  color: #d21122;
+}
+
+#btn-new-question * {
+  color: #d21122;
+}
+
+#question-body {
+  height: 10rem;
+}
