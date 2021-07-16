@@ -413,10 +413,8 @@ function updateSurveyQuestions(id) {
 }
 
 function submitSurveyQuestions() {
-  let id = document.querySelector(".important-survey-id").id;
-  console.log(id);
-  if (id != undefined) {
-    updateSurveyQuestions(id);
+  if (document.querySelector(".important-survey-id") != null) {
+    updateSurveyQuestions(document.querySelector(".important-survey-id").id);
     return;
   }
 
@@ -450,6 +448,7 @@ function submitSurveyQuestions() {
     title: document.getElementById("survey-title").value,
     description: description,
     questions: surveyQuestions,
+    create: true,
   };
 
   http.open("POST", url, true);

@@ -22,7 +22,6 @@ function DisplayRecentSurveys(req, res, next) {
 exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
-    console.log("this is params", surveyId);
     let today = new Date();
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 30);
@@ -36,7 +35,7 @@ function UpsertSurvey(req, res, next) {
         updated: today,
         expiry: expiryDate,
     };
-    if (surveyId == undefined) {
+    if (req.body.create == true) {
         let newSurvey = new survey_1.default({
             title: req.body.title,
             description: req.body.description,
