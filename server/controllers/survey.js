@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
+exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 function DisplayRecentSurveys(req, res, next) {
@@ -19,7 +19,8 @@ function DisplayRecentSurveys(req, res, next) {
     });
 }
 exports.DisplayRecentSurveys = DisplayRecentSurveys;
-function CreateSurvey(req, res, next) {
+function UpsertSurvey(req, res, next) {
+    let surveyId = req.params.surveyId;
     let today = new Date();
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 30);
@@ -35,15 +36,27 @@ function CreateSurvey(req, res, next) {
         updated: today,
         expiry: expiryDate,
     });
-    survey_1.default.create(newSurvey, (err, survey) => {
-        if (err) {
-            console.error(err);
-            res.end(err);
-        }
-    });
+    if (req.body.surveyId == undefined) {
+        survey_1.default.create(newSurvey, (err, survey) => {
+            if (err) {
+                console.error(err);
+                res.end(err);
+            }
+            console.log('CREATED', survey._id);
+        });
+    }
+    else {
+        survey_1.default.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+            if (err) {
+                console.error(err);
+                res.end();
+            }
+            console.log('UPDATED', survey._id);
+        });
+    }
     res.redirect("/");
 }
-exports.CreateSurvey = CreateSurvey;
+exports.UpsertSurvey = UpsertSurvey;
 function DisplaySurveyById(req, res, next) {
     let surveyId = req.params.id;
     let surveyFound;
@@ -76,22 +89,6 @@ function DisplayUpdateSurveyPage(req, res, next) {
     });
 }
 exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
-function UpdateSurveyById(req, res, next) {
-    let id = req.params.id;
-    let update = {
-        title: req.body.title,
-        updated: new Date(),
-    };
-    survey_1.default.updateOne({ _id: id }, update, {}, (err, survey) => {
-        if (err) {
-            console.error(err);
-            res.end(err);
-        }
-        console.log(survey._id);
-        res.end();
-    });
-}
-exports.UpdateSurveyById = UpdateSurveyById;
 function DeleteSurvey(req, res, next) {
     let id = req.params.id;
     survey_1.default.deleteOne({ _id: id }, {}, (err) => {

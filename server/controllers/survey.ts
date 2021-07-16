@@ -23,11 +23,12 @@ export function DisplayRecentSurveys(
   });
 }
 
-export function CreateSurvey(
+export function UpsertSurvey(
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
+  let surveyId = req.params.surveyId;
   let today = new Date();
   let expiryDate = new Date();
   expiryDate.setDate(today.getDate() + 30);
@@ -47,12 +48,27 @@ export function CreateSurvey(
     expiry: expiryDate,
   });
 
-  Survey.create(newSurvey, (err, survey) => {
-    if (err) {
-      console.error(err);
-      res.end(err);
-    }
-  });
+  if(req.body.surveyId == undefined){
+    Survey.create(newSurvey, (err, survey) => {
+      if (err) {
+        console.error(err);
+        res.end(err);
+      }
+
+      console.log('CREATED', survey._id);
+    });
+
+  }else{
+    Survey.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+      if (err) {
+        console.error(err);
+        res.end();
+      }
+  
+      console.log('UPDATED', survey._id);
+    });
+  }
+
   res.redirect("/");
 }
 
@@ -97,30 +113,6 @@ export function DisplayUpdateSurveyPage(
       page: "respondSurvey",
       survey: surveyFound,
     });
-  });
-}
-
-export function UpdateSurveyById(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  let id = req.params.id;
-
-  //instantiate a new survey object
-  let update = {
-    title: req.body.title,
-    updated: new Date(),
-  };
-
-  Survey.updateOne({ _id: id }, update, {}, (err, survey) => {
-    if (err) {
-      console.error(err);
-      res.end(err);
-    }
-
-    console.log(survey._id);
-    res.end();
   });
 }
 
