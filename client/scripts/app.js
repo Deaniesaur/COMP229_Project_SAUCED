@@ -33,6 +33,7 @@ function getQuestionTypeDiv(i) {
     name="inlineRadioOptions"
     id="checkBoxes"
     value="3"
+    disabled
   />
   <label class="form-check-label" for="checkBoxes">
     CHECK BOXES
@@ -45,6 +46,7 @@ function getQuestionTypeDiv(i) {
     name="inlineRadioOptions"
     id="trueFalse"
     value="4"
+    disabled
   />
   <label class="form-check-label" for="trueFalse">
     TRUE / FALSE
@@ -130,17 +132,19 @@ const shortAnswerQuestion = `
 <br />
 <br />`;
 
-function addNewQuestionButton(i) {
+function addNewQuestionButton(i, j) {
+  if (document.querySelector(".important-survey-id") != null)
+    i = document.getElementsByName("question").length;
   let div = document.createElement("div");
   div.id = "btn-new-question";
   div.innerHTML = getNewQuestionButton(i);
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
-  if (document.querySelector(".important-survey-id").id != undefined)
+  if (document.querySelector(".important-survey-id") != null && j)
     displaySubmitButton();
 }
 
-addNewQuestionButton(0);
+addNewQuestionButton(0, true);
 
 function displaySubmitButton() {
   let div = document.createElement("div");
@@ -195,7 +199,7 @@ function chooseNewQuestionType(j) {
   displayQuestionOptions(response, j);
 
   document.getElementById("question-type").remove();
-  addNewQuestionButton(j);
+  addNewQuestionButton(j, false);
   displaySubmitButton();
 }
 
