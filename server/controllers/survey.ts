@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 
 import Survey from "../models/survey";
 import Question from "../models/question";
+import SurveyResponse from "../models/response";
+import { UnorderedCollection } from "http-errors";
 
 export function DisplayRecentSurveys(
   req: Request,
@@ -130,7 +132,7 @@ export function DeleteSurvey(
       }
 
       console.log(`Survey: ${id} DELETED`);
-      res.redirect("/recent");
+      res.redirect("/survey");
     });
   });
 }
@@ -144,4 +146,41 @@ export function DisplayNewSurveyPage(
     title: "SAUCED | New Survey",
     page: "newSurvey",
   });
+}
+
+export function SubmitResponse(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  let surveyId = req.params.id;
+  let answers = [];
+  let count = 0;
+
+  // TODO: Insert Code to retrieve answers here as an Array
+  while(true){
+    let value = req.body["question" + count];
+    if(value == undefined)
+      break;
+
+    console.log(`Questions ${count}`, value);
+    answers.push(value);
+    count++;
+  }
+
+  let newResponse = new SurveyResponse({
+    surveyId: surveyId,
+    surveyOwner: "User",
+    answers: answers,
+    created: new Date()
+  });
+
+  SurveyResponse.create(newResponse, (err, response) => {
+    if (err) {
+      console.error(err);
+      res.end(err);
+    }
+  });
+
+  res.redirect("/survey");
 }
