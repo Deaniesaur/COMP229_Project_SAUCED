@@ -96,6 +96,28 @@ export function DisplaySurveyById(
   // });
 }
 
+export function DisplayUpdateSurveyPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  let surveyId = req.params.id;
+  let surveyFound: any;
+
+  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
+    if (err) {
+      return console.error(err);
+    }
+
+    surveyFound = survey.toObject();
+    res.render("index", {
+      title: "SAUCED | Answer Survey",
+      page: "respondSurvey",
+      survey: surveyFound,
+    });
+  });
+}
+
 export function UpdateSurveyById(
   req: Request,
   res: Response,
@@ -149,9 +171,17 @@ export function DisplayNewSurveyPage(
   res: Response,
   next: NextFunction
 ): void {
-  res.render("index", {
-    title: "SAUCED | New Survey",
-    page: "newSurvey",
+  let surveyId = req.params.id;
+  let surveyFound: any;
+  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
+    if (err) {
+      return console.error(err);
+    }
+    res.render("index", {
+      title: "SAUCED | Edit Survey",
+      page: "newSurvey",
+      survey: surveyFound,
+    });
   });
 }
 
