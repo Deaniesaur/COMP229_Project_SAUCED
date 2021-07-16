@@ -352,6 +352,7 @@ function deleteOption(i, j) {
         break;
       case 1:
         anchors[0].href = `javascript:addNewOption(${i}, ${k - 1})`;
+        console.log("k", k);
         break;
       case 2:
         anchors[0].href = `javascript:editOption(${i}, ${k - 1})`;
