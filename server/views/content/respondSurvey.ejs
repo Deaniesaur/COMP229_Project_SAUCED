@@ -19,10 +19,7 @@
       />
       <br />
       <% }; break; case 'short answer': %>
-      <textarea
-        id="question<%= i %>_answer_<%= k %>"
-        name="question<%= i %>"
-      ></textarea>
+      <input class="form-control" type="text" placeholder="Your answer." />
       <% break; case 'true / false': %>
       <label for="question<%= i %>_answer_1">True</label>
       <input
