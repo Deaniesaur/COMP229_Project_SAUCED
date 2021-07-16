@@ -4,7 +4,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose, { mongo } from "mongoose";
-import cors from 'cors';
+import cors from "cors";
 
 import indexRouter from "../routes/index";
 import usersRouter from "../routes/users";

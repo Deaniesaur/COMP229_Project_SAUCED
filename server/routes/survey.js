@@ -12,6 +12,7 @@ router.get("/answer/:id", survey_1.DisplaySurveyById);
 router.post("/answer/:id", survey_1.SubmitResponse);
 router.post("/create", survey_1.CreateSurvey);
 router.get("/create", survey_1.DisplayNewSurveyPage);
+router.get("/edit/:id", survey_1.DisplayUpdateSurveyPage);
 router.post("/edit/:id", survey_1.UpdateSurveyById);
 router.get("/delete/:id", survey_1.DeleteSurvey);
 const question_1 = __importDefault(require("./question"));

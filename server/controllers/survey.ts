@@ -32,7 +32,7 @@ export function CreateSurvey(
 ): void {
   let today = new Date();
   let expiryDate = new Date();
-  expiryDate.setDate(today.getDate() + 2);
+  expiryDate.setDate(today.getDate() + 30);
   let surveyThumbnail = null;
 
   console.log(req.body.title);
@@ -73,10 +73,10 @@ export function DisplaySurveyById(
 
     surveyFound = survey.toObject();
     res.render("index", {
-            title: "SAUCED | Answer Survey",
-            page: "respondSurvey",
-            survey: surveyFound,
-          });
+      title: "SAUCED | Answer Survey",
+      page: "respondSurvey",
+      survey: surveyFound,
+    });
   });
   // }).then(() => {
   //   Question.find({ surveyId: surveyId }, function (err, questions) {
@@ -94,6 +94,28 @@ export function DisplaySurveyById(
   //     });
   //   });
   // });
+}
+
+export function DisplayUpdateSurveyPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  let surveyId = req.params.id;
+  let surveyFound: any;
+
+  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
+    if (err) {
+      return console.error(err);
+    }
+
+    surveyFound = survey.toObject();
+    res.render("index", {
+      title: "SAUCED | Answer Survey",
+      page: "respondSurvey",
+      survey: surveyFound,
+    });
+  });
 }
 
 export function UpdateSurveyById(
@@ -165,10 +187,9 @@ export function SubmitResponse(
   let count = 0;
 
   // TODO: Insert Code to retrieve answers here as an Array
-  while(true){
+  while (true) {
     let value = req.body["question" + count];
-    if(value == undefined)
-      break;
+    if (value == undefined) break;
 
     console.log(`Questions ${count}`, value);
     answers.push(value);
@@ -179,7 +200,7 @@ export function SubmitResponse(
     surveyId: surveyId,
     surveyOwner: "User",
     answers: answers,
-    created: new Date()
+    created: new Date(),
   });
 
   SurveyResponse.create(newResponse, (err, response) => {

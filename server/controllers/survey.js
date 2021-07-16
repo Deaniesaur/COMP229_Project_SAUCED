@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
+exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const question_1 = __importDefault(require("../models/question"));
 const response_1 = __importDefault(require("../models/response"));
@@ -23,7 +23,7 @@ exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function CreateSurvey(req, res, next) {
     let today = new Date();
     let expiryDate = new Date();
-    expiryDate.setDate(today.getDate() + 2);
+    expiryDate.setDate(today.getDate() + 30);
     let surveyThumbnail = null;
     console.log(req.body.title);
     let newSurvey = new survey_1.default({
@@ -61,6 +61,22 @@ function DisplaySurveyById(req, res, next) {
     });
 }
 exports.DisplaySurveyById = DisplaySurveyById;
+function DisplayUpdateSurveyPage(req, res, next) {
+    let surveyId = req.params.id;
+    let surveyFound;
+    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
+        if (err) {
+            return console.error(err);
+        }
+        surveyFound = survey.toObject();
+        res.render("index", {
+            title: "SAUCED | Answer Survey",
+            page: "respondSurvey",
+            survey: surveyFound,
+        });
+    });
+}
+exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
 function UpdateSurveyById(req, res, next) {
     let id = req.params.id;
     let update = {
@@ -118,7 +134,7 @@ function SubmitResponse(req, res, next) {
         surveyId: surveyId,
         surveyOwner: "User",
         answers: answers,
-        created: new Date()
+        created: new Date(),
     });
     response_1.default.create(newResponse, (err, response) => {
         if (err) {
