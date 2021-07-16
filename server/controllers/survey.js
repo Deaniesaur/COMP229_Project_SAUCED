@@ -112,17 +112,9 @@ function DeleteSurvey(req, res, next) {
 }
 exports.DeleteSurvey = DeleteSurvey;
 function DisplayNewSurveyPage(req, res, next) {
-    let surveyId = req.params.id;
-    let surveyFound;
-    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
-        if (err) {
-            return console.error(err);
-        }
-        res.render("index", {
-            title: "SAUCED | Edit Survey",
-            page: "newSurvey",
-            survey: surveyFound,
-        });
+    res.render("index", {
+        title: "SAUCED | New Survey",
+        page: "newSurvey",
     });
 }
 exports.DisplayNewSurveyPage = DisplayNewSurveyPage;

@@ -171,17 +171,9 @@ export function DisplayNewSurveyPage(
   res: Response,
   next: NextFunction
 ): void {
-  let surveyId = req.params.id;
-  let surveyFound: any;
-  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
-    if (err) {
-      return console.error(err);
-    }
-    res.render("index", {
-      title: "SAUCED | Edit Survey",
-      page: "newSurvey",
-      survey: surveyFound,
-    });
+  res.render("index", {
+    title: "SAUCED | New Survey",
+    page: "newSurvey",
   });
 }
 
