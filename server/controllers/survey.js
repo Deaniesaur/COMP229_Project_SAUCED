@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
+const mongoose_1 = __importDefault(require("mongoose"));
 function DisplayRecentSurveys(req, res, next) {
     survey_1.default.find(function (err, surveys) {
         if (err) {
@@ -20,29 +21,38 @@ function DisplayRecentSurveys(req, res, next) {
 }
 exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function UpsertSurvey(req, res, next) {
-    let surveyId = req.params.surveyId;
+    let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
+    console.log("this is params", surveyId);
     let today = new Date();
     let expiryDate = new Date();
     expiryDate.setDate(today.getDate() + 30);
     let surveyThumbnail = null;
-    console.log(req.body.title);
-    let newSurvey = new survey_1.default({
+    let newSurvey = {
         title: req.body.title,
         description: req.body.description,
-        thumbnail: surveyThumbnail,
         owner: "User",
         questions: req.body.questions,
         created: today,
         updated: today,
         expiry: expiryDate,
-    });
-    if (req.body.surveyId == undefined) {
+    };
+    if (surveyId == undefined) {
+        let newSurvey = new survey_1.default({
+            title: req.body.title,
+            description: req.body.description,
+            thumbnail: surveyThumbnail,
+            owner: "User",
+            questions: req.body.questions,
+            created: today,
+            updated: today,
+            expiry: expiryDate,
+        });
         survey_1.default.create(newSurvey, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end(err);
             }
-            console.log('CREATED', survey._id);
+            console.log("CREATED", survey._id);
         });
     }
     else {
@@ -51,7 +61,7 @@ function UpsertSurvey(req, res, next) {
                 console.error(err);
                 res.end();
             }
-            console.log('UPDATED', survey._id);
+            console.log("UPDATED");
         });
     }
     res.redirect("/");

@@ -3,6 +3,8 @@ import express, { Request, Response, NextFunction } from "express";
 import Survey from "../models/survey";
 import SurveyResponse from "../models/response";
 
+import mongoose, { mongo } from "mongoose";
+
 export function DisplayRecentSurveys(
   req: Request,
   res: Response,
@@ -28,44 +30,52 @@ export function UpsertSurvey(
   res: Response,
   next: NextFunction
 ): void {
-  let surveyId = req.params.surveyId;
+  let surveyId = mongoose.Types.ObjectId(req.params.id);
+  console.log("this is params", surveyId);
   let today = new Date();
   let expiryDate = new Date();
   expiryDate.setDate(today.getDate() + 30);
   let surveyThumbnail = null;
 
-  console.log(req.body.title);
-
-  //instantiate a new survey object
-  let newSurvey = new Survey({
+  //instantiate a new object
+  let newSurvey = {
     title: req.body.title,
     description: req.body.description,
-    thumbnail: surveyThumbnail,
     owner: "User",
     questions: req.body.questions,
     created: today,
     updated: today,
     expiry: expiryDate,
-  });
+  };
 
-  if(req.body.surveyId == undefined){
+  if (surveyId == undefined) {
+    //instantiate a new survey object
+    let newSurvey = new Survey({
+      title: req.body.title,
+      description: req.body.description,
+      thumbnail: surveyThumbnail,
+      owner: "User",
+      questions: req.body.questions,
+      created: today,
+      updated: today,
+      expiry: expiryDate,
+    });
     Survey.create(newSurvey, (err, survey) => {
       if (err) {
         console.error(err);
         res.end(err);
       }
 
-      console.log('CREATED', survey._id);
+      console.log("CREATED", survey._id);
     });
-
-  }else{
+  } else {
     Survey.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
       if (err) {
         console.error(err);
         res.end();
       }
-  
-      console.log('UPDATED', survey._id);
+
+      console.log("UPDATED");
     });
   }
 

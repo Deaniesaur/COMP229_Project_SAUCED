@@ -358,12 +358,12 @@ function deleteOption(i, j) {
 }
 
 function receiveSurveyId() {
-  console.log(document.querySelector(".important-survey-id").id);
+  return document.querySelector(".important-survey-id").id;
 }
 
-function updateSurveyQuestions() {
+function updateSurveyQuestions(id) {
   let http = new XMLHttpRequest();
-  let url = `/survey/edit/${receiveSurveyId()}`;
+  let url = `/survey/edit/${id}`;
   let description = document.getElementById("description").value;
   let surveyQuestions = [];
   let questionsDiv = document.getElementsByName("question");
@@ -409,8 +409,10 @@ function updateSurveyQuestions() {
 }
 
 function submitSurveyQuestions() {
-  if (receiveSurveyId() != undefined) {
-    updateSurveyQuestions();
+  let id = document.querySelector(".important-survey-id").id;
+  console.log(id);
+  if (id != undefined) {
+    updateSurveyQuestions(id);
     return;
   }
 
