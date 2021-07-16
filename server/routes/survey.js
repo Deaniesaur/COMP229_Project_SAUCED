@@ -15,6 +15,4 @@ router.get("/create", survey_1.DisplayNewSurveyPage);
 router.get("/edit/:id", survey_1.DisplayUpdateSurveyPage);
 router.post("/edit/:id", survey_1.UpdateSurveyById);
 router.get("/delete/:id", survey_1.DeleteSurvey);
-const question_1 = __importDefault(require("./question"));
-router.use("/question", question_1.default);
 //# sourceMappingURL=survey.js.map

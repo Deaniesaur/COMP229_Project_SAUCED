@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 
 import Survey from "../models/survey";
-import Question from "../models/question";
 import SurveyResponse from "../models/response";
-import { UnorderedCollection } from "http-errors";
 
 export function DisplayRecentSurveys(
   req: Request,
@@ -78,22 +76,6 @@ export function DisplaySurveyById(
       survey: surveyFound,
     });
   });
-  // }).then(() => {
-  //   Question.find({ surveyId: surveyId }, function (err, questions) {
-  //     if (err) {
-  //       return console.error(err);
-  //     }
-
-  //     surveyFound.questions = questions;
-  //     console.log("Survey", surveyFound);
-
-  //     res.render("index", {
-  //       title: "SAUCED | Answer Survey",
-  //       page: "respondSurvey",
-  //       survey: surveyFound,
-  //     });
-  //   });
-  // });
 }
 
 export function DisplayUpdateSurveyPage(
@@ -155,7 +137,7 @@ export function DeleteSurvey(
       res.end(err);
     }
   }).then(() => {
-    Question.deleteMany({ surveyId: id }, {}, (err) => {
+    SurveyResponse.deleteMany({ surveyId: id }, {}, (err) => {
       if (err) {
         res.end();
       }

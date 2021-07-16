@@ -9,7 +9,6 @@ import cors from "cors";
 import indexRouter from "../routes/index";
 import usersRouter from "../routes/users";
 import surveyRouter from "../routes/survey";
-import questionRouter from "../routes/question";
 
 //App Configuration
 const app = express();
