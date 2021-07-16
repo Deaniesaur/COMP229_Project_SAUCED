@@ -10,11 +10,9 @@ const survey_1 = require("../controllers/survey");
 router.get("/", survey_1.DisplayRecentSurveys);
 router.get("/answer/:id", survey_1.DisplaySurveyById);
 router.post("/answer/:id", survey_1.SubmitResponse);
-router.post("/create", survey_1.CreateSurvey);
+router.post("/create", survey_1.UpsertSurvey);
 router.get("/create", survey_1.DisplayNewSurveyPage);
 router.get("/edit/:id", survey_1.DisplayUpdateSurveyPage);
-router.post("/edit/:id", survey_1.UpdateSurveyById);
+router.post("/edit/:id", survey_1.UpsertSurvey);
 router.get("/delete/:id", survey_1.DeleteSurvey);
-const question_1 = __importDefault(require("./question"));
-router.use("/question", question_1.default);
 //# sourceMappingURL=survey.js.map

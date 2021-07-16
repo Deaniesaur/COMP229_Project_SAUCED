@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 
 import Survey from "../models/survey";
-import Question from "../models/question";
 import SurveyResponse from "../models/response";
-import { UnorderedCollection } from "http-errors";
 
 export function DisplayRecentSurveys(
   req: Request,
@@ -25,11 +23,12 @@ export function DisplayRecentSurveys(
   });
 }
 
-export function CreateSurvey(
+export function UpsertSurvey(
   req: Request,
   res: Response,
   next: NextFunction
 ): void {
+  let surveyId = req.params.surveyId;
   let today = new Date();
   let expiryDate = new Date();
   expiryDate.setDate(today.getDate() + 30);
@@ -49,12 +48,27 @@ export function CreateSurvey(
     expiry: expiryDate,
   });
 
-  Survey.create(newSurvey, (err, survey) => {
-    if (err) {
-      console.error(err);
-      res.end(err);
-    }
-  });
+  if(req.body.surveyId == undefined){
+    Survey.create(newSurvey, (err, survey) => {
+      if (err) {
+        console.error(err);
+        res.end(err);
+      }
+
+      console.log('CREATED', survey._id);
+    });
+
+  }else{
+    Survey.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+      if (err) {
+        console.error(err);
+        res.end();
+      }
+  
+      console.log('UPDATED', survey._id);
+    });
+  }
+
   res.redirect("/");
 }
 
@@ -78,22 +92,6 @@ export function DisplaySurveyById(
       survey: surveyFound,
     });
   });
-  // }).then(() => {
-  //   Question.find({ surveyId: surveyId }, function (err, questions) {
-  //     if (err) {
-  //       return console.error(err);
-  //     }
-
-  //     surveyFound.questions = questions;
-  //     console.log("Survey", surveyFound);
-
-  //     res.render("index", {
-  //       title: "SAUCED | Answer Survey",
-  //       page: "respondSurvey",
-  //       survey: surveyFound,
-  //     });
-  //   });
-  // });
 }
 
 export function DisplayUpdateSurveyPage(
@@ -119,30 +117,6 @@ export function DisplayUpdateSurveyPage(
   });
 }
 
-export function UpdateSurveyById(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  let id = req.params.id;
-
-  //instantiate a new survey object
-  let update = {
-    title: req.body.title,
-    updated: new Date(),
-  };
-
-  Survey.updateOne({ _id: id }, update, {}, (err, survey) => {
-    if (err) {
-      console.error(err);
-      res.end(err);
-    }
-
-    console.log(survey._id);
-    res.end();
-  });
-}
-
 export function DeleteSurvey(
   req: Request,
   res: Response,
@@ -156,7 +130,7 @@ export function DeleteSurvey(
       res.end(err);
     }
   }).then(() => {
-    Question.deleteMany({ surveyId: id }, {}, (err) => {
+    SurveyResponse.deleteMany({ surveyId: id }, {}, (err) => {
       if (err) {
         res.end();
       }
