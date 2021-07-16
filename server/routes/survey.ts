@@ -6,9 +6,8 @@ export default router;
 
 import {
   DisplayRecentSurveys,
-  CreateSurvey,
+  UpsertSurvey,
   DeleteSurvey,
-  UpdateSurveyById,
   DisplaySurveyById,
   DisplayNewSurveyPage,
   DisplayUpdateSurveyPage,
@@ -25,7 +24,7 @@ router.get("/answer/:id", DisplaySurveyById);
 router.post("/answer/:id", SubmitResponse);
 
 //POST Create Survey
-router.post("/create", CreateSurvey);
+router.post("/create", UpsertSurvey);
 
 //GET Create Survey
 router.get("/create", DisplayNewSurveyPage);
@@ -34,7 +33,7 @@ router.get("/create", DisplayNewSurveyPage);
 router.get("/edit/:id", DisplayUpdateSurveyPage);
 
 //POST Update Survey By Id
-router.post("/edit/:id", UpdateSurveyById);
+router.post("/edit/:id", UpsertSurvey);
 
 //Todo: Delete Survey
 router.get("/delete/:id", DeleteSurvey);
