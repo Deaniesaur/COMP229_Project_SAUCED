@@ -12,11 +12,11 @@ const QuestionSchema = new Schema({
     type: String,
     choices: [],
     created: Date,
-    updated: Date
+    updated: Date,
 }, {
-    collection: 'questions'
+    collection: "questions",
 });
 QuestionSchema.index({ surveyId: 1 });
-const Model = mongoose_1.default.model('Question', QuestionSchema);
+const Model = mongoose_1.default.model("Question", QuestionSchema);
 exports.default = Model;
 //# sourceMappingURL=question.js.map

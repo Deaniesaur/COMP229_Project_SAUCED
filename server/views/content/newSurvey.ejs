@@ -13,21 +13,26 @@
       </div>
     </div>
     <div class="col-9">
+      <label for="survey-title" class="form-label">Title</label>
       <input
         type="text"
         class="form-control"
         id="survey-title"
-        placeholder="Title"
+        placeholder="Survey title"
       />
       <br />
       <div class="row">
         <div class="col-8">
           <p>Description</p>
 
-          <textarea id="description" name="description" rows="8" cols="50">
-Put a short description of your survey here.
-                    </textarea
-          >
+          <textarea
+            id="description"
+            name="description"
+            rows="8"
+            cols="50"
+            placeholder="Put a short description of your survey here."
+            value=""
+          ></textarea>
         </div>
         <div class="col-4">
           <p>Thumbnail</p>
@@ -47,7 +52,4 @@ Put a short description of your survey here.
       </div>
     </div>
   </div>
-  <form method="POST" class="col-lg-6 col-md-10 col-sm-10">
-    <button type="submit">Hello WOrld</button>
-  </form>
 </div>

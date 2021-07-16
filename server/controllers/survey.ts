@@ -111,8 +111,8 @@ export function DisplayUpdateSurveyPage(
 
     surveyFound = survey.toObject();
     res.render("index", {
-      title: "SAUCED | Answer Survey",
-      page: "respondSurvey",
+      title: "SAUCED | Edit Survey",
+      page: "editSurvey",
       survey: surveyFound,
     });
   });

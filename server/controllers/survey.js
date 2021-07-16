@@ -70,8 +70,8 @@ function DisplayUpdateSurveyPage(req, res, next) {
         }
         surveyFound = survey.toObject();
         res.render("index", {
-            title: "SAUCED | Answer Survey",
-            page: "respondSurvey",
+            title: "SAUCED | Edit Survey",
+            page: "editSurvey",
             survey: surveyFound,
         });
     });

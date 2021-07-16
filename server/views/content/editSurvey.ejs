@@ -1,0 +1,143 @@
+<div class="normal-text">
+  <div class="row">
+    <div class="col-3">
+      <div class="card sticky-top" id="survey-information">
+        <div class="card-body">
+          <h5 class="card-title">Survey Information</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-9">
+      <label for="survey-title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="survey-title"
+        placeholder="Survey title"
+        value="<%= survey.title %>"
+      />
+      <br />
+      <div class="row">
+        <div class="col-8">
+          <p>Description</p>
+          <textarea
+            id="description"
+            name="description"
+            rows="8"
+            cols="50"
+            placeholder="Put a short description of your survey here."
+            value="<%= survey.description %>"
+          >
+<%= survey.description %></textarea
+          >
+        </div>
+        <div class="col-4">
+          <p>Thumbnail</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-thumbnail" type="button">
+              <i class="fas fa-plus fa-2x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center" id="main-section">
+        <p>
+          <br /><br />
+          Start by selecting the plus (+) button and the type of question you
+          wish to add to your new survey.<br /><br />
+        </p>
+        <% for (let i=0; i < survey.questions.length; i++ ) { const
+        currentQuestion = survey.questions[i]; %>
+        <div id="question-main-<%=i%>">
+          <div class="text-center row" id="question-body">
+            <div class="col-9">
+              <p>QUESTION <%=i+1%></p>
+              <textarea
+                id="question<%=i+1%>"
+                name="question"
+                rows="2"
+                cols="63"
+                value="<%= survey.questions[i].question %> "
+              >
+<%= survey.questions[i].question %> </textarea
+              >
+            </div>
+            <div class="col-3">
+              <a href="javascript:deleteQuestion(<%=i%>)">
+                <p class="text-center" id="trash-icon">
+                  <i class="fas fa-trash fa-4x"></i></p
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="text-center" id="answer-<%=i%>">
+          <br /><br />
+          <% switch (currentQuestion.type) { case "Multiple Choice": for (let j
+          = 0; j < currentQuestion.choices.length; j++) { let currentChoice =
+          currentQuestion.choices[j]; %>
+
+          <div class="form-check form-check-inline" id="option-<%=j+1%>">
+            <label class="form-check-label">
+              <input
+                type="text"
+                class="form-control"
+                id="question<%=i+1%>"
+                value="<%=currentChoice%>"
+              />
+
+              <a href="javascript:editOption(<%=i%>, <%=j%>)">
+                <p class="text-center" id="edit-icon">
+                  <i class="fas fa-edit"></i>
+                </p>
+              </a>
+
+              <a href="javascript:deleteOption(<%=i%>, <%=j%>)">
+                <p class="text-center" id="edit-icon">
+                  <i class="fas fa-trash"></i></p
+              ></a>
+            </label>
+
+            <br />
+          </div>
+          <% } %>
+
+          <div
+            class="form-check form-check-inline"
+            id="option-<%=currentQuestion.choices.length%>"
+            style="vertical-align: top"
+          >
+            <p class="text-center" id="edit-icon">
+              <a
+                href="javascript:addNewOption(<%=i%>, <%=currentQuestion.choices.length%>)"
+              >
+                <i class="fas fa-plus"></i
+              ></a>
+            </p>
+          </div>
+
+          <% break; case "Short Answer": %>
+
+          <label class="form-check-label short-answer"></label>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="The participants will fill-in this area."
+            disabled=""
+          />
+
+          <% } %>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  console.log(`<%- JSON.stringify(survey) %>`);
+</script>
