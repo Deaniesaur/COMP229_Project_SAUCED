@@ -1,9 +1,5 @@
 "use strict";
 
-function populateSurvey(survey) {
-  console.log(survey);
-}
-
 function getQuestionTypeDiv(i) {
   return `
 <div class="form-check form-check-inline">
@@ -140,6 +136,8 @@ function addNewQuestionButton(i) {
   div.innerHTML = getNewQuestionButton(i);
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
+  if (document.querySelector(".important-survey-id").id != undefined)
+    displaySubmitButton();
 }
 
 addNewQuestionButton(0);
@@ -226,7 +224,6 @@ function addNewOption(i, j) {
   }
   let questionDiv = document.getElementById(`answer-${i}`);
   let option = questionDiv.children[j + 1];
-  console.log(option);
   option.innerHTML = getMultipleChoiceOption(i, j);
   let div = document.createElement("div");
   div.className = "form-check form-check-inline";
@@ -241,7 +238,10 @@ function displayMultipleChoice(i) {
   div.id = `answer-${i - 1}`;
 
   div.innerHTML =
-    "<br><br>" + initMultipleChoiceOptions(i) + addNewOptionButton(i, 5);
+    "<br><br>" +
+    initMultipleChoiceOptions(i) +
+    addNewOptionButton(i, 5) +
+    "<br><br>";
   div.className = "text-center";
   document.getElementById("main-section").appendChild(div);
   $(div).hide().fadeIn(1000);
@@ -294,7 +294,6 @@ function deleteQuestion(i) {
     $(this).remove();
   });
   for (let j = i + 1; j < x; j++) {
-    console.log(j);
     let parent = document.getElementById(`question-main-${j}`);
     parent.id = `question-main-${j - 1}`;
     parent.querySelector("p").textContent =
@@ -302,7 +301,6 @@ function deleteQuestion(i) {
     parent.querySelector("a").href = `javascript:deleteQuestion(${j - 1})`;
     parent = document.getElementById(`answer-${j}`);
     parent.id = `answer-${j - 1}`;
-    console.log(parent);
     [...parent.querySelectorAll(`#question${j + 1}`)].forEach((e) => {
       e.id = `question${j}`;
       e.parentElement.htmlFor = `question${j}`;
@@ -311,7 +309,6 @@ function deleteQuestion(i) {
       let child = parent.querySelectorAll("div")[k - 1];
       if (child == undefined) break;
       let anchors = child.querySelectorAll("a");
-      console.log(child);
       switch (anchors.length) {
         case 0:
           break;
@@ -336,14 +333,12 @@ function editOption(i, j) {
   questionDiv = questionDiv.querySelectorAll("div")[j - 1];
   let optionText = questionDiv.querySelectorAll("p")[0];
   optionText.textContent = "Hello World";
-  console.log(optionText);
 }
 
 function deleteOption(i, j) {
   let questionDiv = document.getElementById(`answer-${i}`);
   questionDiv.children[j + 1].remove();
   for (let k = j + 1; k < 10; k++) {
-    console.log(`k is =  ${k}`);
     let optionDiv = questionDiv.children[k];
     if (optionDiv == undefined) break;
     optionDiv.id = `option-${k}`;
@@ -362,9 +357,62 @@ function deleteOption(i, j) {
   }
 }
 
+function receiveSurveyId() {
+  console.log(document.querySelector(".important-survey-id").id);
+}
+
+function updateSurveyQuestions() {
+  let http = new XMLHttpRequest();
+  let url = `/survey/edit/${receiveSurveyId()}`;
+  let description = document.getElementById("description").value;
+  let surveyQuestions = [];
+  let questionsDiv = document.getElementsByName("question");
+
+  questionsDiv.forEach((question) => {
+    let surveyQuestion = {};
+    surveyQuestion["question"] = question.value;
+    // surveyQuestion["type"] = "Multiple Choice";
+    surveyQuestion["choices"] = [];
+
+    let optionsDiv = document.getElementsByName(question.id);
+
+    optionsDiv.forEach((option) => {
+      surveyQuestion.choices.push(option.value);
+    });
+    if (surveyQuestion.choices.length == 0) {
+      surveyQuestion["type"] = "Short Answer";
+    } else {
+      surveyQuestion["type"] = "Multiple Choice";
+    }
+
+    surveyQuestions.push(surveyQuestion);
+  });
+
+  let payload = {
+    title: document.getElementById("survey-title").value,
+    description: description,
+    questions: surveyQuestions,
+  };
+
+  http.open("POST", url, true);
+
+  // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+
+  http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+      window.location = http.responseURL;
+    }
+  };
+  // http.send(params);
+  http.send(JSON.stringify(payload));
+}
+
 function submitSurveyQuestions() {
-  receiveSurveyId();
-  return;
+  if (receiveSurveyId() != undefined) {
+    updateSurveyQuestions();
+    return;
+  }
 
   let http = new XMLHttpRequest();
   let url = "/survey/create";
@@ -410,8 +458,4 @@ function submitSurveyQuestions() {
   };
   // http.send(params);
   http.send(JSON.stringify(payload));
-}
-
-function receiveSurveyId() {
-  console.log(document.querySelector(".important-survey-id").id);
 }
