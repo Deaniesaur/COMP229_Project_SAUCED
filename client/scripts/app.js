@@ -123,7 +123,7 @@ function getMultipleChoiceOption(i, j) {
 const shortAnswerQuestion = `
 <br />
 <br />
-<label class="form-check-label" for=""></label>
+<label class="form-check-label short-answer" for=""></label>
 <input class="form-control" type="text" placeholder="The participants will fill-in this area." disabled>
 <br />
 <br />`;
@@ -352,8 +352,20 @@ function deleteOption(i, j) {
   }
 }
 
+function getQuestionType(divv) {
+  // let a = divv.classList.contains("short-answer");
+  // if (a.length > 0) return "Short Answer";
+  // console.log(isActive);
+  divv = Array.from(divv);
+  console.log(divv);
+  const activeEl = Array.prototype.find.call(divv, (item) =>
+    item.classList.contains("short-answer")
+  );
+  console.log(activeEl);
+  return "Multiple Choice";
+}
+
 function submitSurveyQuestions() {
-  // let params = gatherSurveyInformation();
   let http = new XMLHttpRequest();
   let url = "/survey/create";
   let description = document.getElementById("description").value;
@@ -361,22 +373,21 @@ function submitSurveyQuestions() {
   let questionsDiv = document.getElementsByName("question");
 
   questionsDiv.forEach((question) => {
-    // console.log(question);
-    // console.log(question.id);
-
     let surveyQuestion = {};
     surveyQuestion["question"] = question.value;
-    surveyQuestion["type"] = "Multiple Choice";
+    // surveyQuestion["type"] = "Multiple Choice";
     surveyQuestion["choices"] = [];
-
-    // console.log(question.value);
 
     let optionsDiv = document.getElementsByName(question.id);
 
     optionsDiv.forEach((option) => {
       surveyQuestion.choices.push(option.value);
-      console.log(option.value);
     });
+    if (surveyQuestion.choices.length == 0) {
+      surveyQuestion["type"] = "Short Answer";
+    } else {
+      surveyQuestion["type"] = "Multiple Choice";
+    }
 
     surveyQuestions.push(surveyQuestion);
   });
@@ -396,11 +407,9 @@ function submitSurveyQuestions() {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      //window.location = http.responseURL;
+      window.location = http.responseURL;
     }
   };
   // http.send(params);
   http.send(JSON.stringify(payload));
 }
-
-function gatherSurverInformation() {}
