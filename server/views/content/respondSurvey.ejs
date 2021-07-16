@@ -4,7 +4,7 @@
 <div>
     <%= survey.description %>
 </div>
-<form>
+<form method="POST">
     <ol>
         <% for (var i=0; i < survey.questions.length; i++ ) { 
         const currentQuestion = survey.questions[i]; %>

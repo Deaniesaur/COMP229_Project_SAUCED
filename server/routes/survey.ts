@@ -11,6 +11,7 @@ import {
   UpdateSurveyById,
   DisplaySurveyById,
   DisplayNewSurveyPage,
+  SubmitResponse,
 } from "../controllers/survey";
 
 //GET All Surveys
@@ -18,6 +19,9 @@ router.get("/", DisplayRecentSurveys);
 
 //GET Display Answer Survey
 router.get("/answer/:id", DisplaySurveyById);
+
+//POST Create Survey Response
+router.post("/answer/:id", SubmitResponse);
 
 //POST Create Survey
 router.post("/create", CreateSurvey);

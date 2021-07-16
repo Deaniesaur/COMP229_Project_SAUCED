@@ -31,6 +31,7 @@ function CreateSurvey(req, res, next) {
         description: req.body.description,
         thumbnail: surveyThumbnail,
         owner: "User",
+        questions: req.body.questions,
         created: today,
         updated: today,
         expiry: expiryDate,
@@ -52,18 +53,10 @@ function DisplaySurveyById(req, res, next) {
             return console.error(err);
         }
         surveyFound = survey.toObject();
-    }).then(() => {
-        question_1.default.find({ surveyId: surveyId }, function (err, questions) {
-            if (err) {
-                return console.error(err);
-            }
-            surveyFound.questions = questions;
-            console.log("Survey", surveyFound);
-            res.render("index", {
-                title: "SAUCED | Answer Survey",
-                page: "respondSurvey",
-                survey: surveyFound,
-            });
+        res.render("index", {
+            title: "SAUCED | Answer Survey",
+            page: "respondSurvey",
+            survey: surveyFound,
         });
     });
 }

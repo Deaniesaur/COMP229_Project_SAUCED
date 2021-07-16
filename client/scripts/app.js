@@ -63,7 +63,7 @@ function getQuestionBody() {
   <div class="text-center row" id="question-body">
   <div class="col-9">
   <p>QUESTION ${counter + 1}</p>
-  <textarea id="question" name="question" rows="2" cols="63">
+  <textarea id="question${counter + 1}" name="question" rows="2" cols="63">
   WHAT DO YOU THINK ABOUT OUR WEBSITE?
                       </textarea
   >
@@ -95,7 +95,7 @@ function getMultipleChoiceQuestion(i) {
   return `
 <div class="form-check form-check-inline" id="option-${i}">
 <label class="form-check-label" for="question${counter}">
-<input type="text" class="form-control" id="question${counter}" placeholder="Option ${i}">
+<input type="text" class="form-control" id="question${i}" name="question${counter}" placeholder="Option ${i}">
   <a href="javascript:editOption(${counter - 1}, ${i})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
 ></a>
@@ -353,20 +353,52 @@ function deleteOption(i, j) {
 }
 
 function submitSurveyQuestions() {
-  let params = gatherSurveyInformation();
+  // let params = gatherSurveyInformation();
   let http = new XMLHttpRequest();
   let url = "/survey/create";
-  let params = "title=sampleTitle&description=sampledescription";
+  let description = document.getElementById("description").value;
+  let surveyQuestions = [];
+  let questionsDiv = document.getElementsByName("question");
+
+  questionsDiv.forEach((question) => {
+    console.log(question);
+    console.log(question.id);
+
+    let surveyQuestion = {};
+    surveyQuestion["question"] = question.value;
+    surveyQuestion["type"] = "Multiple Choice";
+    surveyQuestion["choices"] = [];
+
+    let optionsDiv = document.getElementsByName(question.id);
+
+    optionsDiv.forEach((option) => {
+      console.log(option);
+      surveyQuestion.choices.push(option.value);
+    })
+
+    surveyQuestions.push(surveyQuestion);
+  });
+
+  console.log(surveyQuestions);
+
+  let payload = {
+    title: "sampleTitle",
+    description: description,
+    questions: surveyQuestions
+  };
+
   http.open("POST", url, true);
 
-  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
       window.location = http.responseURL;
     }
   };
-  http.send(params);
+  // http.send(params);
+  http.send(JSON.stringify(payload));
 }
 
 function gatherSurverInformation() {}
