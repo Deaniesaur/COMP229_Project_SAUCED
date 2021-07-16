@@ -43,6 +43,7 @@ export function CreateSurvey(
     description: req.body.description,
     thumbnail: surveyThumbnail,
     owner: "User",
+    questions: req.body.questions,
     created: today,
     updated: today,
     expiry: expiryDate,
@@ -71,22 +72,28 @@ export function DisplaySurveyById(
     }
 
     surveyFound = survey.toObject();
-  }).then(() => {
-    Question.find({ surveyId: surveyId }, function (err, questions) {
-      if (err) {
-        return console.error(err);
-      }
-
-      surveyFound.questions = questions;
-      console.log("Survey", surveyFound);
-
-      res.render("index", {
-        title: "SAUCED | Answer Survey",
-        page: "respondSurvey",
-        survey: surveyFound,
-      });
-    });
+    res.render("index", {
+            title: "SAUCED | Answer Survey",
+            page: "respondSurvey",
+            survey: surveyFound,
+          });
   });
+  // }).then(() => {
+  //   Question.find({ surveyId: surveyId }, function (err, questions) {
+  //     if (err) {
+  //       return console.error(err);
+  //     }
+
+  //     surveyFound.questions = questions;
+  //     console.log("Survey", surveyFound);
+
+  //     res.render("index", {
+  //       title: "SAUCED | Answer Survey",
+  //       page: "respondSurvey",
+  //       survey: surveyFound,
+  //     });
+  //   });
+  // });
 }
 
 export function UpdateSurveyById(

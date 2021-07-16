@@ -8,7 +8,7 @@ const SurveySchema = new Schema({
     description: String,
     thumbnail: Buffer,
     owner: String,
-    choices: [],
+    questions: [],
     created: Date,
     updated: Date,
     expiry: Date
