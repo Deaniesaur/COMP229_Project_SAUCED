@@ -23,7 +23,7 @@ exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function CreateSurvey(req, res, next) {
     let today = new Date();
     let expiryDate = new Date();
-    expiryDate.setDate(today.getDate() + 2);
+    expiryDate.setDate(today.getDate() + 30);
     let surveyThumbnail = null;
     console.log(req.body.title);
     let newSurvey = new survey_1.default({
@@ -118,7 +118,7 @@ function SubmitResponse(req, res, next) {
         surveyId: surveyId,
         surveyOwner: "User",
         answers: answers,
-        created: new Date()
+        created: new Date(),
     });
     response_1.default.create(newResponse, (err, response) => {
         if (err) {

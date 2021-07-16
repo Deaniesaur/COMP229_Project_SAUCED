@@ -361,20 +361,22 @@ function submitSurveyQuestions() {
   let questionsDiv = document.getElementsByName("question");
 
   questionsDiv.forEach((question) => {
-    console.log(question);
-    console.log(question.id);
+    // console.log(question);
+    // console.log(question.id);
 
     let surveyQuestion = {};
     surveyQuestion["question"] = question.value;
     surveyQuestion["type"] = "Multiple Choice";
     surveyQuestion["choices"] = [];
 
+    // console.log(question.value);
+
     let optionsDiv = document.getElementsByName(question.id);
 
     optionsDiv.forEach((option) => {
-      console.log(option);
       surveyQuestion.choices.push(option.value);
-    })
+      console.log(option.value);
+    });
 
     surveyQuestions.push(surveyQuestion);
   });
@@ -384,7 +386,7 @@ function submitSurveyQuestions() {
   let payload = {
     title: "sampleTitle",
     description: description,
-    questions: surveyQuestions
+    questions: surveyQuestions,
   };
 
   http.open("POST", url, true);
@@ -394,7 +396,7 @@ function submitSurveyQuestions() {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL;
+      //window.location = http.responseURL;
     }
   };
   // http.send(params);
