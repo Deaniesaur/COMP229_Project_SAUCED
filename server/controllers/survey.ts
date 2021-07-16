@@ -31,7 +31,6 @@ export function UpsertSurvey(
   next: NextFunction
 ): void {
   let surveyId = mongoose.Types.ObjectId(req.params.id);
-  console.log("this is params", surveyId);
   let today = new Date();
   let expiryDate = new Date();
   expiryDate.setDate(today.getDate() + 30);
@@ -48,7 +47,7 @@ export function UpsertSurvey(
     expiry: expiryDate,
   };
 
-  if (surveyId == undefined) {
+  if (req.body.create == true) {
     //instantiate a new survey object
     let newSurvey = new Survey({
       title: req.body.title,

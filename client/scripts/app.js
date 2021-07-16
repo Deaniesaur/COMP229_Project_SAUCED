@@ -352,6 +352,7 @@ function deleteOption(i, j) {
         break;
       case 1:
         anchors[0].href = `javascript:addNewOption(${i}, ${k - 1})`;
+        console.log("k", k);
         break;
       case 2:
         anchors[0].href = `javascript:editOption(${i}, ${k - 1})`;
@@ -413,10 +414,8 @@ function updateSurveyQuestions(id) {
 }
 
 function submitSurveyQuestions() {
-  let id = document.querySelector(".important-survey-id").id;
-  console.log(id);
-  if (id != undefined) {
-    updateSurveyQuestions(id);
+  if (document.querySelector(".important-survey-id") != null) {
+    updateSurveyQuestions(document.querySelector(".important-survey-id").id);
     return;
   }
 
@@ -450,6 +449,7 @@ function submitSurveyQuestions() {
     title: document.getElementById("survey-title").value,
     description: description,
     questions: surveyQuestions,
+    create: true,
   };
 
   http.open("POST", url, true);
