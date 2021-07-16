@@ -226,6 +226,7 @@ function addNewOption(i, j) {
   }
   let questionDiv = document.getElementById(`answer-${i}`);
   let option = questionDiv.children[j + 1];
+  console.log(option);
   option.innerHTML = getMultipleChoiceOption(i, j);
   let div = document.createElement("div");
   div.className = "form-check form-check-inline";

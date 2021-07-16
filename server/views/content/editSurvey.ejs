@@ -81,7 +81,11 @@
           = 0; j < currentQuestion.choices.length; j++) { let currentChoice =
           currentQuestion.choices[j]; %>
 
-          <div class="form-check form-check-inline" id="option-<%=j+1%>">
+          <div
+            class="form-check form-check-inline"
+            id="option-<%=j+1%>"
+            style="vertical-align: top"
+          >
             <label class="form-check-label">
               <input
                 type="text"
@@ -90,13 +94,13 @@
                 value="<%=currentChoice%>"
               />
 
-              <a href="javascript:editOption(<%=i%>, <%=j%>)">
+              <a href="javascript:editOption(<%=i%>, <%=j+1%>)">
                 <p class="text-center" id="edit-icon">
                   <i class="fas fa-edit"></i>
                 </p>
               </a>
 
-              <a href="javascript:deleteOption(<%=i%>, <%=j%>)">
+              <a href="javascript:deleteOption(<%=i%>, <%=j+1%>)">
                 <p class="text-center" id="edit-icon">
                   <i class="fas fa-trash"></i></p
               ></a>
@@ -113,7 +117,7 @@
           >
             <p class="text-center" id="edit-icon">
               <a
-                href="javascript:addNewOption(<%=i%>, <%=currentQuestion.choices.length%>)"
+                href="javascript:addNewOption(<%=i%>, <%=currentQuestion.choices.length+1%>)"
               >
                 <i class="fas fa-plus"></i
               ></a>
