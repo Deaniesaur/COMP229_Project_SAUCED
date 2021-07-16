@@ -352,19 +352,6 @@ function deleteOption(i, j) {
   }
 }
 
-function getQuestionType(divv) {
-  // let a = divv.classList.contains("short-answer");
-  // if (a.length > 0) return "Short Answer";
-  // console.log(isActive);
-  divv = Array.from(divv);
-  console.log(divv);
-  const activeEl = Array.prototype.find.call(divv, (item) =>
-    item.classList.contains("short-answer")
-  );
-  console.log(activeEl);
-  return "Multiple Choice";
-}
-
 function submitSurveyQuestions() {
   let http = new XMLHttpRequest();
   let url = "/survey/create";
@@ -392,10 +379,8 @@ function submitSurveyQuestions() {
     surveyQuestions.push(surveyQuestion);
   });
 
-  console.log(surveyQuestions);
-
   let payload = {
-    title: "sampleTitle",
+    title: document.getElementById("survey-title").value,
     description: description,
     questions: surveyQuestions,
   };
