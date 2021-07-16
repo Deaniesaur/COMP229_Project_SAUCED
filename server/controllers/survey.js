@@ -73,6 +73,7 @@ function DisplayUpdateSurveyPage(req, res, next) {
             title: "SAUCED | Edit Survey",
             page: "editSurvey",
             survey: surveyFound,
+            sid: surveyId,
         });
     });
 }

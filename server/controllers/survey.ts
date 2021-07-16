@@ -114,6 +114,7 @@ export function DisplayUpdateSurveyPage(
       title: "SAUCED | Edit Survey",
       page: "editSurvey",
       survey: surveyFound,
+      sid: surveyId,
     });
   });
 }

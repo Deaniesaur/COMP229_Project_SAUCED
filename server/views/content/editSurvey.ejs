@@ -3,7 +3,9 @@
     <div class="col-3">
       <div class="card sticky-top" id="survey-information">
         <div class="card-body">
-          <h5 class="card-title">Survey Information</h5>
+          <h5 class="card-title important-survey-id" id="<%=sid%>">
+            Survey Information
+          </h5>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">An item</li>
@@ -141,7 +143,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  console.log(`<%- JSON.stringify(survey) %>`);
-</script>

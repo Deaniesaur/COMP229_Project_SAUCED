@@ -363,6 +363,9 @@ function deleteOption(i, j) {
 }
 
 function submitSurveyQuestions() {
+  receiveSurveyId();
+  return;
+
   let http = new XMLHttpRequest();
   let url = "/survey/create";
   let description = document.getElementById("description").value;
@@ -407,4 +410,8 @@ function submitSurveyQuestions() {
   };
   // http.send(params);
   http.send(JSON.stringify(payload));
+}
+
+function receiveSurveyId() {
+  console.log(document.querySelector(".important-survey-id").id);
 }
