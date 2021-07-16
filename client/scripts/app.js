@@ -33,6 +33,7 @@ function getQuestionTypeDiv(i) {
     name="inlineRadioOptions"
     id="checkBoxes"
     value="3"
+    disabled
   />
   <label class="form-check-label" for="checkBoxes">
     CHECK BOXES
@@ -45,6 +46,7 @@ function getQuestionTypeDiv(i) {
     name="inlineRadioOptions"
     id="trueFalse"
     value="4"
+    disabled
   />
   <label class="form-check-label" for="trueFalse">
     TRUE / FALSE
