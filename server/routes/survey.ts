@@ -38,8 +38,3 @@ router.post("/edit/:id", UpdateSurveyById);
 
 //Todo: Delete Survey
 router.get("/delete/:id", DeleteSurvey);
-
-//Add Question Routes
-import questionRouter from "./question";
-
-router.use("/question", questionRouter);

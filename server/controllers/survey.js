@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.UpdateSurveyById = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.CreateSurvey = exports.DisplayRecentSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
-const question_1 = __importDefault(require("../models/question"));
 const response_1 = __importDefault(require("../models/response"));
 function DisplayRecentSurveys(req, res, next) {
     survey_1.default.find(function (err, surveys) {
@@ -101,7 +100,7 @@ function DeleteSurvey(req, res, next) {
             res.end(err);
         }
     }).then(() => {
-        question_1.default.deleteMany({ surveyId: id }, {}, (err) => {
+        response_1.default.deleteMany({ surveyId: id }, {}, (err) => {
             if (err) {
                 res.end();
             }
