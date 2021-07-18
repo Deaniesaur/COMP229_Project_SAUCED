@@ -10,7 +10,13 @@ export function DisplayRecentSurveys(
   res: Response,
   next: NextFunction
 ): void {
-  Survey.find(function (err, surveys) {
+  let today = new Date().toISOString().slice(0, 10);
+
+  let filter = {
+    expiry : { $gte : today} 
+  }
+
+  Survey.find(filter, function (err, surveys) {
     if (err) {
       return console.error(err);
     }

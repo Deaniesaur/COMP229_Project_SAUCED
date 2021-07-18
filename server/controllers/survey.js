@@ -8,7 +8,11 @@ const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
 function DisplayRecentSurveys(req, res, next) {
-    survey_1.default.find(function (err, surveys) {
+    let today = new Date().toISOString().slice(0, 10);
+    let filter = {
+        expiry: { $gte: today }
+    };
+    survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
         }
