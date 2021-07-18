@@ -32,19 +32,17 @@ export function UpsertSurvey(
 ): void {
   let surveyId = mongoose.Types.ObjectId(req.params.id);
   let today = new Date();
-  let expiryDate = new Date();
-  expiryDate.setDate(today.getDate() + 30);
   let surveyThumbnail = null;
 
-  //instantiate a new object
-  let newSurvey = {
+  //instantiate a Survey object
+  let survey = {
     title: req.body.title,
     description: req.body.description,
     owner: "User",
     questions: req.body.questions,
     created: today,
     updated: today,
-    expiry: expiryDate,
+    expiry: req.body.expiry,
   };
 
   if (req.body.create == true) {
@@ -57,7 +55,7 @@ export function UpsertSurvey(
       questions: req.body.questions,
       created: today,
       updated: today,
-      expiry: expiryDate,
+      expiry: req.body.expiry,
     });
     Survey.create(newSurvey, (err, survey) => {
       if (err) {
@@ -68,7 +66,7 @@ export function UpsertSurvey(
       console.log("CREATED", survey._id);
     });
   } else {
-    Survey.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+    Survey.updateOne({ _id: surveyId }, survey, {}, (err, survey) => {
       if (err) {
         console.error(err);
         res.end();

@@ -1,5 +1,13 @@
 "use strict";
 
+//IEFE
+(function (){
+  let expiryDatePicker = document.getElementById("expiry");
+
+  if(expiryDatePicker !== null)
+    expiryDatePicker.value = new Date().toISOString().slice(0, 10);
+})();
+
 function getQuestionTypeDiv(i) {
   return `
 <div class="form-check form-check-inline">
@@ -396,6 +404,7 @@ function updateSurveyQuestions(id) {
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
+    expiry: document.getElementById("expiry").value,
     questions: surveyQuestions,
   };
 
@@ -406,7 +415,7 @@ function updateSurveyQuestions(id) {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL;
+      window.location = http.responseURL + "survey";
     }
   };
   // http.send(params);
@@ -448,6 +457,7 @@ function submitSurveyQuestions() {
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
+    expiry: document.getElementById("expiry").value,
     questions: surveyQuestions,
     create: true,
   };
@@ -459,7 +469,7 @@ function submitSurveyQuestions() {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL;
+      window.location = http.responseURL + "survey";
     }
   };
   // http.send(params);

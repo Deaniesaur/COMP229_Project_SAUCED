@@ -11,8 +11,9 @@
           <thead>
             <tr class="text-light bg-dark">
               <th>Survey Title</th>
-              <th class="text-center"  >Creator</th>
+              <th class="text-center">Owner</th>
               <th class="text-center">Description</th>
+              <th class="text-center">Expiry Date</th>
               <th class="text-center"></th>
               <th class="text-center"></th>
               <th class="text-center"></th>
@@ -25,6 +26,7 @@
               <td><%= surveys[count].title %></td>
               <td class="text-center"><%= surveys[count].owner %></td>
               <td class="text-center"><%= surveys[count].description %></td>
+              <td class="text-center"><%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
 
               <td class="text-center">
                 <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">

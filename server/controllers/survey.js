@@ -23,17 +23,15 @@ exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
     let today = new Date();
-    let expiryDate = new Date();
-    expiryDate.setDate(today.getDate() + 30);
     let surveyThumbnail = null;
-    let newSurvey = {
+    let survey = {
         title: req.body.title,
         description: req.body.description,
         owner: "User",
         questions: req.body.questions,
         created: today,
         updated: today,
-        expiry: expiryDate,
+        expiry: req.body.expiry,
     };
     if (req.body.create == true) {
         let newSurvey = new survey_1.default({
@@ -44,7 +42,7 @@ function UpsertSurvey(req, res, next) {
             questions: req.body.questions,
             created: today,
             updated: today,
-            expiry: expiryDate,
+            expiry: req.body.expiry,
         });
         survey_1.default.create(newSurvey, (err, survey) => {
             if (err) {
@@ -55,7 +53,7 @@ function UpsertSurvey(req, res, next) {
         });
     }
     else {
-        survey_1.default.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+        survey_1.default.updateOne({ _id: surveyId }, survey, {}, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end();
