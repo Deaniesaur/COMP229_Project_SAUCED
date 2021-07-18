@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 
 const Schema = mongoose.Schema;
 
@@ -14,7 +13,13 @@ const SurveySchema = new Schema({
     expiry: Date
 },
 {
-    collection: 'surveys'
+    collection: 'surveys',
+    toObject: {
+        transform: function (doc, ret) {
+            delete ret._id;
+            delete ret.created;
+        }
+    },
 });
 
 const Model = mongoose.model('Survey', SurveySchema);

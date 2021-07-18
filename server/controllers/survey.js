@@ -8,7 +8,11 @@ const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
 function DisplayRecentSurveys(req, res, next) {
-    survey_1.default.find(function (err, surveys) {
+    let today = new Date().toISOString().slice(0, 10);
+    let filter = {
+        expiry: { $gte: today }
+    };
+    survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
         }
@@ -23,30 +27,19 @@ exports.DisplayRecentSurveys = DisplayRecentSurveys;
 function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
     let today = new Date();
-    let expiryDate = new Date();
-    expiryDate.setDate(today.getDate() + 30);
     let surveyThumbnail = null;
-    let newSurvey = {
+    let survey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
+        thumbnail: surveyThumbnail,
         owner: "User",
         questions: req.body.questions,
         created: today,
         updated: today,
-        expiry: expiryDate,
-    };
+        expiry: req.body.expiry,
+    });
     if (req.body.create == true) {
-        let newSurvey = new survey_1.default({
-            title: req.body.title,
-            description: req.body.description,
-            thumbnail: surveyThumbnail,
-            owner: "User",
-            questions: req.body.questions,
-            created: today,
-            updated: today,
-            expiry: expiryDate,
-        });
-        survey_1.default.create(newSurvey, (err, survey) => {
+        survey_1.default.create(survey, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end(err);
@@ -55,12 +48,12 @@ function UpsertSurvey(req, res, next) {
         });
     }
     else {
-        survey_1.default.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+        survey_1.default.updateOne({ _id: surveyId }, survey.toObject(), {}, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end();
             }
-            console.log("UPDATED");
+            console.log("UPDATED", survey._id);
         });
     }
     res.redirect("/");

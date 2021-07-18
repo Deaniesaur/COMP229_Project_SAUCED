@@ -10,7 +10,13 @@ export function DisplayRecentSurveys(
   res: Response,
   next: NextFunction
 ): void {
-  Survey.find(function (err, surveys) {
+  let today = new Date().toISOString().slice(0, 10);
+
+  let filter = {
+    expiry : { $gte : today} 
+  }
+
+  Survey.find(filter, function (err, surveys) {
     if (err) {
       return console.error(err);
     }
@@ -32,34 +38,22 @@ export function UpsertSurvey(
 ): void {
   let surveyId = mongoose.Types.ObjectId(req.params.id);
   let today = new Date();
-  let expiryDate = new Date();
-  expiryDate.setDate(today.getDate() + 30);
   let surveyThumbnail = null;
 
-  //instantiate a new object
-  let newSurvey = {
+  //instantiate a Survey object
+  let survey = new Survey({
     title: req.body.title,
     description: req.body.description,
+    thumbnail: surveyThumbnail,
     owner: "User",
     questions: req.body.questions,
     created: today,
     updated: today,
-    expiry: expiryDate,
-  };
+    expiry: req.body.expiry,
+  });
 
   if (req.body.create == true) {
-    //instantiate a new survey object
-    let newSurvey = new Survey({
-      title: req.body.title,
-      description: req.body.description,
-      thumbnail: surveyThumbnail,
-      owner: "User",
-      questions: req.body.questions,
-      created: today,
-      updated: today,
-      expiry: expiryDate,
-    });
-    Survey.create(newSurvey, (err, survey) => {
+    Survey.create(survey, (err, survey) => {
       if (err) {
         console.error(err);
         res.end(err);
@@ -68,13 +62,13 @@ export function UpsertSurvey(
       console.log("CREATED", survey._id);
     });
   } else {
-    Survey.updateOne({ _id: surveyId }, newSurvey, {}, (err, survey) => {
+    Survey.updateOne({ _id: surveyId }, survey.toObject(), {}, (err, survey) => {
       if (err) {
         console.error(err);
         res.end();
       }
 
-      console.log("UPDATED");
+      console.log("UPDATED", survey._id);
     });
   }
 
