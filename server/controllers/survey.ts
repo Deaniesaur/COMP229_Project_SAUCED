@@ -35,29 +35,19 @@ export function UpsertSurvey(
   let surveyThumbnail = null;
 
   //instantiate a Survey object
-  let survey = {
+  let survey = new Survey({
     title: req.body.title,
     description: req.body.description,
+    thumbnail: surveyThumbnail,
     owner: "User",
     questions: req.body.questions,
     created: today,
     updated: today,
     expiry: req.body.expiry,
-  };
+  });
 
   if (req.body.create == true) {
-    //instantiate a new survey object
-    let newSurvey = new Survey({
-      title: req.body.title,
-      description: req.body.description,
-      thumbnail: surveyThumbnail,
-      owner: "User",
-      questions: req.body.questions,
-      created: today,
-      updated: today,
-      expiry: req.body.expiry,
-    });
-    Survey.create(newSurvey, (err, survey) => {
+    Survey.create(survey, (err, survey) => {
       if (err) {
         console.error(err);
         res.end(err);
@@ -66,13 +56,13 @@ export function UpsertSurvey(
       console.log("CREATED", survey._id);
     });
   } else {
-    Survey.updateOne({ _id: surveyId }, survey, {}, (err, survey) => {
+    Survey.updateOne({ _id: surveyId }, survey.toObject(), {}, (err, survey) => {
       if (err) {
         console.error(err);
         res.end();
       }
 
-      console.log("UPDATED");
+      console.log("UPDATED", survey._id);
     });
   }
 

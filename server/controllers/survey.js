@@ -24,27 +24,18 @@ function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
     let today = new Date();
     let surveyThumbnail = null;
-    let survey = {
+    let survey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
+        thumbnail: surveyThumbnail,
         owner: "User",
         questions: req.body.questions,
         created: today,
         updated: today,
         expiry: req.body.expiry,
-    };
+    });
     if (req.body.create == true) {
-        let newSurvey = new survey_1.default({
-            title: req.body.title,
-            description: req.body.description,
-            thumbnail: surveyThumbnail,
-            owner: "User",
-            questions: req.body.questions,
-            created: today,
-            updated: today,
-            expiry: req.body.expiry,
-        });
-        survey_1.default.create(newSurvey, (err, survey) => {
+        survey_1.default.create(survey, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end(err);
@@ -53,12 +44,12 @@ function UpsertSurvey(req, res, next) {
         });
     }
     else {
-        survey_1.default.updateOne({ _id: surveyId }, survey, {}, (err, survey) => {
+        survey_1.default.updateOne({ _id: surveyId }, survey.toObject(), {}, (err, survey) => {
             if (err) {
                 console.error(err);
                 res.end();
             }
-            console.log("UPDATED");
+            console.log("UPDATED", survey._id);
         });
     }
     res.redirect("/");

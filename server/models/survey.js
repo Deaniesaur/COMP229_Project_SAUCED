@@ -15,7 +15,13 @@ const SurveySchema = new Schema({
     updated: Date,
     expiry: Date
 }, {
-    collection: 'surveys'
+    collection: 'surveys',
+    toObject: {
+        transform: function (doc, ret) {
+            delete ret._id;
+            delete ret.created;
+        }
+    },
 });
 const Model = mongoose_1.default.model('Survey', SurveySchema);
 exports.default = Model;

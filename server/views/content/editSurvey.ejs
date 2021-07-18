@@ -48,7 +48,7 @@
         </div>
         <div>
           Expiry Date:
-          <input type="date" id="expiry" name="expiry">
+          <input type="date" id="editExpiry" name="expiry" value=<%= (survey.expiry).toISOString().slice(0, 10) %>>
         </div>
       </div>
       <div class="row text-center" id="main-section">

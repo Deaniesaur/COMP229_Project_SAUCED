@@ -404,7 +404,7 @@ function updateSurveyQuestions(id) {
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
-    expiry: document.getElementById("expiry").value,
+    expiry: document.getElementById("editExpiry").value,
     questions: surveyQuestions,
   };
 
