@@ -46,22 +46,6 @@
             </button>
           </div>
         </div>
-
-        <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Active 
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">YES</a>
-    <a class="dropdown-item" href="#">NO</a>
-  </div>
-</div>
-
-        <div>
-          Start Date:
-          <input type="date" id="startExpiry" name="startDate" value=<%= (survey.startDate).toISOString().slice(0, 10) %>>
-        </div>
-
         <div>
           Expiry Date:
           <input type="date" id="editExpiry" name="expiry" value=<%= (survey.expiry).toISOString().slice(0, 10) %>>

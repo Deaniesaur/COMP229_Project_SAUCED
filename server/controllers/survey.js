@@ -37,6 +37,8 @@ function UpsertSurvey(req, res, next) {
         created: today,
         updated: today,
         expiry: req.body.expiry,
+        active: req.body.active,
+        startDate: req.body.startDate
     });
     if (req.body.create == true) {
         survey_1.default.create(survey, (err, survey) => {
