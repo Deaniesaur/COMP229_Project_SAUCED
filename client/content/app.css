@@ -273,4 +273,10 @@ IMPORTANT
   .mobile-order-2 {
     order: 2;
   }
+  .mobile-full-width {
+    width: 100%;
+  }
+  .mobile-group-leaders {
+    font-size: 2em;
+  }
 }
