@@ -261,3 +261,16 @@ textarea {
   width: 100%;
   position: absolute;
 }
+
+/*
+IMPORTANT
+*/
+
+@media (max-width: 500px) {
+  .mobile-order-1 {
+    order: 1;
+  }
+  .mobile-order-2 {
+    order: 2;
+  }
+}
