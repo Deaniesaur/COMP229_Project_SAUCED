@@ -21,9 +21,7 @@
     <header><%- include('components/header.ejs'); %></header>
     <!-- Main Content -->
     <main>
-      <div class="container">
-        <h1><%- include('content/' + page + '.ejs'); %></h1>
-      </div>
+      <div class="container"><%- include('content/' + page + '.ejs'); %></div>
     </main>
     <!-- Bottom Nav -->
     <%- include('components/footer.ejs'); %>
