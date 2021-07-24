@@ -26,10 +26,7 @@ function DisplayPublicSurveys(req, res, next) {
 exports.DisplayPublicSurveys = DisplayPublicSurveys;
 function DisplayPrivateSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
-    let filter = {
-        expiry: { $gte: today },
-        owner: "SampleUserName",
-    };
+    let filter = {};
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);

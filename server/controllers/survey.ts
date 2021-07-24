@@ -35,8 +35,7 @@ export function DisplayPrivateSurveys(
   let today = new Date().toISOString().slice(0, 10);
 
   let filter = {
-    expiry: { $gte: today },
-    owner: "SampleUserName",
+    //owner: "SampleUserName",
   };
 
   Survey.find(filter, function (err, surveys) {
