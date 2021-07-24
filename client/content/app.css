@@ -1,132 +1,99 @@
-body {
-  font: 14px "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
-  background-color: #212529;
-  color: #ecebe8;
-  padding: 3rem;
+.question-text {
+  font-size: 28px;
 }
 
-a {
-  color: #00b7ff;
+.answer-text {
+  font-size: 28px;
 }
 
-.navbar.center .navbar-inner {
-  text-align: center;
-}
+/*IMPORTANT*/
 
-.border-md-right {
-  border-right: 1px solid silver;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 500px) {
+  .mobile-order-1 {
+    order: 1;
+  }
+  .mobile-order-2 {
+    order: 2;
+  }
   .border-md-right {
+    /*Borders between nav items*/
     border-right: none;
+  }
+  #account-text {
+    display: none;
   }
 }
 
-.nav-title-top {
-  color: rgba(255, 255, 255, 0.55);
-  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
-  position: absolute;
-  width: 100%;
-  top: 5%;
-  display: block;
-  text-align: center;
-}
-
-.nav-title-bottom {
-  color: rgba(255, 255, 255, 0.55);
-  width: 100%;
-  top: 7%;
-  text-align: center;
-}
-.nav-float {
-  padding-left: 100px;
-}
-
-#navbar-main-menu {
-  margin-top: 5rem;
-}
-
-#carousel {
-  margin-bottom: 5rem;
-}
-
-.home-title {
-  text-align: center;
+body {
+  /*General style*/
   font: 14px "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+  background-color: #212529;
+  color: silver;
+  padding: 1rem;
 }
 
-.carousel-indicators {
-  bottom: -5rem;
+p {
+  /*General style*/
+  line-height: 1.6;
+}
+
+.card {
+  /*About page theme*/
+  background-color: transparent;
+  border: none;
+}
+
+.border-md-right {
+  /*Borders between nav items*/
+  border-right: 1px solid silver;
 }
 
 .col {
+  /*Center text on every column*/
   text-align: center;
 }
 
 .fa-dark {
+  /*Color theme*/
   color: #d21122;
 }
 
-.fa-light {
-  color: #000000;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.btn-xl {
+.button-red {
+  /*Color theme*/
   padding: 10px 20px;
   font-size: 20px;
   border-radius: 10px;
   border: none;
   background-color: #d21122;
 }
-.btn-start-here {
-  text-align: center;
+
+.fa-light {
+  /*Color theme*/
+  color: #000000;
 }
 
-.footer-text {
-  text-align: center;
-  font-family: Poppins;
-  font-size: small;
-}
-.nav-item-black {
+.nav-link {
+  /*Color theme*/
   color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
 }
 
-.normal-text {
-  font-size: medium;
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.75);
 }
 
-#member-card {
-  background-color: transparent;
-  border: none;
+a {
+  /*Color theme*/
+  color: #00b7ff;
 }
 
-.mapouter {
-  margin: 2rem auto;
+/*HEADER*/
+
+.img-fluid {
+  max-width: 63%;
 }
 
-.gmap_canvas {
-  margin-bottom: 2rem;
-}
-
-p {
-  line-height: 1.6;
-}
-
-#survey-information {
-  background-color: rgba(128, 128, 128, 0.295);
-  margin-left: -10%;
-  margin-right: 10%;
-  margin-top: 3rem;
-  border-radius: 1rem;
-  top: 2rem;
-}
+/*NEW SURVEY PAGE*/
 
 .btn-thumbnail {
   background-color: rgba(128, 128, 128, 0.295);
@@ -139,6 +106,15 @@ p {
   background-color: rgb(46, 46, 46);
 }
 
+#survey-information {
+  background-color: rgba(128, 128, 128, 0.295);
+  margin-left: -10%;
+  margin-right: 10%;
+  margin-top: 3rem;
+  border-radius: 1rem;
+  top: 2rem;
+}
+
 #question-type {
   padding: 2rem;
   height: 150px;
@@ -148,11 +124,6 @@ p {
   border-style: solid;
   margin: 2rem auto;
   border-radius: 2rem;
-}
-
-textarea {
-  border-radius: 1rem;
-  padding: 1.2rem;
 }
 
 #short-answer {
@@ -172,6 +143,37 @@ textarea {
 #question-body {
   height: 10rem;
 }
+
+textarea {
+  border-radius: 1rem;
+  padding: 1.2rem;
+}
+
+/*ABOUT PAGE*/
+
+.card {
+  width: 10rem;
+}
+
+#google-maps {
+  margin: 0 5rem;
+}
+
+.map-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+.map-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+/*LOGIN PAGE*/
 
 .login-dark form {
   max-width: 320px;
@@ -238,45 +240,4 @@ textarea {
 
 .login-dark form .btn-primary:active {
   transform: translateY(1px);
-}
-
-.question-text {
-  font-size: 28px;
-}
-
-.answer-text {
-  font-size: 28px;
-}
-
-.map-responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-}
-.map-responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-
-/*
-IMPORTANT
-*/
-
-@media (max-width: 500px) {
-  .mobile-order-1 {
-    order: 1;
-  }
-  .mobile-order-2 {
-    order: 2;
-  }
-  .mobile-full-width {
-    width: 100%;
-  }
-  .mobile-group-leaders {
-    font-size: 2em;
-  }
 }

@@ -1,73 +1,68 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/home"
-      ><img src="/assets/images/logo-light.svg" alt="logo" height="150px"
-    /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="nav-title-top">
-      <img
-        src="/assets/images/title-banner.png"
-        alt="Create Surveys in 2 Minutes"
+<div class="row text-center">
+  <div class="col-2" style="margin: auto">
+    <a href="/home"
+      ><img
+        class="img-fluid"
+        src="/assets/images/logo-light.svg"
+        alt="logo"
         height="100px"
-      />
-    </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mb-2 mb-lg-0 mx-auto" id="navbar-main-menu">
-        <li class="nav-item border-md-right">
-          <a class="nav-link" href="/home">HOME</a>
-        </li>
-        <li class="nav-item dropdown border-md-right">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            SURVEYS
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-dark"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <li>
-              <a class="dropdown-item" href="/survey/create">New Survey</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="/survey/public">Public Surveys</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="/survey/private"
-                >Private Surveys</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about">ABOUT US</a>
-        </li>
-        <li class="nav navbar-nav navbar-right nav-float">
-          <a class="nav-link" href="/login"
-            ><i class="fas fa-user fa-lg"></i> MY ACCOUNT</a
-          >
-        </li>
-      </ul>
-    </div>
+    /></a>
   </div>
-</nav>
+  <div class="col-8" style="margin: auto">
+    <img
+      class="img-fluid"
+      src="/assets/images/title-banner.png"
+      alt="Create Surveys in 2 Minutes"
+      height="100px"
+    />
+  </div>
+  <div class="col-2" style="margin: auto; padding: 0">
+    <a class="nav-link" href="/login"
+      ><i class="fas fa-user fa-lg"></i>
+      <p id="account-text">MY ACCOUNT</p></a
+    >
+  </div>
+</div>
+<div class="row">
+  <nav class="navbar navbar-expand navbar-dark">
+    <ul class="navbar-nav mb-2 mb-lg-0 mx-auto">
+      <li class="nav-item border-md-right">
+        <a class="nav-link" href="/home">HOME</a>
+      </li>
+      <li class="nav-item dropdown border-md-right">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          SURVEYS
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="navbarDropdownMenuLink"
+        >
+          <li>
+            <a class="dropdown-item" href="/survey/create">New Survey</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/survey/public">Public Surveys</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/survey/private">Private Surveys</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">ABOUT US</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 <hr id="bootstrap-overrides" />
-<p class="home-title">
+<p class="text-center">
   Thanks for visiting, start creating surveys<br />
   <br />
   <button type="button" class="btn btn-secondary btn-xl">HERE</button>
