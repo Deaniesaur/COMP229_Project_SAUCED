@@ -5,7 +5,8 @@ export default router;
 //Create Survey controller instance
 
 import {
-  DisplayRecentSurveys,
+  DisplayPublicSurveys,
+  DisplayPrivateSurveys,
   UpsertSurvey,
   DeleteSurvey,
   DisplaySurveyById,
@@ -14,8 +15,11 @@ import {
   SubmitResponse,
 } from "../controllers/survey";
 
-//GET All Surveys
-router.get("/", DisplayRecentSurveys);
+//GET Private Surveys
+router.get("/public", DisplayPublicSurveys);
+
+//GET Private Surveys
+router.get("/private", DisplayPrivateSurveys);
 
 //GET Display Answer Survey
 router.get("/answer/:id", DisplaySurveyById);
