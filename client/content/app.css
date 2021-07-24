@@ -259,6 +259,9 @@ textarea {
     /*Borders between nav items*/
     border-right: none;
   }
+  #google-maps {
+    margin: 0;
+  }
   #account-text {
     display: none;
   }
