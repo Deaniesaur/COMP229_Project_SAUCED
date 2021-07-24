@@ -27,11 +27,11 @@ router.get("/answer/:id", DisplaySurveyById);
 //POST Create Survey Response
 router.post("/answer/:id", SubmitResponse);
 
-//POST Create Survey
-router.post("/create", UpsertSurvey);
-
 //GET Create Survey
 router.get("/create", DisplayNewSurveyPage);
+
+//POST Create Survey
+router.post("/create", UpsertSurvey);
 
 //GET Update Survey By Id
 router.get("/edit/:id", DisplayUpdateSurveyPage);
