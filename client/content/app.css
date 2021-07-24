@@ -8,33 +8,18 @@
 
 /*IMPORTANT*/
 
-@media (max-width: 500px) {
-  .mobile-order-1 {
-    order: 1;
-  }
-  .mobile-order-2 {
-    order: 2;
-  }
-  .border-md-right {
-    /*Borders between nav items*/
-    border-right: none;
-  }
-  #account-text {
-    display: none;
-  }
-}
-
 body {
   /*General style*/
   font: 14px "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
   background-color: #212529;
-  color: silver;
+  color: rgba(255, 255, 255, 0.75);
   padding: 1rem;
 }
 
 p {
   /*General style*/
   line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .card {
@@ -45,7 +30,7 @@ p {
 
 .border-md-right {
   /*Borders between nav items*/
-  border-right: 1px solid silver;
+  border-right: 1px solid rgba(255, 255, 255, 0.55);
 }
 
 .col {
@@ -91,6 +76,25 @@ a {
 
 .img-fluid {
   max-width: 63%;
+}
+
+/*FOOTER*/
+
+#footer-text {
+  font-size: 0.63em;
+}
+
+.footer-link {
+  float: left;
+}
+
+footer a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+footer a:hover {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /*NEW SURVEY PAGE*/
@@ -240,4 +244,28 @@ textarea {
 
 .login-dark form .btn-primary:active {
   transform: translateY(1px);
+}
+
+/*RESPONSIVE*/
+
+@media (max-width: 768px) {
+  .mobile-order-1 {
+    order: 1;
+  }
+  .mobile-order-2 {
+    order: 2;
+  }
+  .border-md-right {
+    /*Borders between nav items*/
+    border-right: none;
+  }
+  #account-text {
+    display: none;
+  }
+  .footer-link {
+    float: none;
+  }
+  #footer-text {
+    margin-top: 1em;
+  }
 }
