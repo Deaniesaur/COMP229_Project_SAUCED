@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DisplayLoginPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
+exports.DisplaySignUpPage = exports.DisplayLoginPage = exports.DisplayAboutPage = exports.DisplayHomePage = void 0;
 function DisplayHomePage(req, res, next) {
     res.render("index", {
         title: "SAUCED | Homepage",
@@ -22,4 +22,11 @@ function DisplayLoginPage(req, res, next) {
     });
 }
 exports.DisplayLoginPage = DisplayLoginPage;
+function DisplaySignUpPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | Login",
+        page: "signup",
+    });
+}
+exports.DisplaySignUpPage = DisplaySignUpPage;
 //# sourceMappingURL=index.js.map
