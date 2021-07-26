@@ -21,12 +21,14 @@
     <header><%- include('components/header.ejs'); %></header>
     <!-- Main Content -->
     <main>
-      <div class="container">
-        <h1><%- include('content/' + page + '.ejs'); %></h1>
+      <div class="container-fluid">
+        <%- include('content/' + page + '.ejs'); %>
       </div>
     </main>
     <!-- Bottom Nav -->
-    <%- include('components/footer.ejs'); %>
+    <footer class="footer mt-auto py-3">
+      <%- include('components/footer.ejs'); %>
+    </footer>
     <!-- JavaScript Section -->
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
