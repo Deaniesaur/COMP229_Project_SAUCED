@@ -7,6 +7,7 @@ import {
   DisplayAboutPage,
   DisplayHomePage,
   DisplayLoginPage,
+  DisplaySignUpPage,
 } from "../controllers/index";
 
 /* GET home page. */
@@ -20,3 +21,6 @@ router.get("/about", DisplayAboutPage);
 
 /* GET Login Page. */
 router.get("/login", DisplayLoginPage);
+
+/* GET Login Page. */
+router.get("/signup", DisplaySignUpPage);

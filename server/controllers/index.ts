@@ -33,3 +33,14 @@ export function DisplayLoginPage(
     page: "login",
   });
 }
+
+export function DisplaySignUpPage(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.render("index", {
+    title: "SAUCED | Login",
+    page: "signup",
+  });
+}

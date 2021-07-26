@@ -3,27 +3,66 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubmitResponse = exports.DisplayNewSurveyPage = exports.DeleteSurvey = exports.DisplayUpdateSurveyPage = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayRecentSurveys = void 0;
+exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayUpdateSurveyPage = exports.DisplayNewSurveyPage = exports.DisplayPrivateSurveys = exports.DisplayPublicSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
-function DisplayRecentSurveys(req, res, next) {
+function DisplayPublicSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
     let filter = {
-        expiry: { $gte: today }
+        expiry: { $gte: today },
     };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
         }
         res.render("index", {
-            title: "SAUCED | Recent Surveys",
-            page: "recent",
+            title: "SAUCED | Public Surveys",
+            page: "surveys",
             surveys: surveys,
         });
     });
 }
-exports.DisplayRecentSurveys = DisplayRecentSurveys;
+exports.DisplayPublicSurveys = DisplayPublicSurveys;
+function DisplayPrivateSurveys(req, res, next) {
+    let today = new Date().toISOString().slice(0, 10);
+    let filter = {};
+    survey_1.default.find(filter, function (err, surveys) {
+        if (err) {
+            return console.error(err);
+        }
+        res.render("index", {
+            title: "SAUCED | Private Surveys",
+            page: "surveys",
+            surveys: surveys,
+        });
+    });
+}
+exports.DisplayPrivateSurveys = DisplayPrivateSurveys;
+function DisplayNewSurveyPage(req, res, next) {
+    res.render("index", {
+        title: "SAUCED | New Survey",
+        page: "newSurvey",
+    });
+}
+exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
+function DisplayUpdateSurveyPage(req, res, next) {
+    let surveyId = req.params.id;
+    let surveyFound;
+    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
+        if (err) {
+            return console.error(err);
+        }
+        surveyFound = survey.toObject();
+        res.render("index", {
+            title: "SAUCED | Edit Survey",
+            page: "editSurvey",
+            survey: surveyFound,
+            sid: surveyId,
+        });
+    });
+}
+exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
 function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
     let today = new Date();
@@ -77,48 +116,6 @@ function DisplaySurveyById(req, res, next) {
     });
 }
 exports.DisplaySurveyById = DisplaySurveyById;
-function DisplayUpdateSurveyPage(req, res, next) {
-    let surveyId = req.params.id;
-    let surveyFound;
-    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
-        if (err) {
-            return console.error(err);
-        }
-        surveyFound = survey.toObject();
-        res.render("index", {
-            title: "SAUCED | Edit Survey",
-            page: "editSurvey",
-            survey: surveyFound,
-            sid: surveyId,
-        });
-    });
-}
-exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
-function DeleteSurvey(req, res, next) {
-    let id = req.params.id;
-    survey_1.default.deleteOne({ _id: id }, {}, (err) => {
-        if (err) {
-            console.error(err);
-            res.end(err);
-        }
-    }).then(() => {
-        response_1.default.deleteMany({ surveyId: id }, {}, (err) => {
-            if (err) {
-                res.end();
-            }
-            console.log(`Survey: ${id} DELETED`);
-            res.redirect("/survey");
-        });
-    });
-}
-exports.DeleteSurvey = DeleteSurvey;
-function DisplayNewSurveyPage(req, res, next) {
-    res.render("index", {
-        title: "SAUCED | New Survey",
-        page: "newSurvey",
-    });
-}
-exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
 function SubmitResponse(req, res, next) {
     let surveyId = req.params.id;
     let answers = [];
@@ -146,4 +143,22 @@ function SubmitResponse(req, res, next) {
     res.redirect("/survey");
 }
 exports.SubmitResponse = SubmitResponse;
+function DeleteSurvey(req, res, next) {
+    let id = req.params.id;
+    survey_1.default.deleteOne({ _id: id }, {}, (err) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+    }).then(() => {
+        response_1.default.deleteMany({ surveyId: id }, {}, (err) => {
+            if (err) {
+                res.end();
+            }
+            console.log(`Survey: ${id} DELETED`);
+            res.redirect("/survey");
+        });
+    });
+}
+exports.DeleteSurvey = DeleteSurvey;
 //# sourceMappingURL=survey.js.map
