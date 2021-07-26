@@ -93,7 +93,7 @@ export function UpsertSurvey(
   let surveyId = mongoose.Types.ObjectId(req.params.id);
   let today = new Date();
   let surveyThumbnail = null;
-
+ 
   //instantiate a Survey object
   let survey = new Survey({
     title: req.body.title,
@@ -104,6 +104,9 @@ export function UpsertSurvey(
     created: today,
     updated: today,
     expiry: req.body.expiry,
+    active: req.body.active,
+    startDate: req.body.startDate
+
   });
 
   if (req.body.create == true) {
