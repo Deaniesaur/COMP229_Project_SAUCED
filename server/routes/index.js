@@ -11,4 +11,5 @@ router.get("/", index_1.DisplayHomePage);
 router.get("/home", index_1.DisplayHomePage);
 router.get("/about", index_1.DisplayAboutPage);
 router.get("/login", index_1.DisplayLoginPage);
+router.get("/signup", index_1.DisplaySignUpPage);
 //# sourceMappingURL=index.js.map
