@@ -101,7 +101,7 @@ export function UpsertSurvey(
     title: req.body.title,
     description: req.body.description,
     thumbnail: surveyThumbnail,
-    owner: "User",
+    owner: "SanjibSaha",
     questions: req.body.questions,
     created: today,
     updated: today,
