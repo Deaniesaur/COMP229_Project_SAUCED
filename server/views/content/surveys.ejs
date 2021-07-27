@@ -32,6 +32,7 @@
                   <i class="fas fa-pencil-alt" ></i> Participate</a>
               </td>
              
+              <% if(title == "SAUCED | Private Surveys") { %>
              <td class="text-center">
                 <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
                   <i class="fas fa-pencil-alt"></i> Edit</a>
@@ -43,6 +44,11 @@
               </td> 
 
             </tr>
+            <% } else { %>
+            
+              <% } %>  
+
+
             <% } %>
           </tbody>
         </table>

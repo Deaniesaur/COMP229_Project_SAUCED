@@ -11,6 +11,8 @@ function DisplayPublicSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
     let filter = {
         expiry: { $gte: today },
+        startDate: { $lte: today },
+        active: true,
     };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
