@@ -37,7 +37,7 @@ export function DisplayPrivateSurveys(
   let today = new Date().toISOString().slice(0, 10);
 
   let filter = {
-    //owner: "SampleUserName",
+    owner: "SanjibSaha",
   };
 
   Survey.find(filter, function (err, surveys) {

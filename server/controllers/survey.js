@@ -28,7 +28,9 @@ function DisplayPublicSurveys(req, res, next) {
 exports.DisplayPublicSurveys = DisplayPublicSurveys;
 function DisplayPrivateSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
-    let filter = {};
+    let filter = {
+        owner: "SanjibSaha",
+    };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
