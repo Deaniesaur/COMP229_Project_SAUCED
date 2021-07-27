@@ -12,6 +12,8 @@ export function DisplayPublicSurveys(
 
   let filter = {
     expiry: { $gte: today },
+    startDate: { $lte: today},
+    active: true,
   };
 
   Survey.find(filter, function (err, surveys) {
