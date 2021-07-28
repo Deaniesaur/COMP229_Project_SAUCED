@@ -7,12 +7,14 @@ import mongoose, { mongo } from "mongoose";
 import cors from "cors";
 
 import indexRouter from "../routes/index";
-import usersRouter from "../routes/users";
 import surveyRouter from "../routes/survey";
 
 //App Configuration
 const app = express();
 export default app;
+
+//module for auth messaging and error management
+import flash from 'connect-flash';
 
 //modules for authentication
 import session from 'express-session';
@@ -51,27 +53,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../../client")));
 app.use(express.static(path.join(__dirname, "../../node_modules")));
 
-//Routing
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/survey", surveyRouter);
-
-// catch 404 and forward to error handler
-app.use(function (
-  err: createError.HttpError,
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) {
-  next(createError(404));
-});
-
 //setup express session
 app.use(session({
   secret: DBConfig.Secret,
   saveUninitialized: false,
   resave: false
 }));
+
+//initialize flash
+app.use(flash());
 
 //initialize passport
 app.use(passport.initialize());
@@ -83,6 +73,20 @@ passport.use(User.createStrategy());
 //serialize and deserialize user data
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+//Routing
+app.use("/", indexRouter);
+app.use("/survey", surveyRouter);
+
+// catch 404 and forward to error handler
+app.use(function (
+  err: createError.HttpError,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function (

@@ -32,9 +32,6 @@ router.get("/signup", DisplaySignUpPage);
 router.get("/logout", Logout);
 
 /* POST Login Page. */
-router.post("/login", DisplaySignUpPage);
-
-/* POST Login Page. */
 router.post("/login", ProcessLogin);
 
 /* POST Sign Up Page. */

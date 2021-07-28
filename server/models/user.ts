@@ -5,11 +5,11 @@ const Schema = mongoose.Schema; // alias for the Mongoose Schema
 
 const UserSchema = new Schema(
   {
+    username: String,
     firstName: String,
     lastName: String,
     birthday: String,
     email: String,
-    username: String,
     created: {
       type: Date,
       default: Date.now(),
@@ -34,8 +34,11 @@ declare global {
   export type UserDocument = mongoose.Document & {
       _id: String,
       username: String,
+      firstName: String,
+      lastName: String,
+      birthday: String,
       email: String,
-      display: String
   }
 }
+
 export default Model;

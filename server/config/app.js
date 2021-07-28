@@ -30,10 +30,10 @@ const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const index_1 = __importDefault(require("../routes/index"));
-const users_1 = __importDefault(require("../routes/users"));
 const survey_1 = __importDefault(require("../routes/survey"));
 const app = express_1.default();
 exports.default = app;
+const connect_flash_1 = __importDefault(require("connect-flash"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = __importDefault(require("passport-local"));
@@ -59,22 +59,22 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookie_parser_1.default());
 app.use(express_1.default.static(path_1.default.join(__dirname, "../../client")));
 app.use(express_1.default.static(path_1.default.join(__dirname, "../../node_modules")));
-app.use("/", index_1.default);
-app.use("/users", users_1.default);
-app.use("/survey", survey_1.default);
-app.use(function (err, req, res, next) {
-    next(http_errors_1.default(404));
-});
 app.use(express_session_1.default({
     secret: DBConfig.Secret,
     saveUninitialized: false,
     resave: false
 }));
+app.use(connect_flash_1.default());
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 passport_1.default.use(user_1.default.createStrategy());
 passport_1.default.serializeUser(user_1.default.serializeUser());
 passport_1.default.deserializeUser(user_1.default.deserializeUser());
+app.use("/", index_1.default);
+app.use("/survey", survey_1.default);
+app.use(function (err, req, res, next) {
+    next(http_errors_1.default(404));
+});
 app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};

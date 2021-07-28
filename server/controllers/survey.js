@@ -7,12 +7,13 @@ exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = expo
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const util_1 = require("../util");
 function DisplayPublicSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
     let filter = {
         expiry: { $gte: today },
         startDate: { $lte: today },
-        active: true,
+        active: true
     };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
@@ -22,15 +23,14 @@ function DisplayPublicSurveys(req, res, next) {
             title: "SAUCED | Public Surveys",
             page: "surveys",
             surveys: surveys,
+            display: util_1.GetDisplayName(req),
         });
     });
 }
 exports.DisplayPublicSurveys = DisplayPublicSurveys;
 function DisplayPrivateSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
-    let filter = {
-        owner: "SanjibSaha",
-    };
+    let filter = {};
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
@@ -39,6 +39,7 @@ function DisplayPrivateSurveys(req, res, next) {
             title: "SAUCED | Private Surveys",
             page: "surveys",
             surveys: surveys,
+            display: util_1.GetDisplayName(req),
         });
     });
 }
@@ -47,6 +48,7 @@ function DisplayNewSurveyPage(req, res, next) {
     res.render("index", {
         title: "SAUCED | New Survey",
         page: "newSurvey",
+        display: util_1.GetDisplayName(req),
     });
 }
 exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
@@ -63,6 +65,7 @@ function DisplayUpdateSurveyPage(req, res, next) {
             page: "editSurvey",
             survey: surveyFound,
             sid: surveyId,
+            display: util_1.GetDisplayName(req),
         });
     });
 }
@@ -75,13 +78,11 @@ function UpsertSurvey(req, res, next) {
         title: req.body.title,
         description: req.body.description,
         thumbnail: surveyThumbnail,
-        owner: "SanjibSaha",
+        owner: "User",
         questions: req.body.questions,
         created: today,
         updated: today,
         expiry: req.body.expiry,
-        active: req.body.active,
-        startDate: req.body.startDate
     });
     if (req.body.create == true) {
         survey_1.default.create(survey, (err, survey) => {
@@ -116,6 +117,7 @@ function DisplaySurveyById(req, res, next) {
             title: "SAUCED | Answer Survey",
             page: "respondSurvey",
             survey: surveyFound,
+            display: util_1.GetDisplayName(req),
         });
     });
 }
