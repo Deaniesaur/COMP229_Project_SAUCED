@@ -12,6 +12,8 @@ export function DisplayPublicSurveys(
 
   let filter = {
     expiry: { $gte: today },
+    startDate: { $lte: today},
+    active: true,
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -35,7 +37,7 @@ export function DisplayPrivateSurveys(
   let today = new Date().toISOString().slice(0, 10);
 
   let filter = {
-    //owner: "SampleUserName",
+    owner: "SanjibSaha",
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -99,7 +101,7 @@ export function UpsertSurvey(
     title: req.body.title,
     description: req.body.description,
     thumbnail: surveyThumbnail,
-    owner: "User",
+    owner: "SanjibSaha",
     questions: req.body.questions,
     created: today,
     updated: today,
