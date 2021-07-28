@@ -14,6 +14,15 @@ import surveyRouter from "../routes/survey";
 const app = express();
 export default app;
 
+//modules for authentication
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+
+//authentication objects 
+let localStategy = passportLocal.Strategy;
+import User from '../models/user';
+
 //Enable CORS
 app.use(cors());
 
@@ -56,6 +65,24 @@ app.use(function (
 ) {
   next(createError(404));
 });
+
+//setup express session
+app.use(session({
+  secret: DBConfig.Secret,
+  saveUninitialized: false,
+  resave: false
+}));
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//implement auth strategy
+passport.use(User.createStrategy());
+
+//serialize and deserialize user data
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // error handler
 app.use(function (

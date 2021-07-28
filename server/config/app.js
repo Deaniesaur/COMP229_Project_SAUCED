@@ -34,6 +34,11 @@ const users_1 = __importDefault(require("../routes/users"));
 const survey_1 = __importDefault(require("../routes/survey"));
 const app = express_1.default();
 exports.default = app;
+const express_session_1 = __importDefault(require("express-session"));
+const passport_1 = __importDefault(require("passport"));
+const passport_local_1 = __importDefault(require("passport-local"));
+let localStategy = passport_local_1.default.Strategy;
+const user_1 = __importDefault(require("../models/user"));
 app.use(cors_1.default());
 const DBConfig = __importStar(require("./db"));
 mongoose_1.default.connect(DBConfig.MongoURI, {
@@ -60,6 +65,16 @@ app.use("/survey", survey_1.default);
 app.use(function (err, req, res, next) {
     next(http_errors_1.default(404));
 });
+app.use(express_session_1.default({
+    secret: DBConfig.Secret,
+    saveUninitialized: false,
+    resave: false
+}));
+app.use(passport_1.default.initialize());
+app.use(passport_1.default.session());
+passport_1.default.use(user_1.default.createStrategy());
+passport_1.default.serializeUser(user_1.default.serializeUser());
+passport_1.default.deserializeUser(user_1.default.deserializeUser());
 app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
