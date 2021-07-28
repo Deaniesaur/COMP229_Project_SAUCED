@@ -14,6 +14,9 @@ import surveyRouter from "../routes/survey";
 const app = express();
 export default app;
 
+//module for auth messaging and error management
+import flash from 'connect-flash';
+
 //modules for authentication
 import session from 'express-session';
 import passport from 'passport';
@@ -51,6 +54,27 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../../client")));
 app.use(express.static(path.join(__dirname, "../../node_modules")));
 
+//setup express session
+app.use(session({
+  secret: DBConfig.Secret,
+  saveUninitialized: false,
+  resave: false
+}));
+
+//initialize flash
+app.use(flash());
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//implement auth strategy
+passport.use(User.createStrategy());
+
+//serialize and deserialize user data
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //Routing
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
@@ -65,24 +89,6 @@ app.use(function (
 ) {
   next(createError(404));
 });
-
-//setup express session
-app.use(session({
-  secret: DBConfig.Secret,
-  saveUninitialized: false,
-  resave: false
-}));
-
-//initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-//implement auth strategy
-passport.use(User.createStrategy());
-
-//serialize and deserialize user data
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // error handler
 app.use(function (

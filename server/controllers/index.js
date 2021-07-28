@@ -48,6 +48,7 @@ function ProcessSignUp(req, res, next) {
             if (err.name == "UserExistsError") {
                 console.error('Error: User already exists');
             }
+            req.flash('registerMessage', 'Registration Error');
             return res.redirect('/signup');
         }
         return passport_1.default.authenticate('local')(req, req, () => {
@@ -63,6 +64,8 @@ function ProcessLogin(req, res, next) {
             return next(err);
         }
         if (!user) {
+            req.flash('loginMessage', 'Authentication Error');
+            console.error('login error', err);
             return res.redirect('/login');
         }
         req.login(user, (err) => {
@@ -70,6 +73,7 @@ function ProcessLogin(req, res, next) {
                 console.error(err);
                 return next(err);
             }
+            console.error('sucess login', err);
             return res.redirect('/survey/private');
         });
     })(req, res, next);

@@ -67,7 +67,7 @@ export function ProcessSignUp(
             if(err.name == "UserExistsError"){
                 console.error('Error: User already exists');
             }
-            //req.flash('registerMessage', 'Registration Error');
+            req.flash('registerMessage', 'Registration Error');
 
             return res.redirect('/signup');
         }
@@ -93,7 +93,8 @@ export function ProcessLogin(
 
     //login errors
     if(!user){
-        //req.flash('loginMessage', 'Authentication Error');
+        req.flash('loginMessage', 'Authentication Error');
+        console.error('login error', err);
         return res.redirect('/login');
     }
 
@@ -102,10 +103,11 @@ export function ProcessLogin(
             console.error(err);
             return next(err);
         }
+        console.error('sucess login', err);
 
         return res.redirect('/survey/private');
     })
-})(req, res, next);
+  })(req, res, next);
 }
 
 export function Logout(
