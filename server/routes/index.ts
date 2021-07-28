@@ -22,5 +22,11 @@ router.get("/about", DisplayAboutPage);
 /* GET Login Page. */
 router.get("/login", DisplayLoginPage);
 
-/* GET Login Page. */
+/* GET Sign Up Page. */
 router.get("/signup", DisplaySignUpPage);
+
+/* POST Login Page. */
+router.post("/login", DisplaySignUpPage);
+
+/* POST Sign Up Page. */
+router.post("/signup", DisplaySignUpPage);
