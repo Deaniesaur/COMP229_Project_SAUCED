@@ -3,6 +3,9 @@ import Survey from "../models/survey";
 import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
 
+//import Util Function
+import { GetDisplayName } from '../util';
+
 export function DisplayPublicSurveys(
   req: Request,
   res: Response,
@@ -12,8 +15,8 @@ export function DisplayPublicSurveys(
 
   let filter = {
     expiry: { $gte: today },
-    startDate: { $lte: today},
-    active: true,
+    startDate: {$lte: today },
+    active: true
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -25,6 +28,7 @@ export function DisplayPublicSurveys(
       title: "SAUCED | Public Surveys",
       page: "surveys",
       surveys: surveys,
+      display: GetDisplayName(req),
     });
   });
 }
@@ -37,7 +41,7 @@ export function DisplayPrivateSurveys(
   let today = new Date().toISOString().slice(0, 10);
 
   let filter = {
-    owner: "SanjibSaha",
+    //owner: "SampleUserName",
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -49,6 +53,7 @@ export function DisplayPrivateSurveys(
       title: "SAUCED | Private Surveys",
       page: "surveys",
       surveys: surveys,
+      display: GetDisplayName(req),
     });
   });
 }
@@ -61,6 +66,7 @@ export function DisplayNewSurveyPage(
   res.render("index", {
     title: "SAUCED | New Survey",
     page: "newSurvey",
+    display: GetDisplayName(req),
   });
 }
 
@@ -83,6 +89,7 @@ export function DisplayUpdateSurveyPage(
       page: "editSurvey",
       survey: surveyFound,
       sid: surveyId,
+      display: GetDisplayName(req),
     });
   });
 }
@@ -95,20 +102,17 @@ export function UpsertSurvey(
   let surveyId = mongoose.Types.ObjectId(req.params.id);
   let today = new Date();
   let surveyThumbnail = null;
- 
+
   //instantiate a Survey object
   let survey = new Survey({
     title: req.body.title,
     description: req.body.description,
     thumbnail: surveyThumbnail,
-    owner: "SanjibSaha",
+    owner: "User",
     questions: req.body.questions,
     created: today,
     updated: today,
     expiry: req.body.expiry,
-    active: req.body.active,
-    startDate: req.body.startDate
-
   });
 
   if (req.body.create == true) {
@@ -157,6 +161,7 @@ export function DisplaySurveyById(
       title: "SAUCED | Answer Survey",
       page: "respondSurvey",
       survey: surveyFound,
+      display: GetDisplayName(req),
     });
   });
 }

@@ -7,7 +7,6 @@ import mongoose, { mongo } from "mongoose";
 import cors from "cors";
 
 import indexRouter from "../routes/index";
-import usersRouter from "../routes/users";
 import surveyRouter from "../routes/survey";
 
 //App Configuration
@@ -77,7 +76,6 @@ passport.deserializeUser(User.deserializeUser());
 
 //Routing
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/survey", surveyRouter);
 
 // catch 404 and forward to error handler

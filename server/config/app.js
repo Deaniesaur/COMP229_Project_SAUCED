@@ -30,7 +30,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const index_1 = __importDefault(require("../routes/index"));
-const users_1 = __importDefault(require("../routes/users"));
 const survey_1 = __importDefault(require("../routes/survey"));
 const app = express_1.default();
 exports.default = app;
@@ -72,7 +71,6 @@ passport_1.default.use(user_1.default.createStrategy());
 passport_1.default.serializeUser(user_1.default.serializeUser());
 passport_1.default.deserializeUser(user_1.default.deserializeUser());
 app.use("/", index_1.default);
-app.use("/users", users_1.default);
 app.use("/survey", survey_1.default);
 app.use(function (err, req, res, next) {
     next(http_errors_1.default(404));

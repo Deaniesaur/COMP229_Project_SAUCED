@@ -15,11 +15,13 @@ import {
   SubmitResponse,
 } from "../controllers/survey";
 
+import { AuthGuard } from "../util";
+
 //GET Private Surveys
 router.get("/public", DisplayPublicSurveys);
 
 //GET Private Surveys
-router.get("/private", DisplayPrivateSurveys);
+router.get("/private", AuthGuard, DisplayPrivateSurveys);
 
 //GET Display Answer Survey
 router.get("/answer/:id", DisplaySurveyById);
@@ -28,16 +30,16 @@ router.get("/answer/:id", DisplaySurveyById);
 router.post("/answer/:id", SubmitResponse);
 
 //GET Create Survey
-router.get("/create", DisplayNewSurveyPage);
+router.get("/create", AuthGuard, DisplayNewSurveyPage);
 
 //POST Create Survey
-router.post("/create", UpsertSurvey);
+router.post("/create", AuthGuard, UpsertSurvey);
 
 //GET Update Survey By Id
-router.get("/edit/:id", DisplayUpdateSurveyPage);
+router.get("/edit/:id", AuthGuard, DisplayUpdateSurveyPage);
 
 //POST Update Survey By Id
-router.post("/edit/:id", UpsertSurvey);
+router.post("/edit/:id", AuthGuard, UpsertSurvey);
 
 //Todo: Delete Survey
-router.get("/delete/:id", DeleteSurvey);
+router.get("/delete/:id", AuthGuard, DeleteSurvey);

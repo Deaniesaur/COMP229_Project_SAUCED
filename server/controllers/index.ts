@@ -3,6 +3,9 @@ import Survey from "../models/survey";
 import User from "../models/user";
 import passport from "passport";
 
+//import Util Function
+import { GetDisplayName } from '../util';
+
 export function DisplayHomePage(
   req: Request,
   res: Response,
@@ -11,6 +14,7 @@ export function DisplayHomePage(
   res.render("index", {
     title: "SAUCED | Homepage",
     page: "home",
+    display: GetDisplayName(req),
   });
 }
 
@@ -22,6 +26,7 @@ export function DisplayAboutPage(
   res.render("index", {
     title: "SAUCED | About Us",
     page: "about",
+    display: GetDisplayName(req),
   });
 }
 
@@ -33,6 +38,7 @@ export function DisplayLoginPage(
   res.render("index", {
     title: "SAUCED | Login",
     page: "login",
+    display: GetDisplayName(req),
   });
 }
 
@@ -44,6 +50,7 @@ export function DisplaySignUpPage(
   res.render("index", {
     title: "SAUCED | Login",
     page: "signup",
+    display: GetDisplayName(req),
   });
 }
 
