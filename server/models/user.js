@@ -1,60 +1,27 @@
-// require modules for the User Model
-let mongoose = require('mongoose');
-let passportLocalMongoose = require('passport-local-mongoose');
-
-let User = mongoose.Schema
-(
-    {
-        username: 
-        {
-            type: String,
-            default: '',
-            trim: true,
-            required: 'username is required'
-        },
-        /*
-        password: 
-        {
-            type: String,
-            default: '';
-            trim: true,
-            required: 'password is required'
-        }
-        */
-       email: 
-       {
-            type: String,
-            default: '',
-            trim: true,
-            required: 'email address is required'
-       },
-       displayName: 
-       {
-            type: String,
-            default: '',
-            trim: true,
-            required: 'Display Name is required'
-       },
-       created: 
-       {
-            type: Date,
-            default: Date.now
-       },
-       update: 
-       {
-            type: Date,
-            default: Date.now
-       }
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const Schema = mongoose_1.default.Schema;
+const UserSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    birthday: String,
+    email: String,
+    username: String,
+    created: {
+        type: Date,
+        default: Date.now(),
     },
-    {
-        collection: "users"
-    }
-);
-
-// configure options for User Model
-
-let options = ({ missingPasswordError: 'Wrong / Missing Password'});
-
-User.plugin(passportLocalMongoose, options);
-
-module.exports.User = mongoose.model('User', User);
+    updated: {
+        type: Date,
+        default: Date.now(),
+    },
+}, {
+    collection: "users",
+});
+const Model = mongoose_1.default.model("User", UserSchema);
+exports.default = Model;
+//# sourceMappingURL=user.js.map

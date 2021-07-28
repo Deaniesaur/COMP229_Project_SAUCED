@@ -46,25 +46,25 @@
             </button>
           </div>
         </div>
-
         <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Active 
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">YES</a>
-    <a class="dropdown-item" href="#">NO</a>
-  </div>
-</div>
-
+          <label for="active">Choose active:</label>
+          <select name="active" id="active">
+            <% if (survey.active) { %>
+              <option value="true" selected>yes</option>
+              <option value="false">no</option>
+            <% } else { %>
+              <option value="true">yes</option>
+              <option value="false" selected>no</option>
+            <% } %>
+          </select>
+        </div>
         <div>
           Start Date:
-          <input type="date" id="startExpiry" name="startDate" value=<%= (survey.startDate).toISOString().slice(0, 10) %>>
+          <input type="date" id="startDate" name="startDate" value= <%= (survey.startDate).toISOString().slice(0, 10) %>>
         </div>
-
         <div>
           Expiry Date:
-          <input type="date" id="editExpiry" name="expiry" value=<%= (survey.expiry).toISOString().slice(0, 10) %>>
+          <input type="date" id="editExpiry" name="expiry" value= <%= (survey.expiry).toISOString().slice(0, 10) %>>
         </div>
       </div>
       <div class="row text-center" id="main-section">

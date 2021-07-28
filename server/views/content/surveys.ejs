@@ -4,7 +4,6 @@
     <div class="col-offset-1 col-md-10">
       <h1><%= title %></h1>
       <a href="/survey/create" class="btn btn-primary"  role="button"><i class="fa fa-plus"></i> Create Survey</a>              
-
       <br>
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
@@ -22,7 +21,9 @@
             <tbody>
             <!-- Template Row -->
             <% for (let count = 0; count < surveys.length; count++) { %>
+              
             <tr class="text-light bg-dark">
+              <% if(typeof owner == 'string' && owner) { %>
               <td><%= surveys[count].title %></td>
               <td class="text-center"><%= surveys[count].owner %></td>
               <td class="text-center"><%= surveys[count].description %></td>
@@ -33,17 +34,36 @@
                   <i class="fas fa-pencil-alt" ></i> Participate</a>
               </td>
              
-             <td class="text-center">
-                <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
-                  <i class="fas fa-pencil-alt"></i> Edit</a>
-              </td>
+             
+            </tr>
+            <% } else { %>
+
+              <td><%= surveys[count].title %></td>
+              <td class="text-center"><%= surveys[count].owner %></td>
+              <td class="text-center"><%= surveys[count].description %></td>
+              <td class="text-center"><%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
 
               <td class="text-center">
-                <a href="/survey/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash-alt"></i> Delete</a>
-              </td> 
+                <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                  <i class="fas fa-pencil-alt" ></i> Participate</a>
+              </td>
+            
+              <% } %>  
+              
+              <% if(title == "SAUCED | Private Surveys") { %>
+                <td class="text-center">
+                   <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                     <i class="fas fa-pencil-alt"></i> Edit</a>
+                 </td>
+   
+                 <td class="text-center">
+                   <a href="/survey/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
+                     <i class="fas fa-trash-alt"></i> Delete</a>
+                 </td> 
+                 <% } else { %>
+                   
+                 <% } %> 
 
-            </tr>
             <% } %>
           </tbody>
         </table>

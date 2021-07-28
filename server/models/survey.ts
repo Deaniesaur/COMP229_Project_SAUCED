@@ -13,6 +13,7 @@ const SurveySchema = new Schema({
     expiry: Date,
     active: Boolean,
     startDate: Date
+    
 },
 {
     collection: 'surveys',

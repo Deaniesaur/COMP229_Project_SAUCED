@@ -401,11 +401,16 @@ function updateSurveyQuestions(id) {
     surveyQuestions.push(surveyQuestion);
   });
 
+  let select = document.getElementById('active');
+  let valueActive = select.options[select.selectedIndex].value;
+
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
-    expiry: document.getElementById("editExpiry").value,
     questions: surveyQuestions,
+    startDate: document.getElementById("startDate").value,
+    expiry: document.getElementById("editExpiry").value,
+    active: valueActive,
   };
 
   http.open("POST", url, true);
@@ -415,7 +420,7 @@ function updateSurveyQuestions(id) {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL + "survey";
+      window.location = http.responseURL + "survey/private";
     }
   };
   // http.send(params);
@@ -433,6 +438,7 @@ function submitSurveyQuestions() {
   let description = document.getElementById("description").value;
   let surveyQuestions = [];
   let questionsDiv = document.getElementsByName("question");
+  
 
   questionsDiv.forEach((question) => {
     let surveyQuestion = {};
@@ -454,13 +460,19 @@ function submitSurveyQuestions() {
     surveyQuestions.push(surveyQuestion);
   });
 
+  let select = document.getElementById('active');
+  let valueActive = select.options[select.selectedIndex].value;
+
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
-    expiry: document.getElementById("expiry").value,
     questions: surveyQuestions,
     create: true,
+    startDate: document.getElementById("startDate").value,
+    expiry: document.getElementById("expiry").value,
+    active: valueActive,
   };
+
 
   http.open("POST", url, true);
 
@@ -469,7 +481,7 @@ function submitSurveyQuestions() {
 
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL + "survey";
+      window.location = http.responseURL + "survey/private";
     }
   };
   // http.send(params);
