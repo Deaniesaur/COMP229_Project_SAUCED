@@ -29,8 +29,10 @@ function DisplayPublicSurveys(req, res, next) {
 }
 exports.DisplayPublicSurveys = DisplayPublicSurveys;
 function DisplayPrivateSurveys(req, res, next) {
-    let today = new Date().toISOString().slice(0, 10);
-    let filter = {};
+    let user = req.user;
+    let filter = {
+        owner: user.username,
+    };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
             return console.error(err);
@@ -73,16 +75,19 @@ exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
 function UpsertSurvey(req, res, next) {
     let surveyId = mongoose_1.default.Types.ObjectId(req.params.id);
     let today = new Date();
+    let user = req.user;
     let surveyThumbnail = null;
     let survey = new survey_1.default({
         title: req.body.title,
         description: req.body.description,
         thumbnail: surveyThumbnail,
-        owner: "User",
+        owner: user.username,
         questions: req.body.questions,
         created: today,
         updated: today,
         expiry: req.body.expiry,
+        startDate: req.body.startDate,
+        active: req.body.active,
     });
     if (req.body.create == true) {
         survey_1.default.create(survey, (err, survey) => {
