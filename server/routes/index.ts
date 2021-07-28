@@ -8,6 +8,9 @@ import {
   DisplayHomePage,
   DisplayLoginPage,
   DisplaySignUpPage,
+  ProcessSignUp,
+  ProcessLogin,
+  Logout,
 } from "../controllers/index";
 
 /* GET home page. */
@@ -25,8 +28,14 @@ router.get("/login", DisplayLoginPage);
 /* GET Sign Up Page. */
 router.get("/signup", DisplaySignUpPage);
 
+/* GET Logout Page. */
+router.get("/logout", Logout);
+
 /* POST Login Page. */
 router.post("/login", DisplaySignUpPage);
 
+/* POST Login Page. */
+router.post("/login", ProcessLogin);
+
 /* POST Sign Up Page. */
-router.post("/signup", DisplaySignUpPage);
+router.post("/signup", ProcessSignUp);

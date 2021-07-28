@@ -12,6 +12,8 @@ router.get("/home", index_1.DisplayHomePage);
 router.get("/about", index_1.DisplayAboutPage);
 router.get("/login", index_1.DisplayLoginPage);
 router.get("/signup", index_1.DisplaySignUpPage);
+router.get("/logout", index_1.Logout);
 router.post("/login", index_1.DisplaySignUpPage);
-router.post("/signup", index_1.DisplaySignUpPage);
+router.post("/login", index_1.ProcessLogin);
+router.post("/signup", index_1.ProcessSignUp);
 //# sourceMappingURL=index.js.map
