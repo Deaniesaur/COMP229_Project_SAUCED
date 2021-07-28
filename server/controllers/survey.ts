@@ -15,7 +15,7 @@ export function DisplayPublicSurveys(
 
   let filter = {
     expiry: { $gte: today },
-    startDate: {$lte: today },
+    startDate: { $lte: today },
     active: true
   };
 
@@ -38,10 +38,9 @@ export function DisplayPrivateSurveys(
   res: Response,
   next: NextFunction
 ): void {
-  let today = new Date().toISOString().slice(0, 10);
-
+  let user = req.user as UserDocument;
   let filter = {
-    //owner: "SampleUserName",
+    owner: user.username,
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -101,6 +100,7 @@ export function UpsertSurvey(
 ): void {
   let surveyId = mongoose.Types.ObjectId(req.params.id);
   let today = new Date();
+  let user = req.user as UserDocument;
   let surveyThumbnail = null;
 
   //instantiate a Survey object
@@ -108,11 +108,13 @@ export function UpsertSurvey(
     title: req.body.title,
     description: req.body.description,
     thumbnail: surveyThumbnail,
-    owner: "User",
+    owner: user.username,
     questions: req.body.questions,
     created: today,
     updated: today,
     expiry: req.body.expiry,
+    startDate: req.body.startDate,
+    active: req.body.active,
   });
 
   if (req.body.create == true) {
