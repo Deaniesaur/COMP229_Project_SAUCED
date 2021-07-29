@@ -102,7 +102,7 @@ export function ProcessLogin(
 
     //login errors
     if(!user){
-        req.flash('loginMessage', 'Authentication Error');
+      req.flash('loginMessage', 'Incorrect Username or Password!');
         console.error('login error', err);
         return res.redirect('/login');
     }
