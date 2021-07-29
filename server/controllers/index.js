@@ -71,7 +71,7 @@ function ProcessLogin(req, res, next) {
             return next(err);
         }
         if (!user) {
-            req.flash('loginMessage', 'Authentication Error');
+            req.flash('loginMessage', 'Incorrect Username or Password!');
             console.error('login error', err);
             return res.redirect('/login');
         }
