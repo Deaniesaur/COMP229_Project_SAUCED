@@ -9,7 +9,7 @@
         <table class="table table-bordered table-striped table-hover">
           <thead>
             <tr class="text-light bg-dark">
-              <% if( display != '') { %>
+              <% if( display != '' && title.includes('Private')) { %>
               <th class="text-center"></th>
               <% } %>
               <th>Survey Title</th>
@@ -17,7 +17,7 @@
               <th class="text-center">Description</th>
               <th class="text-center">Date</th>
               <th class="text-center"></th>
-              <% if( display != '') { %>
+              <% if( display != '' && title.includes('Private')) { %>
               <th class="text-center"></th>
               <th class="text-center"></th>
               <% } %>
@@ -28,7 +28,7 @@
             <% for (let count = 0; count < surveys.length; count++) { %>
               
             <tr class="text-light bg-dark">
-              <% if( display != '') { %>
+              <% if( display != '' && title.includes('Private')) { %>
                 <% if ( surveys[count].active ) { %>
                   <td><i class="far fa-check-circle fa-lg"></i></td>
                 <% } else { %>
@@ -45,7 +45,7 @@
                   <i class="fas fa-pencil-alt" ></i> Participate</a>
               </td>
 
-              <% if( display != '') { %>
+              <% if( display != '' && title.includes('Private')) { %>
                 <td class="text-center">
                   <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
                     <i class="fas fa-pencil-alt"></i> Edit</a>
