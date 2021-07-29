@@ -24,7 +24,8 @@ const UserSchema = new Schema({
     collection: "users",
 });
 UserSchema.plugin(passport_local_mongoose_1.default, {
-    usernameQueryFields: ['username', 'email']
+    usernameQueryFields: ['username', 'email'],
+    usernameLowerCase: true
 });
 const Model = mongoose_1.default.model('User', UserSchema);
 exports.default = Model;

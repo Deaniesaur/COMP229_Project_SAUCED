@@ -39,6 +39,7 @@ export function DisplayLoginPage(
     title: "SAUCED | Login",
     page: "login",
     display: GetDisplayName(req),
+    messages: req.flash('loginMessage'),
   });
 }
 
@@ -51,6 +52,7 @@ export function DisplaySignUpPage(
     title: "SAUCED | Login",
     page: "signup",
     display: GetDisplayName(req),
+    messages: req.flash('registerMessage'),
   });
 }
 

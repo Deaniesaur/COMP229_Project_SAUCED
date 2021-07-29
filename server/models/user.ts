@@ -2,7 +2,6 @@ import mongoose, { PassportLocalSchema } from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 const Schema = mongoose.Schema; // alias for the Mongoose Schema
 
-
 const UserSchema = new Schema(
   {
     username: String,
@@ -25,7 +24,8 @@ const UserSchema = new Schema(
 );
 
 UserSchema.plugin(passportLocalMongoose, {
-  usernameQueryFields: ['username', 'email']
+  usernameQueryFields: ['username', 'email'],
+  usernameLowerCase: true
 });
 
 const Model = mongoose.model('User', UserSchema as PassportLocalSchema);

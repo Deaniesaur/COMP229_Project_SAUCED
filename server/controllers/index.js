@@ -28,6 +28,7 @@ function DisplayLoginPage(req, res, next) {
         title: "SAUCED | Login",
         page: "login",
         display: util_1.GetDisplayName(req),
+        messages: req.flash('loginMessage'),
     });
 }
 exports.DisplayLoginPage = DisplayLoginPage;
@@ -36,6 +37,7 @@ function DisplaySignUpPage(req, res, next) {
         title: "SAUCED | Login",
         page: "signup",
         display: util_1.GetDisplayName(req),
+        messages: req.flash('registerMessage'),
     });
 }
 exports.DisplaySignUpPage = DisplaySignUpPage;
