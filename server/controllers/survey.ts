@@ -76,20 +76,26 @@ export function DisplayUpdateSurveyPage(
 ): void {
   let surveyId = req.params.id;
   let surveyFound: any;
+  let user = req.user as UserDocument;
 
-  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
+  Survey.findOne({ _id: surveyId, owner: user.username }, function (err: any, survey: any) {
     if (err) {
       return console.error(err);
     }
 
-    surveyFound = survey.toObject();
-    res.render("index", {
-      title: "SAUCED | Edit Survey",
-      page: "editSurvey",
-      survey: surveyFound,
-      sid: surveyId,
-      display: GetDisplayName(req),
-    });
+    console.log(survey);
+    if(survey === null){
+      res.redirect('../public');
+    }else{
+      surveyFound = survey.toObject();
+      res.render("index", {
+        title: "SAUCED | Edit Survey",
+        page: "editSurvey",
+        survey: surveyFound,
+        sid: surveyId,
+        display: GetDisplayName(req),
+      });
+    }
   });
 }
 

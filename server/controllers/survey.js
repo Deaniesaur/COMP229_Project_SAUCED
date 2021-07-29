@@ -57,18 +57,25 @@ exports.DisplayNewSurveyPage = DisplayNewSurveyPage;
 function DisplayUpdateSurveyPage(req, res, next) {
     let surveyId = req.params.id;
     let surveyFound;
-    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
+    let user = req.user;
+    survey_1.default.findOne({ _id: surveyId, owner: user.username }, function (err, survey) {
         if (err) {
             return console.error(err);
         }
-        surveyFound = survey.toObject();
-        res.render("index", {
-            title: "SAUCED | Edit Survey",
-            page: "editSurvey",
-            survey: surveyFound,
-            sid: surveyId,
-            display: util_1.GetDisplayName(req),
-        });
+        console.log(survey);
+        if (survey === null) {
+            res.redirect('../public');
+        }
+        else {
+            surveyFound = survey.toObject();
+            res.render("index", {
+                title: "SAUCED | Edit Survey",
+                page: "editSurvey",
+                survey: surveyFound,
+                sid: surveyId,
+                display: util_1.GetDisplayName(req),
+            });
+        }
     });
 }
 exports.DisplayUpdateSurveyPage = DisplayUpdateSurveyPage;
