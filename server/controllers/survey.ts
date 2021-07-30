@@ -207,7 +207,7 @@ export function SubmitResponse(
     }
   });
 
-  res.redirect("/survey/public");
+  res.redirect("/survey/public ");
 }
 
 export function DeleteSurvey(
@@ -229,7 +229,7 @@ export function DeleteSurvey(
       }
 
       console.log(`Survey: ${id} DELETED`);
-      res.redirect("/survey");
+      res.redirect("/survey/private");
     });
   });
 }
