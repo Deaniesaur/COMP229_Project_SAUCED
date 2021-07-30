@@ -207,7 +207,7 @@ export function SubmitResponse(
     }
   });
 
-  res.redirect("/survey");
+  res.redirect("/survey/public");
 }
 
 export function DeleteSurvey(
