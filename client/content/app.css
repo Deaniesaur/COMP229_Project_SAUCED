@@ -76,6 +76,8 @@ a {
 
 .img-fluid {
   max-width: 63%;
+  max-height: 15rem;
+  margin-bottom: 2rem;
 }
 
 /*FOOTER*/
@@ -279,9 +281,6 @@ textarea {
   }
   #google-maps {
     margin: 0;
-  }
-  #account-text {
-    display: none;
   }
   .footer-link {
     float: none;
