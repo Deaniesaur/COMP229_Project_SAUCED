@@ -253,67 +253,11 @@ function deleteQuestion(questionNumber) {
   }
 }
 
-function updateSurveyQuestions(id) {
-  let http = new XMLHttpRequest();
-  let url = `/survey/edit/${id}`;
-  let description = document.getElementById("description").value;
-  let surveyQuestions = [];
-  let questionsDiv = document.getElementsByName("question");
-
-  questionsDiv.forEach((question) => {
-    let surveyQuestion = {};
-    surveyQuestion["question"] = question.value;
-    // surveyQuestion["type"] = "Multiple Choice";
-    surveyQuestion["choices"] = [];
-
-    let optionsDiv = document.getElementsByName(question.id);
-
-    optionsDiv.forEach((option) => {
-      surveyQuestion.choices.push(option.value);
-    });
-    if (surveyQuestion.choices.length == 0) {
-      surveyQuestion["type"] = "Short Answer";
-    } else {
-      surveyQuestion["type"] = "Multiple Choice";
-    }
-
-    surveyQuestions.push(surveyQuestion);
-  });
-
-  let select = document.getElementById("active");
-  let valueActive = select.options[select.selectedIndex].value;
-
-  let payload = {
-    title: document.getElementById("survey-title").value,
-    description: description,
-    questions: surveyQuestions,
-    startDate: document.getElementById("startDate").value,
-    expiry: document.getElementById("editExpiry").value,
-    active: valueActive,
-  };
-
-  http.open("POST", url, true);
-
-  // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-
-  http.onreadystatechange = function () {
-    if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL + "survey/private";
-    }
-  };
-  // http.send(params);
-  http.send(JSON.stringify(payload));
-}
-
 function submitSurveyQuestions() {
-  if (document.querySelector(".important-survey-id") != null) {
-    updateSurveyQuestions(document.querySelector(".important-survey-id").id);
-    return;
-  }
-
+  const sid = document.querySelector(".important-survey-id");
+  let url;
+  sid != null ? (url = `/survey/edit/${sid}`) : (url = "/survey/create");
   let http = new XMLHttpRequest();
-  let url = "/survey/create";
   let description = document.getElementById("description").value;
   let surveyQuestions = [];
   let questionsDiv = document.getElementsByName("question");
@@ -321,46 +265,39 @@ function submitSurveyQuestions() {
   questionsDiv.forEach((question) => {
     let surveyQuestion = {};
     surveyQuestion["question"] = question.value;
-    // surveyQuestion["type"] = "Multiple Choice";
     surveyQuestion["choices"] = [];
 
-    let optionsDiv = document.getElementsByName(question.id);
-
+    let optionsDiv = document.querySelectorAll(`#${question.id}`);
     optionsDiv.forEach((option) => {
-      surveyQuestion.choices.push(option.value);
+      option.type != "textarea"
+        ? surveyQuestion.choices.push(option.value)
+        : true;
     });
+    console.log(surveyQuestion);
     if (surveyQuestion.choices.length == 0) {
       surveyQuestion["type"] = "Short Answer";
     } else {
       surveyQuestion["type"] = "Multiple Choice";
     }
-
     surveyQuestions.push(surveyQuestion);
   });
-
   let select = document.getElementById("active");
-  let valueActive = select.options[select.selectedIndex].value;
-
+  let isActive = select.options[select.selectedIndex].value;
   let payload = {
     title: document.getElementById("survey-title").value,
     description: description,
     questions: surveyQuestions,
-    create: true,
     startDate: document.getElementById("startDate").value,
     expiry: document.getElementById("expiry").value,
-    active: valueActive,
+    active: isActive,
   };
-
+  sid != null ? (payload.create = false) : (payload.create = true);
   http.open("POST", url, true);
-
-  // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-
   http.onreadystatechange = function () {
     if (http.readyState == 4 && http.status == 200) {
       window.location = http.responseURL + "survey/private";
     }
   };
-  // http.send(params);
   http.send(JSON.stringify(payload));
 }
