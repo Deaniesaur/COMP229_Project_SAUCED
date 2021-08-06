@@ -13,7 +13,7 @@ function DisplayPublicSurveys(req, res, next) {
     let filter = {
         expiry: { $gte: today },
         startDate: { $lte: today },
-        active: true
+        active: true,
     };
     survey_1.default.find(filter, function (err, surveys) {
         if (err) {
@@ -64,7 +64,7 @@ function DisplayUpdateSurveyPage(req, res, next) {
         }
         console.log(survey);
         if (survey === null) {
-            res.redirect('../public');
+            res.redirect("../public");
         }
         else {
             surveyFound = survey.toObject();
