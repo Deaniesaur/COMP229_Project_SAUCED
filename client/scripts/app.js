@@ -107,7 +107,7 @@ function getMultipleChoiceQuestion(i, j) {
   return `
 <div class="form-check form-check-inline" id="option-${j}">
 <label class="form-check-label">
-<input type="text" class="form-control" id="question${j}" name="question${i}" placeholder="Option ${j}">
+<input type="text" class="form-control" id="question${i}_option${j}" name="question${i}" placeholder="Option ${j}">
   <a href="javascript:editOption(${i - 1}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
 ></a>
@@ -121,7 +121,7 @@ function getMultipleChoiceQuestion(i, j) {
 function getMultipleChoiceOption(i, j) {
   return `
 <label class="form-check-label">
-<input type="text" class="form-control" id="question${i}" placeholder="Option ${j}" enabled>
+<input type="text" class="form-control" id="question${i}_option${j}" name="question${i}" placeholder="Option ${j}" enabled>
  
   <a href="javascript:editOption(${i}, ${j})">
 <p class="text-center" id="edit-icon"><i class="fas fa-edit"></i></p
@@ -236,7 +236,7 @@ function addNewOption(i, j) {
   }
   let questionDiv = document.getElementById(`answer-${i}`);
   let option = questionDiv.children[j + 1];
-  option.innerHTML = getMultipleChoiceOption(i, j);
+  option.innerHTML = getMultipleChoiceOption(i + 1, j);
   let div = document.createElement("div");
   div.className = "form-check form-check-inline";
   div.style = "vertical-align:top";
@@ -472,7 +472,6 @@ function submitSurveyQuestions() {
     expiry: document.getElementById("expiry").value,
     active: valueActive,
   };
-
 
   http.open("POST", url, true);
 
