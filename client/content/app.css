@@ -117,6 +117,7 @@ footer a:hover {
   margin-top: 3rem;
   border-radius: 1rem;
   top: 2rem;
+  width: 100%;
 }
 
 #question-type {
@@ -151,6 +152,14 @@ footer a:hover {
 textarea {
   border-radius: 1rem;
   padding: 1.2rem;
+}
+
+.form-check-label {
+  width: -webkit-fill-available;
+}
+
+.option-icon p {
+  line-height: 2.5rem;
 }
 
 /*ABOUT PAGE*/
@@ -249,11 +258,20 @@ textarea {
 /*RESPONSIVE*/
 
 @media (max-width: 768px) {
+  .mobile-order-0 {
+    order: 0;
+  }
   .mobile-order-1 {
     order: 1;
   }
   .mobile-order-2 {
     order: 2;
+  }
+  .mobile-order-3 {
+    order: 3;
+  }
+  .mobile-order-4 {
+    order: 4;
   }
   .border-md-right {
     /*Borders between nav items*/
@@ -270,5 +288,12 @@ textarea {
   }
   #footer-text {
     margin-top: 1em;
+  }
+  body {
+    padding: 0;
+  }
+  #survey-information {
+    margin-left: initial;
+    margin-right: initial;
   }
 }
