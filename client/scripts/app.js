@@ -69,7 +69,7 @@ function getMultipleChoiceOption(questionNumber, optionNumber) {
 <div class="row" id=option-${optionNumber}>
 <div class="col-9">
 <label class="form-check-label">
-<input type="text" class="form-control" id="question-${questionNumber}" placeholder="Option ${optionNumber}">
+<input type="text" class="form-control" name="question-${questionNumber}" placeholder="Option ${optionNumber}">
 </label>
 </div>
 <div class="col-3 option-icon">
@@ -274,13 +274,12 @@ function submitSurveyQuestions() {
     surveyQuestion["question"] = question.value;
     surveyQuestion["choices"] = [];
 
-    let optionsDiv = document.querySelectorAll(`#${question.id}`);
-    optionsDiv.forEach((option) => {
+    let options = document.getElementsByName(question.id);
+    options.forEach((option) => {
       option.type != "textarea"
         ? surveyQuestion.choices.push(option.value)
         : true;
     });
-    console.log(surveyQuestion);
     if (surveyQuestion.choices.length == 0) {
       surveyQuestion["type"] = "Short Answer";
     } else {
