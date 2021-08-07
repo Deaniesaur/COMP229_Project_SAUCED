@@ -1,11 +1,16 @@
 "use strict";
-
+const sid = document.querySelector(".important-survey-id");
 //IIFE
 (function () {
+  let startDatePicker = document.getElementById("startDate");
   let expiryDatePicker = document.getElementById("expiry");
 
-  if (expiryDatePicker !== null)
-    expiryDatePicker.value = new Date().toISOString().slice(0, 10);
+  if (sid == null) {
+    let today = new Date();
+    let tomorrow = new Date(today.getTime() + 86400000);
+    startDatePicker.valueAsDate = today;
+    expiryDatePicker.valueAsDate = tomorrow;
+  }
 })();
 
 function getQuestionTypeDiv(questionNumber) {
@@ -256,7 +261,6 @@ function deleteQuestion(questionNumber) {
 }
 
 function submitSurveyQuestions() {
-  const sid = document.querySelector(".important-survey-id");
   let url;
   sid != null ? (url = `/survey/edit/${sid}`) : (url = "/survey/create");
   let http = new XMLHttpRequest();
