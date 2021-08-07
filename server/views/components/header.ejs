@@ -1,63 +1,55 @@
-<div class="row text-center">
-  <a href="/home"
-    ><img
-      class="img-fluid"
-      src="/assets/images/logo-light.svg"
-      alt="sauced logo"
-  /></a>
-</div>
-
-<div class="row">
-  <nav class="navbar navbar-expand navbar-dark">
-    <ul class="navbar-nav mb-2 mb-lg-0 mx-auto">
-      <li class="nav-item border-md-right">
-        <a class="nav-link" href="/home">HOME</a>
-      </li>
-
-      <li class="nav-item dropdown border-md-right">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          SURVEYS
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-dark"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="/survey/public">All Surveys</a>
-          </li>
-          <% if (display != '') { %>
-          <li>
-            <a class="dropdown-item" href="/survey/create">New Survey</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="/survey/private">My Surveys</a>
-          </li>
-          <% } %>
-        </ul>
-      </li>
-
-      <li class="nav-item border-md-right">
-        <a class="nav-link" href="/about">ABOUT US</a>
-      </li>
-      <li class="nav-item">
-        <% if (display == '') { %>
-        <a class="nav-link" href="/login"
-          ><i class="fas fa-user fa-lg"></i> Login</a
-        >
-        <% } else { %>
-        <a class="nav-link" href="/logout">
-          <i class="fas fa-sign-out-alt fa-lg account-text"></i> Logout
-        </a>
+<nav class="navbar navbar-expand-md navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home"
+      ><img
+        class="img-fluid"
+        src="/assets/images/logo-light.svg"
+        alt="sauced logo"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavBar"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavBar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item border-md-right">
+          <a class="nav-link" href="/home">HOME</a>
+        </li>
+        <% if (display != '') { %>
+        <li class="nav-item border-md-right">
+          <a class="nav-link" href="/survey/create">NEW SURVEY</a>
+        </li>
+        <li class="nav-item border-md-right">
+          <a class="nav-link" href="/survey/private">MY SURVEYS</a>
+        </li>
         <% } %>
-      </li>
-    </ul>
-  </nav>
-</div>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">ABOUT US</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <% if (display == '') { %>
+            <a class="nav-link" href="/login"
+              ><i class="fas fa-user fa-lg"></i> Login</a
+            >
+            <% } else { %>
+            <a class="nav-link" href="/logout">
+              <i class="fas fa-sign-out-alt fa-lg account-text"></i> Logout
+            </a>
+            <% } %>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</nav>
 <hr id="bootstrap-overrides" />
