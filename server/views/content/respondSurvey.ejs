@@ -15,6 +15,7 @@
         name="question<%= i %>"
         value="<%= currentChoice %>"
         type="radio"
+        required
       />
       <label for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label>
       <br />
@@ -27,6 +28,7 @@
         name="question<%= i %>"
         value="true"
         type="radio"
+        required
       />
       <label for="question<%= i %>_answer_2">False</label>
       <input
@@ -34,6 +36,7 @@
         name="question<%= i %>"
         value="false"
         type="radio"
+        required
       />
 
       <% break; } %>
