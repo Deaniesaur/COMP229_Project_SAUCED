@@ -2,9 +2,11 @@
 <div class="row text-center">
   <div class="col-md-9">
     <a class="nav-link footer-link" href="/home">Home</a>
+    <a class="nav-link footer-link" href="/survey/public">All Surveys</a>
+    <% if (display != '') { %>
     <a class="nav-link footer-link" href="/survey/create">New Survey</a>
-    <a class="nav-link footer-link" href="/survey/public">Public Surveys</a>
-    <a class="nav-link footer-link" href="/survey/private">Private Surveys</a>
+    <a class="nav-link footer-link" href="/survey/private">My Surveys</a>
+    <% } %>
     <a class="nav-link footer-link" href="/about">About Us</a>
   </div>
   <br /><br />

@@ -1,11 +1,16 @@
 "use strict";
-
+const sid = document.querySelector(".important-survey-id");
 //IIFE
 (function () {
+  let startDatePicker = document.getElementById("startDate");
   let expiryDatePicker = document.getElementById("expiry");
 
-  if (expiryDatePicker !== null)
-    expiryDatePicker.value = new Date().toISOString().slice(0, 10);
+  if (sid == null) {
+    let today = new Date();
+    let tomorrow = new Date(today.getTime() + 86400000);
+    startDatePicker.valueAsDate = today;
+    expiryDatePicker.valueAsDate = tomorrow;
+  }
 })();
 
 function getQuestionTypeDiv(questionNumber) {
@@ -64,11 +69,12 @@ function getMultipleChoiceOption(questionNumber, optionNumber) {
 <div class="row" id=option-${optionNumber}>
 <div class="col-9">
 <label class="form-check-label">
-<input type="text" class="form-control" id="question-${questionNumber}" placeholder="Option ${optionNumber}" enabled>
+<input type="text" class="form-control" name="question-${questionNumber}" placeholder="Option ${optionNumber}">
+</label>
 </div>
 <div class="col-3 option-icon">
 <a href="javascript:deleteOption(${questionNumber}, ${optionNumber})">
-<p class="text-center"><i class="fas fa-trash"></i></p></a></label></div></div>`;
+<p class="text-center"><i class="fas fa-trash"></i></p></a></div></div>`;
 }
 
 function addNewQuestionButton(questionNumber, optionNumber) {
@@ -176,7 +182,7 @@ function initMultipleChoiceOptions(questionNumber) {
 
 function addNewOptionButton(questionNumber, optionNumber) {
   return `
-<div class="form-check form-check-inline" id="option-${optionNumber}" style="vertical-align:top">
+<div class="form-check form-check-inline" id="option-${optionNumber}">
 <p class="text-center" id="edit-icon">
   <a href="javascript:addNewOption(${questionNumber}, ${optionNumber})">
 <i class="fas fa-plus"></i></a></p
@@ -191,9 +197,11 @@ function addNewOption(questionNumber, optionNumber) {
   }
   let div = document.getElementById(`answer-${questionNumber - 1}`);
   div.children[optionNumber - 1].remove();
-  div.innerHTML +=
+  div.insertAdjacentHTML(
+    "beforeend",
     getMultipleChoiceOption(questionNumber, optionNumber) +
-    addNewOptionButton(questionNumber, optionNumber + 1);
+      addNewOptionButton(questionNumber, optionNumber + 1)
+  );
 }
 
 function deleteOption(questionNumber, optionNumber) {
@@ -254,7 +262,6 @@ function deleteQuestion(questionNumber) {
 }
 
 function submitSurveyQuestions() {
-  const sid = document.querySelector(".important-survey-id");
   let url;
   sid != null ? (url = `/survey/edit/${sid}`) : (url = "/survey/create");
   let http = new XMLHttpRequest();
@@ -267,13 +274,12 @@ function submitSurveyQuestions() {
     surveyQuestion["question"] = question.value;
     surveyQuestion["choices"] = [];
 
-    let optionsDiv = document.querySelectorAll(`#${question.id}`);
-    optionsDiv.forEach((option) => {
+    let options = document.getElementsByName(question.id);
+    options.forEach((option) => {
       option.type != "textarea"
         ? surveyQuestion.choices.push(option.value)
         : true;
     });
-    console.log(surveyQuestion);
     if (surveyQuestion.choices.length == 0) {
       surveyQuestion["type"] = "Short Answer";
     } else {
