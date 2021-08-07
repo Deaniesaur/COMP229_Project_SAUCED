@@ -191,9 +191,11 @@ function addNewOption(questionNumber, optionNumber) {
   }
   let div = document.getElementById(`answer-${questionNumber - 1}`);
   div.children[optionNumber - 1].remove();
-  div.innerHTML +=
+  div.insertAdjacentHTML(
+    "beforeend",
     getMultipleChoiceOption(questionNumber, optionNumber) +
-    addNewOptionButton(questionNumber, optionNumber + 1);
+      addNewOptionButton(questionNumber, optionNumber + 1)
+  );
 }
 
 function deleteOption(questionNumber, optionNumber) {
