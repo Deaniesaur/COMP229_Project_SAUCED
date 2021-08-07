@@ -210,7 +210,7 @@ export function SubmitResponse(
     }
   });
 
-  res.redirect("/survey/public ");
+  res.redirect("/survey/public");
 }
 
 export function DeleteSurvey(

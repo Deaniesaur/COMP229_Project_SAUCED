@@ -158,7 +158,7 @@ function SubmitResponse(req, res, next) {
             res.end(err);
         }
     });
-    res.redirect("/survey/public ");
+    res.redirect("/survey/public");
 }
 exports.SubmitResponse = SubmitResponse;
 function DeleteSurvey(req, res, next) {
