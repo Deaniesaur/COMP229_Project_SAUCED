@@ -4,7 +4,7 @@ import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
 
 //import Util Function
-import { GetDisplayName } from '../util';
+import { GetDisplayName } from "../util";
 
 export function DisplayPublicSurveys(
   req: Request,
@@ -16,7 +16,7 @@ export function DisplayPublicSurveys(
   let filter = {
     expiry: { $gte: today },
     startDate: { $lte: today },
-    active: true
+    active: true,
   };
 
   Survey.find(filter, function (err, surveys) {
@@ -78,25 +78,28 @@ export function DisplayUpdateSurveyPage(
   let surveyFound: any;
   let user = req.user as UserDocument;
 
-  Survey.findOne({ _id: surveyId, owner: user.username }, function (err: any, survey: any) {
-    if (err) {
-      return console.error(err);
-    }
+  Survey.findOne(
+    { _id: surveyId, owner: user.username },
+    function (err: any, survey: any) {
+      if (err) {
+        return console.error(err);
+      }
 
-    console.log(survey);
-    if(survey === null){
-      res.redirect('../public');
-    }else{
-      surveyFound = survey.toObject();
-      res.render("index", {
-        title: "SAUCED | Edit Survey",
-        page: "editSurvey",
-        survey: surveyFound,
-        sid: surveyId,
-        display: GetDisplayName(req),
-      });
+      console.log(survey);
+      if (survey === null) {
+        res.redirect("../public");
+      } else {
+        surveyFound = survey.toObject();
+        res.render("index", {
+          title: "SAUCED | Edit Survey",
+          page: "editSurvey",
+          survey: surveyFound,
+          sid: surveyId,
+          display: GetDisplayName(req),
+        });
+      }
     }
-  });
+  );
 }
 
 export function UpsertSurvey(

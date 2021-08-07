@@ -1,70 +1,62 @@
-<div class="normal-text">
-  <div class="row">
-    <div class="col-3">
-      <div class="card sticky-top" id="survey-information">
-        <div class="card-body">
-          <h5 class="card-title">Survey Information</h5>
+<div class="row">
+  <div class="col-md-3 mobile-order-3">
+    <div class="card sticky-top" id="survey-information">
+      <div class="card-body">
+        <h5 class="card-title">Survey Information</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <label for="active">Choose active:</label>
+          <select name="active" id="active">
+            <option value="true">yes</option>
+            <option value="false">no</option>
+          </select>
+        </li>
+        <li class="list-group-item">
+          Start Date: <input type="date" id="startDate" name="startDate" />
+        </li>
+        <li class="list-group-item">
+          Expiry Date: <input type="date" id="expiry" name="expiry" />
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-9 mobile-order-1">
+    <label for="survey-title" class="form-label">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="survey-title"
+      placeholder="Survey title"
+    />
+    <br />
+    <div class="row">
+      <div class="col-md-8 mobile-order-2">
+        <p>Description</p>
+
+        <textarea
+          class="w-100"
+          id="description"
+          name="description"
+          rows="8"
+          placeholder="Put a short description of your survey here."
+        ></textarea>
+      </div>
+      <div class="col-md-4 mobile-order-0">
+        <p>Thumbnail</p>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary btn-thumbnail" type="button">
+            <i class="fas fa-plus fa-2x"></i>
+          </button>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-        </ul>
       </div>
     </div>
-    <div class="col-9">
-      <label for="survey-title" class="form-label">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="survey-title"
-        placeholder="Survey title"
-      />
-      <br />
-      <div class="row">
-        <div class="col-8">
-          <p>Description</p>
-
-          <textarea
-            id="description"
-            name="description"
-            rows="8"
-            cols="50"
-            placeholder="Put a short description of your survey here."
-            value=""
-          ></textarea>
-        </div>
-        <div class="col-4">
-          <p>Thumbnail</p>
-          <div class="d-grid gap-2">
-            <button class="btn btn-primary btn-thumbnail" type="button">
-              <i class="fas fa-plus fa-2x"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <label for="active">Choose active:</label>
-        <select name="active" id="active">
-          <option value="true">yes</option>
-          <option value="false">no</option>
-        </select>
-      </div>
-      <div>
-        Start Date:
-        <input type="date" id="startDate" name="startDate">
-      </div>
-      <div>
-        Expiry Date:
-        <input type="date" id="expiry" name="expiry">
-      </div>
-      <div class="row text-center" id="main-section">
-        <p>
-          <br /><br />
-          Start by selecting the plus (+) button and the type of question you
-          wish to add to your new survey.<br /><br />
-        </p>
-      </div>
+    <div class="row text-center" id="main-section">
+      <p>
+        <br /><br />
+        Start by selecting the plus (+) button and the type of question you wish
+        to add to your new survey.<br /><br />
+      </p>
     </div>
   </div>
 </div>

@@ -1,34 +1,12 @@
 <div class="row text-center">
-  <div class="col-2" style="margin: auto">
-    <a href="/home"
-      ><img
-        class="img-fluid"
-        src="/assets/images/logo-light.svg"
-        alt="logo"
-        height="100px"
-    /></a>
-  </div>
-  <div class="col-8" style="margin: auto">
-    <img
+  <a href="/home"
+    ><img
       class="img-fluid"
-      src="/assets/images/title-banner.png"
-      alt="Create Surveys in 2 Minutes"
-      height="100px"
-    />
-  </div>
-  <div class="col-2" style="margin: auto; padding: 0">
-    <% if (display == '') { %>
-    <a class="nav-link" href="/login"
-      ><i class="fas fa-user fa-lg"></i>
-      <p id="account-text">MY ACCOUNT</p></a
-    >
-    <% } else { %>
-    <a class="nav-link" href="/logout">
-      <i class="fas fa-sign-out-alt fa-lg account-text"></i> Logout
-    </a>
-    <% } %>
-  </div>
+      src="/assets/images/logo-light.svg"
+      alt="sauced logo"
+  /></a>
 </div>
+
 <div class="row">
   <nav class="navbar navbar-expand navbar-dark">
     <ul class="navbar-nav mb-2 mb-lg-0 mx-auto">
@@ -36,21 +14,7 @@
         <a class="nav-link" href="/home">HOME</a>
       </li>
 
-      <li class="nav-item border-md-right">
-        <a class="nav-link" href="/survey/create">CREATE SURVEY</a>
-      </li>
-
-      <li class="nav-item border-md-right">
-        <a class="nav-link" href="/survey/public">ALL SURVEYS</a>
-      </li>
-
-      <% if (display !== '') { %>
-      <li class="nav-item border-md-right">
-        <a class="nav-link" href="/survey/private">MY SURVEYS</a>
-      </li>
-      <% } %>
-
-      <!-- <li class="nav-item dropdown border-md-right">
+      <li class="nav-item dropdown border-md-right">
         <a
           class="nav-link dropdown-toggle"
           href="#"
@@ -66,7 +30,7 @@
           aria-labelledby="navbarDropdownMenuLink"
         >
           <li>
-            <a class="dropdown-item" href="/survey/public">Surveys</a>
+            <a class="dropdown-item" href="/survey/public">All Surveys</a>
           </li>
           <% if (display != '') { %>
           <li>
@@ -77,17 +41,23 @@
           </li>
           <% } %>
         </ul>
-      </li> -->
+      </li>
 
-      <li class="nav-item">
+      <li class="nav-item border-md-right">
         <a class="nav-link" href="/about">ABOUT US</a>
+      </li>
+      <li class="nav-item">
+        <% if (display == '') { %>
+        <a class="nav-link" href="/login"
+          ><i class="fas fa-user fa-lg"></i> Login</a
+        >
+        <% } else { %>
+        <a class="nav-link" href="/logout">
+          <i class="fas fa-sign-out-alt fa-lg account-text"></i> Logout
+        </a>
+        <% } %>
       </li>
     </ul>
   </nav>
 </div>
 <hr id="bootstrap-overrides" />
-<p class="text-center">
-  Thanks for visiting, start creating surveys<br />
-  <br />
-  <button type="button" class="btn btn-secondary btn-xl">HERE</button>
-</p>
