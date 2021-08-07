@@ -1,5 +1,7 @@
 "use strict";
-const sid = document.querySelector(".important-survey-id");
+const header = document.querySelector(".important-survey-id");
+const sid = header == null ? null : header.id;
+
 //IIFE
 (function () {
   let startDatePicker = document.getElementById("startDate");
@@ -182,7 +184,7 @@ function initMultipleChoiceOptions(questionNumber) {
 
 function addNewOptionButton(questionNumber, optionNumber) {
   return `
-<div class="form-check form-check-inline" id="option-${optionNumber}">
+<div class="form-check form-check-inline" name="option-${optionNumber}">
 <p class="text-center" id="edit-icon">
   <a href="javascript:addNewOption(${questionNumber}, ${optionNumber})">
 <i class="fas fa-plus"></i></a></p
