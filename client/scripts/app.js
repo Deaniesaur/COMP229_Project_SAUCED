@@ -69,11 +69,12 @@ function getMultipleChoiceOption(questionNumber, optionNumber) {
 <div class="row" id=option-${optionNumber}>
 <div class="col-9">
 <label class="form-check-label">
-<input type="text" class="form-control" id="question-${questionNumber}" placeholder="Option ${optionNumber}" enabled>
+<input type="text" class="form-control" id="question-${questionNumber}" placeholder="Option ${optionNumber}">
+</label>
 </div>
 <div class="col-3 option-icon">
 <a href="javascript:deleteOption(${questionNumber}, ${optionNumber})">
-<p class="text-center"><i class="fas fa-trash"></i></p></a></label></div></div>`;
+<p class="text-center"><i class="fas fa-trash"></i></p></a></div></div>`;
 }
 
 function addNewQuestionButton(questionNumber, optionNumber) {
@@ -181,7 +182,7 @@ function initMultipleChoiceOptions(questionNumber) {
 
 function addNewOptionButton(questionNumber, optionNumber) {
   return `
-<div class="form-check form-check-inline" id="option-${optionNumber}" style="vertical-align:top">
+<div class="form-check form-check-inline" id="option-${optionNumber}">
 <p class="text-center" id="edit-icon">
   <a href="javascript:addNewOption(${questionNumber}, ${optionNumber})">
 <i class="fas fa-plus"></i></a></p
