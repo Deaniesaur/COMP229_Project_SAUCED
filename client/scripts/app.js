@@ -1,5 +1,7 @@
 "use strict";
-const sid = document.querySelector(".important-survey-id").id;
+const header = document.querySelector(".important-survey-id");
+const sid = header == null ? null : header.id;
+
 //IIFE
 (function () {
   let startDatePicker = document.getElementById("startDate");
@@ -275,6 +277,7 @@ function submitSurveyQuestions() {
     surveyQuestion["choices"] = [];
 
     let options = document.getElementsByName(question.id);
+    console.log(question.id)
     options.forEach((option) => {
       option.type != "textarea"
         ? surveyQuestion.choices.push(option.value)
