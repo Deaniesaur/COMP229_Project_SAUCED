@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayUpdateSurveyPage = exports.DisplayNewSurveyPage = exports.DisplayPrivateSurveys = exports.DisplayPublicSurveys = void 0;
+exports.DownloadPDF = exports.CreateSurveyAnalysis = exports.DisplaySurveyAnalysis = exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayUpdateSurveyPage = exports.DisplayNewSurveyPage = exports.DisplayPrivateSurveys = exports.DisplayPublicSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -179,4 +179,94 @@ function DeleteSurvey(req, res, next) {
     });
 }
 exports.DeleteSurvey = DeleteSurvey;
+function DisplaySurveyAnalysis(req, res, next) {
+    console.log('Dean here!');
+    res.render("index", {
+        title: "SAUCED | Analysis",
+        page: "analysis",
+        display: util_1.GetDisplayName(req),
+    });
+}
+exports.DisplaySurveyAnalysis = DisplaySurveyAnalysis;
+function CreateSurveyAnalysis(req, res, next) {
+    let surveyId = req.params.id;
+    survey_1.default.findOne({ _id: surveyId }, function (err, survey) {
+        if (err) {
+            return console.error(err);
+        }
+        response_1.default.find({ surveyId: surveyId }, function (err, responses) {
+            if (err) {
+                return console.error(err);
+            }
+            let isShortAnswer = [];
+            let analysisList = [];
+            let questions = survey.questions;
+            questions.forEach((question) => {
+                let analysis = {};
+                let answers = {};
+                analysis['question'] = question.question;
+                analysis['type'] = question.type;
+                if (question.type == 'Short Answer') {
+                    isShortAnswer.push(true);
+                    answers = [];
+                }
+                else {
+                    isShortAnswer.push(false);
+                    let options = question.choices;
+                    options.forEach((option) => {
+                        answers[option] = 0;
+                    });
+                }
+                analysis['answers'] = answers;
+                analysisList.push(analysis);
+            });
+            responses.forEach((response) => {
+                let answers = response.answers;
+                for (let i = 0; i < answers.length; i++) {
+                    if (isShortAnswer[i]) {
+                        analysisList[i]['answers'].push(answers[i]);
+                    }
+                    else {
+                        analysisList[i]['answers'][answers[i]] += 1;
+                    }
+                }
+            });
+            console.log('types', isShortAnswer);
+            console.log('analysisList', analysisList);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(analysisList));
+        });
+    });
+}
+exports.CreateSurveyAnalysis = CreateSurveyAnalysis;
+function DownloadPDF(req, res, next) {
+    let charts = req.body.charts;
+    var options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "10mm",
+        header: {
+            height: "45mm",
+            contents: '<div style="text-align: center;">Author: SAUCED</div>'
+        },
+        footer: {
+            height: "28mm",
+            contents: {
+                first: 'Cover page',
+                2: 'Second page',
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>',
+                last: 'Last Page'
+            }
+        }
+    };
+    let document = {
+        html: charts,
+        data: {},
+        path: "./output.pdf",
+        type: "",
+    };
+    res.setHeader('Content-Type', 'text/html');
+    res.send('Download WIP');
+}
+exports.DownloadPDF = DownloadPDF;
 //# sourceMappingURL=survey.js.map

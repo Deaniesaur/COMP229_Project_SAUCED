@@ -6,6 +6,10 @@ import mongoose, { mongo } from "mongoose";
 //import Util Function
 import { GetDisplayName } from "../util";
 
+interface LooseObject {
+  [key: string]: any
+}
+
 export function DisplayPublicSurveys(
   req: Request,
   res: Response,
@@ -235,4 +239,133 @@ export function DeleteSurvey(
       res.redirect("/survey/private");
     });
   });
+}
+
+export function DisplaySurveyAnalysis(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+  // let analysis = req.body.analysis;
+
+  console.log('Dean here!');
+  res.render("index", {
+    title: "SAUCED | Analysis",
+    page: "analysis",
+    display: GetDisplayName(req),
+  });
+}
+
+export function CreateSurveyAnalysis(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+  let surveyId = req.params.id;
+
+  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
+    if (err) {
+      return console.error(err);
+    }
+    
+    SurveyResponse.find({ surveyId: surveyId }, function (err: any, responses: Array<LooseObject>) {
+      if (err) {
+        return console.error(err);
+      }
+      
+      let isShortAnswer: Array<boolean> = [];
+      let analysisList: Array<LooseObject> = [];
+      let questions = survey.questions;
+
+      questions.forEach((question: any) => {
+        let analysis: LooseObject = {};
+        let answers: LooseObject = {};
+        
+        analysis['question'] = question.question;
+        analysis['type'] = question.type;
+
+        if(question.type == 'Short Answer'){
+          isShortAnswer.push(true);
+          answers = [];
+        }else{
+          isShortAnswer.push(false);
+          let options = question.choices;
+
+          options.forEach((option: string) => {
+            answers[option] = 0;
+          })
+        }
+
+        analysis['answers'] = answers;
+        analysisList.push(analysis);
+      });
+
+      responses.forEach((response: LooseObject) => {
+        let answers = response.answers;
+
+        for(let i = 0; i < answers.length; i++){
+          if(isShortAnswer[i]){
+            analysisList[i]['answers'].push(answers[i]);
+          }
+          else{
+            analysisList[i]['answers'][answers[i]] += 1;
+          }
+        }
+      });
+
+      console.log('types', isShortAnswer);
+      console.log('analysisList', analysisList);
+
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(analysisList));
+    });
+  });
+}
+
+//WIP
+export function DownloadPDF(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+  let charts = req.body.charts;
+  // console.log('charts', charts);
+
+  var options = {
+    format: "A3",
+    orientation: "portrait",
+    border: "10mm",
+    header: {
+      height: "45mm",
+      contents: '<div style="text-align: center;">Author: SAUCED</div>'
+    },
+    footer: {
+      height: "28mm",
+      contents: {
+          first: 'Cover page',
+          2: 'Second page', // Any page number is working. 1-based index
+          default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+          last: 'Last Page'
+      }
+    }
+  };
+
+  let document = {
+    html: charts,
+    data: {},
+    path: "./output.pdf",
+    type: "",
+  };
+  
+  // pdf
+  //   .create(document, options)
+  //   .then((pdfRes: any) => {
+  //     console.log(pdfRes);
+  //   })
+  //   .catch((pdfError: any) => {
+  //     console.error(pdfError);
+  //   });
+
+  res.setHeader('Content-Type', 'text/html');
+  res.send('Download WIP');
 }

@@ -13,6 +13,9 @@ import {
   DisplayNewSurveyPage,
   DisplayUpdateSurveyPage,
   SubmitResponse,
+  DisplaySurveyAnalysis,
+  CreateSurveyAnalysis,
+  DownloadPDF,
 } from "../controllers/survey";
 
 import { AuthGuard } from "../util";
@@ -41,5 +44,14 @@ router.get("/edit/:id", AuthGuard, DisplayUpdateSurveyPage);
 //POST Update Survey By Id
 router.post("/edit/:id", AuthGuard, UpsertSurvey);
 
-//Todo: Delete Survey
+//GET Delete Survey
 router.get("/delete/:id", AuthGuard, DeleteSurvey);
+
+//GET Display Survey Analysis
+router.get("/analysis/:id", AuthGuard, DisplaySurveyAnalysis);
+
+//POST Create Survey Analysis
+router.post("/analysis/:id", AuthGuard, CreateSurveyAnalysis);
+
+//GET Download Survey Analysis
+router.post("/download/:id", AuthGuard, DownloadPDF);
