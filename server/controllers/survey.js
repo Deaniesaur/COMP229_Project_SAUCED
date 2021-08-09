@@ -1,12 +1,23 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayUpdateSurveyPage = exports.DisplayNewSurveyPage = exports.DisplayPrivateSurveys = exports.DisplayPublicSurveys = void 0;
+exports.DownloadPDF = exports.CreateSurveyAnalysis = exports.DisplaySurveyAnalysis = exports.DeleteSurvey = exports.SubmitResponse = exports.DisplaySurveyById = exports.UpsertSurvey = exports.DisplayUpdateSurveyPage = exports.DisplayNewSurveyPage = exports.DisplayPrivateSurveys = exports.DisplayPublicSurveys = void 0;
 const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const pdf_creator_node_1 = __importDefault(require("pdf-creator-node"));
+const ejs_1 = __importDefault(require("ejs"));
 const util_1 = require("../util");
 function DisplayPublicSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
@@ -179,4 +190,129 @@ function DeleteSurvey(req, res, next) {
     });
 }
 exports.DeleteSurvey = DeleteSurvey;
+function DisplaySurveyAnalysis(req, res, next) {
+    let surveyId = req.params.id;
+    res.render("index", {
+        title: "SAUCED | Analysis",
+        page: "analysis",
+        surveyId: surveyId,
+        display: util_1.GetDisplayName(req),
+    });
+}
+exports.DisplaySurveyAnalysis = DisplaySurveyAnalysis;
+function CreateSurveyAnalysis(req, res, next) {
+    let getAnalysisList = getSurveyAnalysisData(req, res, next);
+    getAnalysisList.then((analysis) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(analysis));
+    });
+}
+exports.CreateSurveyAnalysis = CreateSurveyAnalysis;
+function DownloadPDF(req, res, next) {
+    const options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "10mm",
+        header: {
+            height: "45mm",
+            contents: '<div style="text-align: center;">Author: SAUCED</div>'
+        },
+        footer: {
+            height: "28mm",
+            contents: {
+                first: 'Cover page',
+                2: 'Second page',
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>',
+                last: 'Last Page'
+            }
+        }
+    };
+    let user = req.user;
+    let path = "output/" + user.username + "/" + "analysis.pdf";
+    let getAnalysisList = getSurveyAnalysisData(req, res, next);
+    getAnalysisList.then((completeAnalysis) => {
+        ejs_1.default.renderFile('template.ejs', {
+            title: completeAnalysis.title,
+            description: completeAnalysis.description,
+            analysis: completeAnalysis.analysis,
+            count: completeAnalysis.responseCount,
+        }, function (err, data) {
+            if (err) {
+                console.log('error', err);
+            }
+            let document = {
+                html: data,
+                data: {},
+                path: "./" + path,
+                type: "",
+            };
+            pdf_creator_node_1.default
+                .create(document, options)
+                .then((pdfRes) => {
+                console.log(pdfRes);
+                let filePath = `${__dirname}/../../${path}`;
+                res.download(filePath, 'analysis.pdf', (err) => {
+                    if (err) {
+                        res.status(500).send({
+                            message: "Could not download the file. " + err,
+                        });
+                    }
+                });
+            })
+                .catch((pdfError) => {
+                console.error(pdfError);
+                res.status(500).send({
+                    message: "Could not download the file. " + err,
+                });
+            });
+        });
+    });
+}
+exports.DownloadPDF = DownloadPDF;
+function getSurveyAnalysisData(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let surveyId = req.params.id;
+        let completeAnalysis = {};
+        let analysisList = [];
+        let survey = yield survey_1.default.findOne({ _id: surveyId });
+        let responses = yield response_1.default.find({ surveyId: surveyId });
+        let isShortAnswer = [];
+        let questions = survey.questions;
+        completeAnalysis['title'] = survey.title;
+        completeAnalysis['description'] = survey.description;
+        completeAnalysis['responseCount'] = responses.length;
+        questions.forEach((question) => {
+            let analysis = {};
+            let answers = {};
+            analysis['question'] = question.question;
+            analysis['type'] = question.type;
+            if (question.type == 'Short Answer') {
+                isShortAnswer.push(true);
+                answers = [];
+            }
+            else {
+                isShortAnswer.push(false);
+                let options = question.choices;
+                options.forEach((option) => {
+                    answers[option] = 0;
+                });
+            }
+            analysis['answers'] = answers;
+            analysisList.push(analysis);
+        });
+        responses.forEach((response) => {
+            let answers = response.answers;
+            for (let i = 0; i < answers.length; i++) {
+                if (isShortAnswer[i]) {
+                    analysisList[i]['answers'].push(answers[i]);
+                }
+                else {
+                    analysisList[i]['answers'][answers[i]] += 1;
+                }
+            }
+        });
+        completeAnalysis['analysis'] = analysisList;
+        return completeAnalysis;
+    });
+}
 //# sourceMappingURL=survey.js.map

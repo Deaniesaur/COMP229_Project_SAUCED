@@ -20,6 +20,7 @@
               <% if( display != '' && title.includes('Private')) { %>
               <th class="text-center"></th>
               <th class="text-center"></th>
+              <th class="text-center"></th>
               <% } %>
             </tr>
             </thead>
@@ -46,6 +47,11 @@
               </td>
 
               <% if( display != '' && title.includes('Private')) { %>
+                <td class="text-center">
+                  <a href="/survey/analysis/<%= surveys[count]._id %>" class="btn btn-info btn-sm">
+                    <i class="fas fa-chart-bar fa-lg"></i> Analysis</a>
+                </td>
+
                 <td class="text-center">
                   <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
                     <i class="fas fa-pencil-alt"></i> Edit</a>
