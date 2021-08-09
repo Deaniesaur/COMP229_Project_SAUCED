@@ -170,32 +170,3 @@ function addShortAnswers(data){
     shortAnswersDiv.append(ul);
     chartsDiv.append(shortAnswersDiv);
 }
-
-function generatePDF() {
-    const path = window.location.pathname;
-    const surveyId = path.substring(path.lastIndexOf("/") + 1);
-    const url = '/survey/download/' + surveyId;
-
-    let chartsHTML = document.documentElement.innerHTML;
-    let http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.setRequestHeader("Content-type", "application/json");
-    http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
-            console.log('download response', http.response);
-        // data = JSON.parse(http.response);
-
-        // const url = window.URL.createObjectURL(new Blob([data]));
-        // const link = document.createElement('a');
-        // link.href = url;
-        // link.setAttribute('download', 'analysis.csv');
-        // document.body.appendChild(link);
-        // link.click();
-        // document.body.removeChild(link);
-        }
-    };
-
-    // http.send(chartsHTML);
-    http.send(JSON.stringify({'analysis': chartsHTML}));
-    // http.send();
-}

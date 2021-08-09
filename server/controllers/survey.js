@@ -191,15 +191,16 @@ function DeleteSurvey(req, res, next) {
 }
 exports.DeleteSurvey = DeleteSurvey;
 function DisplaySurveyAnalysis(req, res, next) {
+    let surveyId = req.params.id;
     res.render("index", {
         title: "SAUCED | Analysis",
         page: "analysis",
+        surveyId: surveyId,
         display: util_1.GetDisplayName(req),
     });
 }
 exports.DisplaySurveyAnalysis = DisplaySurveyAnalysis;
 function CreateSurveyAnalysis(req, res, next) {
-    let surveyId = req.params.id;
     let getAnalysisList = getSurveyAnalysisData(req, res, next);
     getAnalysisList.then((analysis) => {
         res.setHeader('Content-Type', 'application/json');
@@ -226,7 +227,8 @@ function DownloadPDF(req, res, next) {
             }
         }
     };
-    let path = "./output/analysis.pdf";
+    let user = req.user;
+    let path = "output/" + user.username + "/" + "analysis.pdf";
     let getAnalysisList = getSurveyAnalysisData(req, res, next);
     getAnalysisList.then((completeAnalysis) => {
         ejs_1.default.renderFile('template.ejs', {
@@ -241,19 +243,28 @@ function DownloadPDF(req, res, next) {
             let document = {
                 html: data,
                 data: {},
-                path: path,
+                path: "./" + path,
                 type: "",
             };
             pdf_creator_node_1.default
                 .create(document, options)
                 .then((pdfRes) => {
                 console.log(pdfRes);
+                let filePath = `${__dirname}/../../${path}`;
+                res.download(filePath, 'analysis.pdf', (err) => {
+                    if (err) {
+                        res.status(500).send({
+                            message: "Could not download the file. " + err,
+                        });
+                    }
+                });
             })
                 .catch((pdfError) => {
                 console.error(pdfError);
+                res.status(500).send({
+                    message: "Could not download the file. " + err,
+                });
             });
-            res.setHeader('Content-Type', 'text/html');
-            res.send(path);
         });
     });
 }

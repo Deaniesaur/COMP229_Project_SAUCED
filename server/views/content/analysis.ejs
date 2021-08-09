@@ -1,7 +1,9 @@
 <div id="charts">
 </div>
 <div class="d-flex justify-content-center mt-3">
-  <button type="button" class="btn btn-secondary button-red " onclick="generatePDF()">
-    Download as PDF
-  </button>
+  <form method="post" action="/survey/download/<%=surveyId%>">
+    <button class="btn btn-secondary button-red" type="submit" >
+      Download as PDF
+    </button>
+  </form>
 </div>

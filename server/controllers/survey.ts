@@ -248,9 +248,12 @@ export function DisplaySurveyAnalysis(
   res: Response,
   next: NextFunction
 ): any {
+  let surveyId = req.params.id;
+  
   res.render("index", {
     title: "SAUCED | Analysis",
     page: "analysis",
+    surveyId: surveyId,
     display: GetDisplayName(req),
   });
 }
@@ -260,8 +263,6 @@ export function CreateSurveyAnalysis(
   res: Response,
   next: NextFunction
 ): any {
-  let surveyId = req.params.id;
-
   let getAnalysisList = getSurveyAnalysisData(req, res, next)
   getAnalysisList.then((analysis) => {
     res.setHeader('Content-Type', 'application/json');
@@ -295,7 +296,8 @@ export function DownloadPDF(
     }
   };
   
-  let path = "./output/analysis.pdf";
+  let user = req.user as UserDocument;
+  let path = "output/" + user.username + "/" + "analysis.pdf";
   let getAnalysisList = getSurveyAnalysisData(req, res, next);
 
   getAnalysisList.then((completeAnalysis) => {
@@ -316,7 +318,7 @@ export function DownloadPDF(
       let document = {
         html: data,
         data: {},
-        path: path,
+        path: "./" + path,
         type: "",
       };
 
@@ -324,13 +326,23 @@ export function DownloadPDF(
         .create(document, options)
         .then((pdfRes: any) => {
           console.log(pdfRes);
+
+          // res.setHeader('Content-Type', 'text/html');
+          let filePath = `${__dirname}/../../${path}`;
+          res.download(filePath, 'analysis.pdf', (err) => {
+            if (err) {
+              res.status(500).send({
+                message: "Could not download the file. " + err,
+              });
+            }
+          });
         })
         .catch((pdfError: any) => {
           console.error(pdfError);
+          res.status(500).send({
+            message: "Could not download the file. " + err,
+          });
         });
-
-      res.setHeader('Content-Type', 'text/html');
-      res.send(path);
     });
   });
 }
