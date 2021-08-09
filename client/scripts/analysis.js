@@ -2,8 +2,6 @@ window.onload = function () {
     if(window.location.pathname.includes('analysis')){
         console.log('Chart Page');
         getData();
-    }else{
-        console.log('Not Chart Page');
     }
 }
 
@@ -95,18 +93,21 @@ async function getData(){
     http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
     http.onreadystatechange = function () {
         if (http.readyState == 4 && http.status == 200) {
-        data = JSON.parse(http.response);
-        console.log('analysisData', data);
+        let completeAnalysis = JSON.parse(http.response);
+        let data = completeAnalysis.analysis;
+
         //Insert Response Count
         let chartsDiv = document.getElementById('charts');
-        let header = document.createElement('h3');
         let div = document.createElement('div');
-        header.innerHTML = 'Response Count: ' + data.length;
-        div.append(header);
+        let titleHeader = document.createElement('h3');
+        titleHeader.innerHTML = 'Title: ' + completeAnalysis.title;
+        let responseHeader = document.createElement('h4');
+        responseHeader.innerHTML = 'Response Count: ' + completeAnalysis.responseCount;
+        div.append(titleHeader);
+        div.append(responseHeader);
         chartsDiv.append(div);
 
         for(let i = 0; i < data.length; i++){
-            console.log('data', i, data[i]);
             let chartId = `chartContainer-${i}`;
             let responseAnalysis = data[i];
 
@@ -145,7 +146,7 @@ function addChart(chartId, data){
 function addShortAnswers(data){
     let chartsDiv = document.getElementById('charts');
     let shortAnswersDiv = document.createElement('div');
-    shortAnswersDiv.className = 'container border mt-3';
+    shortAnswersDiv.className = 'container border rounded mt-3';
     let ul = document.createElement('ul');
 
     let questionLabel = document.createElement('h6');
@@ -154,7 +155,7 @@ function addShortAnswers(data){
 
     if(data.answers.length == 0){
         let p = document.createElement('p');
-        p.innerHTML = 'No Comments Yet'
+        p.innerHTML = 'No Answers Yet'
         shortAnswersDiv.append(p);
         chartsDiv.append(shortAnswersDiv);
         return;
@@ -174,14 +175,10 @@ function generatePDF() {
     const path = window.location.pathname;
     const surveyId = path.substring(path.lastIndexOf("/") + 1);
     const url = '/survey/download/' + surveyId;
-    console.log(url);
 
-    // let chartsHTML = document.getElementById("charts");
     let chartsHTML = document.documentElement.innerHTML;
-    // console.log('chartsHTML', chartsHTML);
     let http = new XMLHttpRequest();
     http.open("POST", url, true);
-    // http.setRequestHeader("Content-type", "text/html");
     http.setRequestHeader("Content-type", "application/json");
     http.onreadystatechange = function () {
         if (http.readyState == 4 && http.status == 200) {

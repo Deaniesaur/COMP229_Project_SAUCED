@@ -17,7 +17,7 @@ const survey_1 = __importDefault(require("../models/survey"));
 const response_1 = __importDefault(require("../models/response"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const pdf_creator_node_1 = __importDefault(require("pdf-creator-node"));
-const fs_1 = __importDefault(require("fs"));
+const ejs_1 = __importDefault(require("ejs"));
 const util_1 = require("../util");
 function DisplayPublicSurveys(req, res, next) {
     let today = new Date().toISOString().slice(0, 10);
@@ -191,7 +191,6 @@ function DeleteSurvey(req, res, next) {
 }
 exports.DeleteSurvey = DeleteSurvey;
 function DisplaySurveyAnalysis(req, res, next) {
-    console.log('Dean here!');
     res.render("index", {
         title: "SAUCED | Analysis",
         page: "analysis",
@@ -203,7 +202,6 @@ function CreateSurveyAnalysis(req, res, next) {
     let surveyId = req.params.id;
     let getAnalysisList = getSurveyAnalysisData(req, res, next);
     getAnalysisList.then((analysis) => {
-        console.log('analysisList', analysis);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(analysis));
     });
@@ -229,40 +227,49 @@ function DownloadPDF(req, res, next) {
         }
     };
     let path = "./output/analysis.pdf";
-    let html = fs_1.default.readFileSync("template.html", "utf8");
     let getAnalysisList = getSurveyAnalysisData(req, res, next);
-    getAnalysisList.then((analysisList) => {
-        let document = {
-            html: html,
-            data: {
-                title: 'Hello Dean',
-                analysis: analysisList
-            },
-            path: path,
-            type: "",
-        };
-        console.log(document);
-        pdf_creator_node_1.default
-            .create(document, options)
-            .then((pdfRes) => {
-            console.log(pdfRes);
-        })
-            .catch((pdfError) => {
-            console.error(pdfError);
+    getAnalysisList.then((completeAnalysis) => {
+        ejs_1.default.renderFile('template.ejs', {
+            title: completeAnalysis.title,
+            description: completeAnalysis.description,
+            analysis: completeAnalysis.analysis,
+            count: completeAnalysis.responseCount,
+        }, function (err, data) {
+            if (err) {
+                console.log('error', err);
+            }
+            let document = {
+                html: data,
+                data: {},
+                path: path,
+                type: "",
+            };
+            pdf_creator_node_1.default
+                .create(document, options)
+                .then((pdfRes) => {
+                console.log(pdfRes);
+            })
+                .catch((pdfError) => {
+                console.error(pdfError);
+            });
+            res.setHeader('Content-Type', 'text/html');
+            res.send(path);
         });
-        res.setHeader('Content-Type', 'text/html');
-        res.send(path);
     });
 }
 exports.DownloadPDF = DownloadPDF;
 function getSurveyAnalysisData(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         let surveyId = req.params.id;
+        let completeAnalysis = {};
         let analysisList = [];
         let survey = yield survey_1.default.findOne({ _id: surveyId });
         let responses = yield response_1.default.find({ surveyId: surveyId });
         let isShortAnswer = [];
         let questions = survey.questions;
+        completeAnalysis['title'] = survey.title;
+        completeAnalysis['description'] = survey.description;
+        completeAnalysis['responseCount'] = responses.length;
         questions.forEach((question) => {
             let analysis = {};
             let answers = {};
@@ -293,7 +300,8 @@ function getSurveyAnalysisData(req, res, next) {
                 }
             }
         });
-        return analysisList;
+        completeAnalysis['analysis'] = analysisList;
+        return completeAnalysis;
     });
 }
 //# sourceMappingURL=survey.js.map

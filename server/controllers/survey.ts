@@ -3,7 +3,7 @@ import Survey from "../models/survey";
 import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
 import pdf from 'pdf-creator-node';
-import fs from 'fs';
+import ejs from 'ejs';
 
 //import Util Function
 import { GetDisplayName } from "../util";
@@ -248,9 +248,6 @@ export function DisplaySurveyAnalysis(
   res: Response,
   next: NextFunction
 ): any {
-  // let analysis = req.body.analysis;
-
-  console.log('Dean here!');
   res.render("index", {
     title: "SAUCED | Analysis",
     page: "analysis",
@@ -267,8 +264,6 @@ export function CreateSurveyAnalysis(
 
   let getAnalysisList = getSurveyAnalysisData(req, res, next)
   getAnalysisList.then((analysis) => {
-    console.log('analysisList', analysis);
-
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(analysis));
   })
@@ -280,8 +275,6 @@ export function DownloadPDF(
   res: Response,
   next: NextFunction
 ): any {
-  // let analysis = req.body.analysis;
-  // console.log('analysis', analysis);\
 
   const options = {
     format: "A3",
@@ -303,35 +296,42 @@ export function DownloadPDF(
   };
   
   let path = "./output/analysis.pdf";
-  let html = fs.readFileSync("template.html", "utf8");
   let getAnalysisList = getSurveyAnalysisData(req, res, next);
 
-  // console.log('template', html);
-
-  getAnalysisList.then((analysisList) => {
-    let document = {
-      html: html,
-      data: {
-        title: 'Hello Dean',
-        analysis: analysisList
+  getAnalysisList.then((completeAnalysis) => {
+    
+    ejs.renderFile(
+      'template.ejs',
+      {
+        title: completeAnalysis.title,
+        description: completeAnalysis.description,
+        analysis: completeAnalysis.analysis,
+        count: completeAnalysis.responseCount,
       },
-      path: path,
-      type: "",
-    };
+      function(err, data) {
+      if(err){
+        console.log('error', err);
+      }
+      
+      let document = {
+        html: data,
+        data: {},
+        path: path,
+        type: "",
+      };
 
-    console.log(document);
+      pdf
+        .create(document, options)
+        .then((pdfRes: any) => {
+          console.log(pdfRes);
+        })
+        .catch((pdfError: any) => {
+          console.error(pdfError);
+        });
 
-    pdf
-      .create(document, options)
-      .then((pdfRes: any) => {
-        console.log(pdfRes);
-      })
-      .catch((pdfError: any) => {
-        console.error(pdfError);
-      });
-
-    res.setHeader('Content-Type', 'text/html');
-    res.send(path);
+      res.setHeader('Content-Type', 'text/html');
+      res.send(path);
+    });
   });
 }
 
@@ -341,12 +341,17 @@ async function getSurveyAnalysisData(
   next: NextFunction
 ): Promise<LooseObject> {
   let surveyId = req.params.id;
-  let analysisList: LooseObject = [];
+  let completeAnalysis: LooseObject = {};
+  let analysisList: Array<LooseObject> = [];
   let survey: LooseObject = await Survey.findOne({ _id: surveyId });
   let responses = await SurveyResponse.find({ surveyId: surveyId });
 
   let isShortAnswer: Array<boolean> = [];
   let questions = survey.questions;
+
+  completeAnalysis['title'] = survey.title;
+  completeAnalysis['description'] = survey.description;
+  completeAnalysis['responseCount'] = responses.length;
 
   questions.forEach((question: any) => {
     let analysis: LooseObject = {};
@@ -384,5 +389,6 @@ async function getSurveyAnalysisData(
     }
   });
 
-  return analysisList;
+  completeAnalysis['analysis'] = analysisList;
+  return completeAnalysis;
 }
