@@ -6,7 +6,7 @@
       <a href="/survey/create" class="btn btn-primary"  role="button"><i class="fa fa-plus"></i> Create Survey</a>              
       <br>
       <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-striped table-hover table-dark">
           <thead>
             <tr class="text-light bg-dark">
               <% if( display != '' && title.includes('Private')) { %>
@@ -41,7 +41,7 @@
               <td class="text-center"><%= (surveys[count].startDate).toISOString().slice(0, 10); %> to <%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
 
               <td class="text-center">
-                <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-success btn-sm">
                   <i class="fas fa-pencil-alt" ></i> Participate</a>
               </td>
 
