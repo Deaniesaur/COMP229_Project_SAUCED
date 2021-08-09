@@ -2,14 +2,14 @@
 <html>
   <head>
     <mate charest="utf-8" />
-    <title>Hello world!</title>
+    <title>{{this.title}}</title>
   </head>
   <body>
-    <h1>User List</h1>
+    <h1>{{this.title}}</h1>
     <ul>
-      {{#each users}}
-      <li>Name: {{this.name}}</li>
-      <li>Age: {{this.age}}</li>
+      {{#each analysis}}
+      <li>Question: {{this.question}}</li>
+      <li>Type: {{this.type}}</li>
       <br />
       {{/each}}
     </ul>

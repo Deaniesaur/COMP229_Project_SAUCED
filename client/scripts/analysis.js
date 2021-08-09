@@ -96,7 +96,7 @@ async function getData(){
     http.onreadystatechange = function () {
         if (http.readyState == 4 && http.status == 200) {
         data = JSON.parse(http.response);
-        
+        console.log('analysisData', data);
         //Insert Response Count
         let chartsDiv = document.getElementById('charts');
         let header = document.createElement('h3');
@@ -199,6 +199,6 @@ function generatePDF() {
     };
 
     // http.send(chartsHTML);
-    http.send(JSON.stringify({'charts': chartsHTML}));
+    http.send(JSON.stringify({'analysis': chartsHTML}));
     // http.send();
 }

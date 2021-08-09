@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import Survey from "../models/survey";
 import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
+import pdf from 'pdf-creator-node';
+import fs from 'fs';
 
 //import Util Function
 import { GetDisplayName } from "../util";
@@ -263,63 +265,13 @@ export function CreateSurveyAnalysis(
 ): any {
   let surveyId = req.params.id;
 
-  Survey.findOne({ _id: surveyId }, function (err: any, survey: any) {
-    if (err) {
-      return console.error(err);
-    }
-    
-    SurveyResponse.find({ surveyId: surveyId }, function (err: any, responses: Array<LooseObject>) {
-      if (err) {
-        return console.error(err);
-      }
-      
-      let isShortAnswer: Array<boolean> = [];
-      let analysisList: Array<LooseObject> = [];
-      let questions = survey.questions;
+  let getAnalysisList = getSurveyAnalysisData(req, res, next)
+  getAnalysisList.then((analysis) => {
+    console.log('analysisList', analysis);
 
-      questions.forEach((question: any) => {
-        let analysis: LooseObject = {};
-        let answers: LooseObject = {};
-        
-        analysis['question'] = question.question;
-        analysis['type'] = question.type;
-
-        if(question.type == 'Short Answer'){
-          isShortAnswer.push(true);
-          answers = [];
-        }else{
-          isShortAnswer.push(false);
-          let options = question.choices;
-
-          options.forEach((option: string) => {
-            answers[option] = 0;
-          })
-        }
-
-        analysis['answers'] = answers;
-        analysisList.push(analysis);
-      });
-
-      responses.forEach((response: LooseObject) => {
-        let answers = response.answers;
-
-        for(let i = 0; i < answers.length; i++){
-          if(isShortAnswer[i]){
-            analysisList[i]['answers'].push(answers[i]);
-          }
-          else{
-            analysisList[i]['answers'][answers[i]] += 1;
-          }
-        }
-      });
-
-      console.log('types', isShortAnswer);
-      console.log('analysisList', analysisList);
-
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(analysisList));
-    });
-  });
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(analysis));
+  })
 }
 
 //WIP
@@ -328,10 +280,10 @@ export function DownloadPDF(
   res: Response,
   next: NextFunction
 ): any {
-  let charts = req.body.charts;
-  // console.log('charts', charts);
+  // let analysis = req.body.analysis;
+  // console.log('analysis', analysis);\
 
-  var options = {
+  const options = {
     format: "A3",
     orientation: "portrait",
     border: "10mm",
@@ -349,23 +301,88 @@ export function DownloadPDF(
       }
     }
   };
-
-  let document = {
-    html: charts,
-    data: {},
-    path: "./output.pdf",
-    type: "",
-  };
   
-  // pdf
-  //   .create(document, options)
-  //   .then((pdfRes: any) => {
-  //     console.log(pdfRes);
-  //   })
-  //   .catch((pdfError: any) => {
-  //     console.error(pdfError);
-  //   });
+  let path = "./output/analysis.pdf";
+  let html = fs.readFileSync("template.html", "utf8");
+  let getAnalysisList = getSurveyAnalysisData(req, res, next);
 
-  res.setHeader('Content-Type', 'text/html');
-  res.send('Download WIP');
+  // console.log('template', html);
+
+  getAnalysisList.then((analysisList) => {
+    let document = {
+      html: html,
+      data: {
+        title: 'Hello Dean',
+        analysis: analysisList
+      },
+      path: path,
+      type: "",
+    };
+
+    console.log(document);
+
+    pdf
+      .create(document, options)
+      .then((pdfRes: any) => {
+        console.log(pdfRes);
+      })
+      .catch((pdfError: any) => {
+        console.error(pdfError);
+      });
+
+    res.setHeader('Content-Type', 'text/html');
+    res.send(path);
+  });
+}
+
+async function getSurveyAnalysisData(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<LooseObject> {
+  let surveyId = req.params.id;
+  let analysisList: LooseObject = [];
+  let survey: LooseObject = await Survey.findOne({ _id: surveyId });
+  let responses = await SurveyResponse.find({ surveyId: surveyId });
+
+  let isShortAnswer: Array<boolean> = [];
+  let questions = survey.questions;
+
+  questions.forEach((question: any) => {
+    let analysis: LooseObject = {};
+    let answers: LooseObject = {};
+    
+    analysis['question'] = question.question;
+    analysis['type'] = question.type;
+
+    if(question.type == 'Short Answer'){
+      isShortAnswer.push(true);
+      answers = [];
+    }else{
+      isShortAnswer.push(false);
+      let options = question.choices;
+
+      options.forEach((option: string) => {
+        answers[option] = 0;
+      })
+    }
+
+    analysis['answers'] = answers;
+    analysisList.push(analysis);
+  });
+
+  responses.forEach((response: LooseObject) => {
+    let answers = response.answers;
+
+    for(let i = 0; i < answers.length; i++){
+      if(isShortAnswer[i]){
+        analysisList[i]['answers'].push(answers[i]);
+      }
+      else{
+        analysisList[i]['answers'][answers[i]] += 1;
+      }
+    }
+  });
+
+  return analysisList;
 }
