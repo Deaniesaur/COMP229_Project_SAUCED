@@ -12,7 +12,7 @@
               <% if( display != '' && title.includes('Private')) { %>
               <th class="text-center"></th>
               <% } %>
-              <th>Survey Title</th>
+              <th class="text-center">Survey Title</th>
               <th class="text-center">Owner</th>
               <th class="text-center">Description</th>
               <th class="text-center">Date</th>
@@ -35,10 +35,10 @@
                   <td><i class="fas fa-ban fa-lg"></i></td>
                 <% } %>
               <% } %>
-              <td><%= surveys[count].title %></td>
-              <td class="text-center"><%= surveys[count].owner %></td>
-              <td class="text-center"><%= surveys[count].description %></td>
-              <td class="text-center"><%= (surveys[count].startDate).toISOString().slice(0, 10); %> to <%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
+              <td class="text-center" data-label="Survey Title"><%= surveys[count].title %></td>
+              <td class="text-center" data-label="Owner"><%= surveys[count].owner %></td>
+              <td class="text-center" data-label="Description"><%= surveys[count].description %></td>
+              <td class="text-center" data-label="Date"><%= (surveys[count].startDate).toISOString().slice(0, 10); %> to <%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
 
               <td class="text-center">
                 <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-success btn-sm">
