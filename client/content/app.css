@@ -226,7 +226,7 @@ textarea {
   padding: 11px;
   box-shadow: none;
   margin-top: 26px;
-  margin-left: 40%;
+  width: 50%;
   text-shadow: none;
   outline: none;
 }
