@@ -257,6 +257,75 @@ textarea {
   transform: translateY(1px);
 }
 
+/*SIGNUP PAGE*/
+
+.signup-dark form {
+  max-width: 320px;
+  width: 30%;
+  background-color: #1e2833;
+  padding: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 4px;
+  color: #fff;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.signup-dark .illustration {
+  text-align: center;
+  padding: 15px 0 20px;
+  font-size: 100px;
+  color: #2980ef;
+}
+
+.signup-dark form .form-control {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #434a52;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+}
+
+.signup-dark form .btn-primary {
+  background: #d21122;
+  border: none;
+  border-radius: 4px;
+  padding: 11px;
+  box-shadow: none;
+  width: 50%;
+  margin-top: 26px;
+  text-shadow: none;
+  outline: none;
+}
+
+.signup-dark form .btn-primary:hover,
+.signup-dark form .btn-primary:active {
+  background: #d21122;
+  outline: none;
+}
+
+.signup-dark form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.signup-dark form .forgot:hover,
+.signup-dark form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.signup-dark form .btn-primary:active {
+  transform: translateY(1px);
+}
+
 /*RESPONSIVE*/
 
 @media (max-width: 768px) {
