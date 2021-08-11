@@ -42,6 +42,14 @@ function DisplaySignUpPage(req, res, next) {
 }
 exports.DisplaySignUpPage = DisplaySignUpPage;
 function ProcessSignUp(req, res, next) {
+    let password = req.body.password;
+    let confirm = req.body.confirm;
+    console.log(password, confirm);
+    if (password != confirm) {
+        console.error('Passwords do not match!');
+        req.flash('registerMessage', 'Passwords do not match!');
+        return res.redirect('/signup');
+    }
     let newUser = new user_1.default({
         username: req.body.username,
         firstName: req.body.firstName,

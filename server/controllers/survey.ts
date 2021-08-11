@@ -2,9 +2,15 @@ import express, { Request, Response, NextFunction } from "express";
 import Survey from "../models/survey";
 import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
+import pdf from 'pdf-creator-node';
+import ejs from 'ejs';
 
 //import Util Function
 import { GetDisplayName } from "../util";
+
+interface LooseObject {
+  [key: string]: any
+}
 
 export function DisplayPublicSurveys(
   req: Request,
@@ -235,4 +241,166 @@ export function DeleteSurvey(
       res.redirect("/survey/private");
     });
   });
+}
+
+export function DisplaySurveyAnalysis(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+  let surveyId = req.params.id;
+  
+  res.render("index", {
+    title: "SAUCED | Analysis",
+    page: "analysis",
+    surveyId: surveyId,
+    display: GetDisplayName(req),
+  });
+}
+
+export function CreateSurveyAnalysis(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+  let getAnalysisList = getSurveyAnalysisData(req, res, next)
+  getAnalysisList.then((analysis) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(analysis));
+  })
+}
+
+//WIP
+export function DownloadPDF(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): any {
+
+  const options = {
+    format: "A3",
+    orientation: "portrait",
+    border: "10mm",
+    header: {
+      height: "45mm",
+      contents: '<div style="text-align: center;">Author: SAUCED</div>'
+    },
+    footer: {
+      height: "28mm",
+      contents: {
+          first: 'Cover page',
+          2: 'Second page', // Any page number is working. 1-based index
+          default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+          last: 'Last Page'
+      }
+    }
+  };
+  
+  let user = req.user as UserDocument;
+  let path = "output/" + user.username + "/" + "analysis.pdf";
+  let getAnalysisList = getSurveyAnalysisData(req, res, next);
+
+  getAnalysisList.then((completeAnalysis) => {
+    
+    ejs.renderFile(
+      'template.ejs',
+      {
+        title: completeAnalysis.title,
+        description: completeAnalysis.description,
+        analysis: completeAnalysis.analysis,
+        count: completeAnalysis.responseCount,
+      },
+      function(err, data) {
+      if(err){
+        console.log('error', err);
+      }
+      
+      let document = {
+        html: data,
+        data: {},
+        path: "./" + path,
+        type: "",
+      };
+
+      pdf
+        .create(document, options)
+        .then((pdfRes: any) => {
+          console.log(pdfRes);
+
+          // res.setHeader('Content-Type', 'text/html');
+          let filePath = `${__dirname}/../../${path}`;
+          res.download(filePath, 'analysis.pdf', (err) => {
+            if (err) {
+              res.status(500).send({
+                message: "Could not download the file. " + err,
+              });
+            }
+          });
+        })
+        .catch((pdfError: any) => {
+          console.error(pdfError);
+          res.status(500).send({
+            message: "Could not download the file. " + err,
+          });
+        });
+    });
+  });
+}
+
+async function getSurveyAnalysisData(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<LooseObject> {
+  let surveyId = req.params.id;
+  let completeAnalysis: LooseObject = {};
+  let analysisList: Array<LooseObject> = [];
+  let survey: LooseObject = await Survey.findOne({ _id: surveyId });
+  let responses = await SurveyResponse.find({ surveyId: surveyId });
+
+  let isShortAnswer: Array<boolean> = [];
+  let questions = survey.questions;
+
+  completeAnalysis['title'] = survey.title;
+  completeAnalysis['description'] = survey.description;
+  completeAnalysis['responseCount'] = responses.length;
+
+  questions.forEach((question: any) => {
+    let analysis: LooseObject = {};
+    let answers: LooseObject = {};
+    
+    analysis['question'] = question.question;
+    analysis['type'] = question.type;
+
+    if(question.type == 'Short Answer'){
+      isShortAnswer.push(true);
+      answers = [];
+    }else{
+      isShortAnswer.push(false);
+      let options = question.choices;
+
+      options.forEach((option: string) => {
+        answers[option] = 0;
+      })
+    }
+
+    analysis['answers'] = answers;
+    analysisList.push(analysis);
+  });
+
+  responses.forEach((response: LooseObject) => {
+    let answers = response.answers;
+
+    for(let i = 0; i < answers.length; i++){
+      if(isShortAnswer[i]){
+        analysisList[i]['answers'].push(answers[i]);
+      }
+      else{
+        analysisList[i]['answers'][answers[i]] += 1;
+      }
+    }
+  });
+
+  completeAnalysis['analysis'] = analysisList;
+  return completeAnalysis;
 }

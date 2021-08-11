@@ -17,4 +17,7 @@ router.post("/create", util_1.AuthGuard, survey_1.UpsertSurvey);
 router.get("/edit/:id", util_1.AuthGuard, survey_1.DisplayUpdateSurveyPage);
 router.post("/edit/:id", util_1.AuthGuard, survey_1.UpsertSurvey);
 router.get("/delete/:id", util_1.AuthGuard, survey_1.DeleteSurvey);
+router.get("/analysis/:id", util_1.AuthGuard, survey_1.DisplaySurveyAnalysis);
+router.post("/analysis/:id", util_1.AuthGuard, survey_1.CreateSurveyAnalysis);
+router.post("/download/:id", util_1.AuthGuard, survey_1.DownloadPDF);
 //# sourceMappingURL=survey.js.map

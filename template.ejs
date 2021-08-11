@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <mate charest="utf-8" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1>Survey Title: <%= title %></h1>
+    <h2>Description: <%= description %></h2>
+    <h2>Response Count: <%= count %></h2>
+    <% for(let i = 0; i < analysis.length; i++) { %>
+      <div class="container mt-3 border">
+        <h3>Question: <%= analysis[i].question %></h3>
+        <ul>
+          <% if(analysis[i].type === 'Short Answer') { %>
+            <% for(let j = 0; j < analysis[i].answers.length; j++) { %>
+              <li><%= analysis[i]['answers'][j] %></li>
+            <% } %>
+          <% } else { %>
+            <% for(const [key, value] of Object.entries(analysis[i].answers)) { %>
+              <li><%= key %> : <%= value %></li>
+            <% } %>
+          <% } %>
+        </ul>
+      </div>
+      <br />
+    <% } %>
+  </body>
+</html>

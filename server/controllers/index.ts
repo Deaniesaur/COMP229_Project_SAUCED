@@ -62,6 +62,15 @@ export function ProcessSignUp(
   next: NextFunction
 ): void {
   //instantiate a new User object
+  let password = req.body.password;
+  let confirm = req.body.confirm;
+  console.log(password, confirm);
+    if(password != confirm){
+      console.error('Passwords do not match!')
+      req.flash('registerMessage', 'Passwords do not match!');
+
+      return res.redirect('/signup');
+    }
     let newUser = new User({
         username: req.body.username,
         firstName: req.body.firstName,

@@ -20,7 +20,7 @@
       <label for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label>
       <br />
       <% }; break; case 'short answer': %>
-      <input class="form-control" type="text" placeholder="Your answer." />
+      <input class="form-control" name="question<%= i %>" type="text" placeholder="Your answer." />
       <% break; case 'true / false': %>
       <label for="question<%= i %>_answer_1">True</label>
       <input
