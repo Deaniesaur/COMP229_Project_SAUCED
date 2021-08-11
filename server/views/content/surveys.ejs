@@ -1,23 +1,23 @@
 <!-- MAIN CONTENT -->
 <div class="container normal-text">
   <div class="row">
-    <div class="col-offset-1 col-md-10">
+    <div class="">
       <h1><%= title %></h1>
       <a href="/survey/create" class="btn btn-primary"  role="button"><i class="fa fa-plus"></i> Create Survey</a>              
       <br>
       <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-striped table-hover table-dark">
           <thead>
             <tr class="text-light bg-dark">
-              <% if( display != '' && title.includes('Private')) { %>
+              <% if( display != '' && title.includes('My')) { %>
               <th class="text-center"></th>
               <% } %>
-              <th>Survey Title</th>
-              <th class="text-center">Owner</th>
+              <th class="text-center">Survey Title</th>
+              <th class="text-center" style="min-width: 120px;">Owner</th>
               <th class="text-center">Description</th>
-              <th class="text-center">Date</th>
+              <th class="text-center" style="min-width: 120px;">Date</th>
               <th class="text-center"></th>
-              <% if( display != '' && title.includes('Private')) { %>
+              <% if( display != '' && title.includes('My')) { %>
               <th class="text-center"></th>
               <th class="text-center"></th>
               <th class="text-center"></th>
@@ -29,35 +29,35 @@
             <% for (let count = 0; count < surveys.length; count++) { %>
               
             <tr class="text-light bg-dark">
-              <% if( display != '' && title.includes('Private')) { %>
+              <% if( display != '' && title.includes('My')) { %>
                 <% if ( surveys[count].active ) { %>
                   <td><i class="far fa-check-circle fa-lg"></i></td>
                 <% } else { %>
                   <td><i class="fas fa-ban fa-lg"></i></td>
                 <% } %>
               <% } %>
-              <td><%= surveys[count].title %></td>
-              <td class="text-center"><%= surveys[count].owner %></td>
-              <td class="text-center"><%= surveys[count].description %></td>
-              <td class="text-center"><%= (surveys[count].startDate).toISOString().slice(0, 10); %> to <%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
+              <td class="text-center" data-label="Survey Title"><%= surveys[count].title %></td>
+              <td class="text-center" data-label="Owner"><%= surveys[count].owner %></td>
+              <td class="text-center" data-label="Description"><%= surveys[count].description %></td>
+              <td class="text-center" data-label="Date"><%= (surveys[count].startDate).toISOString().slice(0, 10); %><br>to<br><%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
 
               <td class="text-center">
-                <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
-                  <i class="fas fa-pencil-alt" ></i> Participate</a>
+                <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-success btn-sm" style="width: 100px;">
+                  <i class="fas fa-user-edit"></i> Take</a>
               </td>
 
-              <% if( display != '' && title.includes('Private')) { %>
+              <% if( display != '' && title.includes('My')) { %>
                 <td class="text-center">
-                  <a href="/survey/analysis/<%= surveys[count]._id %>" class="btn btn-info btn-sm">
+                  <a href="/survey/analysis/<%= surveys[count]._id %>" class="btn btn-info btn-sm" style="width: 100px;">
                     <i class="fas fa-chart-bar fa-lg"></i> Analysis</a>
                 </td>
 
                 <td class="text-center">
-                  <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
+                  <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm" style="width: 100px;">
                     <i class="fas fa-pencil-alt"></i> Edit</a>
                 </td>
                 <td class="text-center">
-                  <a href="/survey/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
+                  <a href="/survey/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm" style="width: 100px;">
                     <i class="fas fa-trash-alt"></i> Delete</a>
                 </td> 
               <% } %>

@@ -55,7 +55,7 @@ export function DisplayPrivateSurveys(
     }
 
     res.render("index", {
-      title: "SAUCED | Private Surveys",
+      title: "SAUCED | My Surveys",
       page: "surveys",
       surveys: surveys,
       display: GetDisplayName(req),
