@@ -49,7 +49,7 @@ function DisplayPrivateSurveys(req, res, next) {
             return console.error(err);
         }
         res.render("index", {
-            title: "SAUCED | Private Surveys",
+            title: "SAUCED | My Surveys",
             page: "surveys",
             surveys: surveys,
             display: util_1.GetDisplayName(req),
