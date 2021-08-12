@@ -1,29 +1,39 @@
-<div><%= survey.title %></div>
-<div><%= survey.description %></div>
+
+<h1><%= survey.title %></h1>
+<h4><%= survey.description %></h4>
+
+
 <form method="POST">
-  <ol>
+  <ul class="question-list">
     <% for (let i=0; i < survey.questions.length; i++ ) { const currentQuestion
-    = survey.questions[i]; %>
+    = survey.questions[i];
+      const questionNumber = i+1;
+    %>
     <li>
+      <div class="question-wrapper">
+        <div class="question-number"><%= questionNumber %></div>
+        <div class="single-question">
       <div class="question-text"><%= currentQuestion.question %></div>
-      <div class="answer-text">Answers:</div>
       <% switch (currentQuestion.type.toLowerCase()) { case 'multiple choice':
       for (let k =0; k < currentQuestion.choices.length; k++ ) { let
       currentChoice = currentQuestion.choices[k]; %>
-      <input
-        id="question<%= i %>_answer_<%= k %>"
-        name="question<%= i %>"
-        value="<%= currentChoice %>"
-        type="radio"
-        required
-      />
-      <label for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label>
-      <br />
+      <div class="question-row">
+        <div class="question-radio-wrapper">
+          <input class="question-radio-choice"
+            id="question<%= i %>_answer_<%= k %>"
+            name="question<%= i %>"
+            value="<%= currentChoice %>"
+            type="radio"
+            required
+          />
+        </div>
+        <div class="question-radio-label-wrapper"><label class="question-radio-label" for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label></div>
+      </div>
       <% }; break; case 'short answer': %>
-      <input class="form-control" name="question<%= i %>" type="text" placeholder="Your answer." />
+      <input class="form-control question-radio-label" name="question<%= i %>" type="text" placeholder="Your answer." />
       <% break; case 'true / false': %>
       <label for="question<%= i %>_answer_1">True</label>
-      <input
+      <input class="question-radio-choice"
         id="question<%= i %>_answer_1"
         name="question<%= i %>"
         value="true"
@@ -31,18 +41,20 @@
         required
       />
       <label for="question<%= i %>_answer_2">False</label>
-      <input
+      <input class="question-radio-choice"
         id="question<%= i %>_answer_2"
         name="question<%= i %>"
         value="false"
         type="radio"
         required
       />
-
       <% break; } %>
+    </div>
+  </div>
     </li>
     <% } %>
-  </ol>
-
+  </ul>
+<div class="button-center">
   <button class="btn btn-primary" type="submit">Submit Survey</button>
+  </div>
 </form>

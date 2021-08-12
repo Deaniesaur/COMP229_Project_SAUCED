@@ -1,6 +1,4 @@
-.question-text {
-  font-size: 28px;
-}
+
 
 .answer-text {
   font-size: 28px;
@@ -331,4 +329,115 @@ textarea {
     font-size: 15px;
     font-weight: bold;
   }
+}
+
+/* Respond Survey Form */
+.question-list {
+  list-style-type: none;
+}
+
+.question-wrapper {
+  position: relative;  
+  margin: 40px 0;
+}
+
+
+.single-question {
+  border: 1px solid #fff;
+  border-radius:9px;
+  z-index: 100;
+  padding: 20px;
+}
+
+
+.question-number {
+  width: 30px;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  top: -10px;
+  z-index: 999;
+  border: 1px solid #d21122;
+  background-color: #d21122;
+  font-weight: bold;
+  color: #fff;
+  font-size: 20px;
+  
+}
+
+.question-text {
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+.question-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+
+.question-radio-wrapper {
+  flex: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-radio-label-wrapper {
+  flex: 96%;
+  margin-left: 10px;
+  border: 1px solid #909090;
+  border-radius:9px;
+  padding: 10px 15px;
+  background-color: #909090;
+}
+
+
+.question-radio-choice{
+  width: 30px;
+  height: 30px;
+}
+
+.question-radio-label {
+  color: #212529;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+
+.button-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  }
+
+  .button-center:hover {
+    
+    color: #0d6efd;
+            
+    }
+
+.h1, h1 {
+  font-size: 50px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #d21122;  
+  font-variant: small-caps;
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+}
+
+.h4, h4 {
+  font-size: 30px;
+  color: #dcdcdc;  
+  font-family: Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
+  font-weight: 300;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
