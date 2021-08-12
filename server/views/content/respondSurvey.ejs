@@ -30,7 +30,7 @@
         <div class="question-radio-label-wrapper"><label class="question-radio-label" for="question<%= i %>_answer_<%= k %>"><%= currentChoice %></label></div>
       </div>
       <% }; break; case 'short answer': %>
-      <input class="form-control question-radio-label" name="question<%= i %>" type="text" placeholder="Your answer." />
+      <textarea class="form-control question-radio-label" name="question<%= i %>" type="text" placeholder="Your answer." rows=5></textarea>
       <% break; case 'true / false': %>
       <label for="question<%= i %>_answer_1">True</label>
       <input class="question-radio-choice"
