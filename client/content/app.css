@@ -409,9 +409,7 @@ textarea {
   color: #0d6efd;
 }
 
-/*
-.h1,
-h1 {
+.response-title {
   font-size: 50px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
@@ -422,8 +420,7 @@ h1 {
   align-items: center;
 }
 
-.h4,
-h4 {
+.response-description {
   font-size: 30px;
   color: #dcdcdc;
   font-family: Arial, Helvetica, sans-serif;
@@ -433,4 +430,3 @@ h4 {
   justify-content: center;
   align-items: center;
 }
-*/
