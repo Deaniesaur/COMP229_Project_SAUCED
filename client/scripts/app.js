@@ -2,18 +2,22 @@
 const header = document.querySelector(".important-survey-id");
 const sid = header == null ? null : header.id;
 
-//IIFE
-(function () {
-  let startDatePicker = document.getElementById("startDate");
-  let expiryDatePicker = document.getElementById("expiry");
+$(init);
 
-  if (sid == null) {
-    let today = new Date();
-    let tomorrow = new Date(today.getTime() + 86400000);
-    startDatePicker.valueAsDate = today;
-    expiryDatePicker.valueAsDate = tomorrow;
+function init() {
+  let str = window.location.pathname;
+  if (str.includes("create") || str.includes("edit")) {
+    let startDatePicker = document.getElementById("startDate");
+    let expiryDatePicker = document.getElementById("expiry");
+    if (sid == null) {
+      let today = new Date();
+      let tomorrow = new Date(today.getTime() + 86400000);
+      startDatePicker.valueAsDate = today;
+      expiryDatePicker.valueAsDate = tomorrow;
+    }
+    addNewQuestionButton(0, true);
   }
-})();
+}
 
 function getQuestionTypeDiv(questionNumber) {
   return `
@@ -90,8 +94,6 @@ function addNewQuestionButton(questionNumber, optionNumber) {
   if (document.querySelector(".important-survey-id") != null && optionNumber)
     displaySubmitButton();
 }
-
-addNewQuestionButton(0, true);
 
 function displaySubmitButton() {
   let div = document.createElement("div");
