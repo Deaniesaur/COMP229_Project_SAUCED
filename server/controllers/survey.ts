@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import Survey from "../models/survey";
+import User from '../models/user';
 import SurveyResponse from "../models/response";
 import mongoose, { mongo } from "mongoose";
 import pdf from 'pdf-creator-node';
