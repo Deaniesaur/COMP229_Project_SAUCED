@@ -5,22 +5,22 @@ const sid = header == null ? null : header.id;
 $(init);
 
 function init() {
-  let str = window.location.pathname;
-  if (str.includes("create") || str.includes("edit")) {
-    let startDatePicker = document.getElementById("startDate");
-    let expiryDatePicker = document.getElementById("expiry");
-    if (sid == null) {
-      let today = new Date();
-      let tomorrow = new Date(today.getTime() + 86400000);
-      startDatePicker.valueAsDate = today;
-      expiryDatePicker.valueAsDate = tomorrow;
-    }
-    addNewQuestionButton(0, true);
-  }
+	let str = window.location.pathname;
+	if (str.includes("create") || str.includes("edit")) {
+		let startDatePicker = document.getElementById("startDate");
+		let expiryDatePicker = document.getElementById("expiry");
+		if (sid == null) {
+			let today = new Date();
+			let tomorrow = new Date(today.getTime() + 86400000);
+			startDatePicker.valueAsDate = today;
+			expiryDatePicker.valueAsDate = tomorrow;
+		}
+		addNewQuestionButton(0, true);
+	}
 }
 
 function getQuestionTypeDiv(questionNumber) {
-  return `
+	return `
 <div class="form-check form-check-inline">
   <input
     class="form-check-input"
@@ -55,13 +55,13 @@ function getQuestionTypeDiv(questionNumber) {
 }
 
 function getQuestionBody(questionNumber) {
-  return `
+	return `
   <div class="text-center row" id="question-body">
   <div class="col-9">
   <p>QUESTION ${questionNumber + 1}</p>
   <textarea class="w-100" id="question-${
-    questionNumber + 1
-  }" name="question" rows="2" placeholder="Your question here."></textarea>
+		questionNumber + 1
+	}" name="question" rows="2" placeholder="Your question here."></textarea>
   </div>
   <div class="col-3">
   <a href="javascript:deleteQuestion(${questionNumber + 1})">
@@ -71,7 +71,7 @@ function getQuestionBody(questionNumber) {
 }
 
 function getMultipleChoiceOption(questionNumber, optionNumber) {
-  return `
+	return `
 <div class="row" id=option-${optionNumber}>
 <div class="col-9">
 <label class="form-check-label">
@@ -84,108 +84,108 @@ function getMultipleChoiceOption(questionNumber, optionNumber) {
 }
 
 function addNewQuestionButton(questionNumber, optionNumber) {
-  if (document.querySelector(".important-survey-id") != null)
-    questionNumber = document.getElementsByName("question").length;
-  let div = document.createElement("div");
-  div.id = "btn-new-question";
-  div.innerHTML = `<a href="javascript:addNewQuestionType(${questionNumber})"><p class="text-center"><i class="fas fa-plus fa-2x"></i></p></a>`;
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
-  if (document.querySelector(".important-survey-id") != null && optionNumber)
-    displaySubmitButton();
+	if (document.querySelector(".important-survey-id") != null)
+		questionNumber = document.getElementsByName("question").length;
+	let div = document.createElement("div");
+	div.id = "btn-new-question";
+	div.innerHTML = `<a href="javascript:addNewQuestionType(${questionNumber})"><p class="text-center"><i class="fas fa-plus fa-2x"></i></p></a>`;
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
+	if (document.querySelector(".important-survey-id") != null && optionNumber)
+		displaySubmitButton();
 }
 
 function displaySubmitButton() {
-  let div = document.createElement("div");
-  div.className = "text-center";
-  div.id = "btn-submit-survey";
-  div.innerHTML = `
+	let div = document.createElement("div");
+	div.className = "text-center";
+	div.id = "btn-submit-survey";
+	div.innerHTML = `
   <br /><button type="button"class="btn btn-secondary button-red"onclick="submitSurveyQuestions()">SUBMIT SURVEY</button>`;
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
 }
 
 function addNewQuestionType(questionNumber) {
-  if (questionNumber > 4) {
-    window.alert("You can have a maximum of 5 questions in one survey.");
-    return;
-  }
-  let div = document.createElement("div");
-  div.id = "question-type";
-  div.innerHTML = getQuestionTypeDiv(questionNumber);
-  div.className = "text-center";
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
-  if (questionNumber !== 0)
-    document.getElementById("btn-submit-survey").remove();
-  document.getElementById("btn-new-question").remove();
+	if (questionNumber > 4) {
+		window.alert("You can have a maximum of 5 questions in one survey.");
+		return;
+	}
+	let div = document.createElement("div");
+	div.id = "question-type";
+	div.innerHTML = getQuestionTypeDiv(questionNumber);
+	div.className = "text-center";
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
+	if (questionNumber !== 0)
+		document.getElementById("btn-submit-survey").remove();
+	document.getElementById("btn-new-question").remove();
 }
 
 function chooseNewQuestionType(questionNumber) {
-  let response;
-  let options = document
-    .querySelector("#question-type")
-    .querySelectorAll(".form-check-input");
-  for (
-    let questionNumber = 0;
-    questionNumber < options.length;
-    questionNumber++
-  ) {
-    if (options[questionNumber].checked)
-      response = parseInt(options[questionNumber].value);
-  }
+	let response;
+	let options = document
+		.querySelector("#question-type")
+		.querySelectorAll(".form-check-input");
+	for (
+		let questionNumber = 0;
+		questionNumber < options.length;
+		questionNumber++
+	) {
+		if (options[questionNumber].checked)
+			response = parseInt(options[questionNumber].value);
+	}
 
-  let div = document.createElement("div");
-  div.id = `question-main-${questionNumber}`;
-  div.innerHTML = getQuestionBody(questionNumber);
+	let div = document.createElement("div");
+	div.id = `question-main-${questionNumber}`;
+	div.innerHTML = getQuestionBody(questionNumber);
 
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
 
-  switch (response) {
-    case 1:
-      displayMultipleChoice(questionNumber + 1);
-      break;
-    case 2:
-      displayShortAnswer(questionNumber + 1);
-      break;
-  }
+	switch (response) {
+		case 1:
+			displayMultipleChoice(questionNumber + 1);
+			break;
+		case 2:
+			displayShortAnswer(questionNumber + 1);
+			break;
+	}
 
-  document.getElementById("question-type").remove();
-  addNewQuestionButton(questionNumber + 1, false);
-  displaySubmitButton();
+	document.getElementById("question-type").remove();
+	addNewQuestionButton(questionNumber + 1, false);
+	displaySubmitButton();
 }
 
 function displayMultipleChoice(questionNumber) {
-  let div = document.createElement("div");
-  div.id = `answer-${questionNumber - 1}`;
-  div.innerHTML =
-    initMultipleChoiceOptions(questionNumber) +
-    addNewOptionButton(questionNumber, 5);
-  div.className = "text-center";
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
+	let div = document.createElement("div");
+	div.id = `answer-${questionNumber - 1}`;
+	div.innerHTML =
+		initMultipleChoiceOptions(questionNumber) +
+		addNewOptionButton(questionNumber, 5);
+	div.className = "text-center";
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
 }
 
 function displayShortAnswer(questionNumber) {
-  let div = document.createElement("div");
-  div.id = `answer-${questionNumber - 1}`;
-  div.innerHTML = `<label class="form-check-label short-answer"></label><input class="form-control" type="text" placeholder="The participants will fill-in this area." disabled><br>`;
-  div.className = "text-center";
-  document.getElementById("main-section").appendChild(div);
-  $(div).hide().fadeIn(1000);
+	let div = document.createElement("div");
+	div.id = `answer-${questionNumber - 1}`;
+	div.innerHTML = `<label class="form-check-label short-answer"></label><input class="form-control" type="text" placeholder="The participants will fill-in this area." disabled><br>`;
+	div.className = "text-center";
+	document.getElementById("main-section").appendChild(div);
+	$(div).hide().fadeIn(1000);
 }
 
 function initMultipleChoiceOptions(questionNumber) {
-  let optionsHtml = "";
-  for (let optionNumber = 1; optionNumber < 5; optionNumber++) {
-    optionsHtml += getMultipleChoiceOption(questionNumber, optionNumber);
-  }
-  return optionsHtml;
+	let optionsHtml = "";
+	for (let optionNumber = 1; optionNumber < 5; optionNumber++) {
+		optionsHtml += getMultipleChoiceOption(questionNumber, optionNumber);
+	}
+	return optionsHtml;
 }
 
 function addNewOptionButton(questionNumber, optionNumber) {
-  return `
+	return `
 <div class="form-check form-check-inline" name="option-${optionNumber}">
 <p class="text-center" id="edit-icon">
   <a href="javascript:addNewOption(${questionNumber}, ${optionNumber})">
@@ -195,119 +195,130 @@ function addNewOptionButton(questionNumber, optionNumber) {
 }
 
 function addNewOption(questionNumber, optionNumber) {
-  if (optionNumber > 5) {
-    window.alert("You can't add more than 5 options in the current version.");
-    return;
-  }
-  let div = document.getElementById(`answer-${questionNumber - 1}`);
-  div.children[optionNumber - 1].remove();
-  div.insertAdjacentHTML(
-    "beforeend",
-    getMultipleChoiceOption(questionNumber, optionNumber) +
-      addNewOptionButton(questionNumber, optionNumber + 1)
-  );
+	if (optionNumber > 5) {
+		window.alert("You can't add more than 5 options in the current version.");
+		return;
+	}
+	let div = document.getElementById(`answer-${questionNumber - 1}`);
+	div.children[optionNumber - 1].remove();
+	div.insertAdjacentHTML(
+		"beforeend",
+		getMultipleChoiceOption(questionNumber, optionNumber) +
+			addNewOptionButton(questionNumber, optionNumber + 1)
+	);
 }
 
 function deleteOption(questionNumber, optionNumber) {
-  let div = document.getElementById(`answer-${questionNumber - 1}`);
-  div.children[optionNumber - 1].remove();
-  for (let i = optionNumber - 1; i < 10; i++) {
-    let optionDiv = div.children[i];
-    optionDiv.id = `option-${i + 1}`;
-    let anchor = optionDiv.querySelector("a");
-    if (div.children[i + 1] == undefined) {
-      anchor.href = `javascript:addNewOption(${questionNumber}, ${i + 1})`;
-      return;
-    }
-    anchor.href = `javascript:deleteOption(${questionNumber}, ${i + 1})`;
-  }
+	let div = document.getElementById(`answer-${questionNumber - 1}`);
+	div.children[optionNumber - 1].remove();
+	for (let i = optionNumber - 1; i < 10; i++) {
+		let optionDiv = div.children[i];
+		optionDiv.id = `option-${i + 1}`;
+		let anchor = optionDiv.querySelector("a");
+		if (div.children[i + 1] == undefined) {
+			anchor.href = `javascript:addNewOption(${questionNumber}, ${i + 1})`;
+			return;
+		}
+		anchor.href = `javascript:deleteOption(${questionNumber}, ${i + 1})`;
+	}
 }
 
 function deleteQuestion(questionNumber) {
-  let numberOfQuestions = document.getElementsByName("question").length;
-  document.getElementById(
-    "btn-new-question"
-  ).firstChild.href = `javascript:addNewQuestionType(${numberOfQuestions - 1})`;
+	let numberOfQuestions = document.getElementsByName("question").length;
+	document.getElementById(
+		"btn-new-question"
+	).firstChild.href = `javascript:addNewQuestionType(${numberOfQuestions - 1})`;
 
-  questionNumber = parseInt(questionNumber);
-  if (
-    questionNumber == 1 &&
-    document.getElementById(`question-main-${questionNumber}`) == undefined
-  )
-    $(`#btn-submit-survey`).fadeOut(1000, function () {
-      $(this).remove();
-    });
-  $(`#question-main-${questionNumber - 1}`).fadeOut(1000, function () {
-    $(this).remove();
-  });
-  $(`#answer-${questionNumber - 1}`).fadeOut(1000, function () {
-    $(this).remove();
-  });
+	questionNumber = parseInt(questionNumber);
+	if (
+		questionNumber == 1 &&
+		document.getElementById(`question-main-${questionNumber}`) == undefined
+	)
+		$(`#btn-submit-survey`).fadeOut(1000, function () {
+			$(this).remove();
+		});
+	$(`#question-main-${questionNumber - 1}`).fadeOut(1000, function () {
+		$(this).remove();
+	});
+	$(`#answer-${questionNumber - 1}`).fadeOut(1000, function () {
+		$(this).remove();
+	});
 
-  for (let i = numberOfQuestions - 1; i >= questionNumber; i--) {
-    let parent = document.getElementById(`question-main-${i}`);
-    parent.id = `question-main-${i - 1}`;
-    parent.querySelector("p").textContent = `QUESTION ${i}`;
-    parent.querySelector("a").href = `javascript:deleteQuestion(${i})`;
+	for (let i = numberOfQuestions - 1; i >= questionNumber; i--) {
+		let parent = document.getElementById(`question-main-${i}`);
+		parent.id = `question-main-${i - 1}`;
+		parent.querySelector("p").textContent = `QUESTION ${i}`;
+		parent.querySelector("a").href = `javascript:deleteQuestion(${i})`;
 
-    parent = document.getElementById(`answer-${i}`);
-    parent.id = `answer-${i - 1}`;
+		parent = document.getElementById(`answer-${i}`);
+		parent.id = `answer-${i - 1}`;
 
-    for (let j = 0; j < 10; j++) {
-      let optionDiv = parent.children[j];
-      let anchor = optionDiv.querySelector("a");
-      if (parent.children[j + 1] == undefined) {
-        anchor.href = `javascript:addNewOption(${i}, ${j + 1})`;
-        j = 10;
-      }
-      anchor.href = `javascript:deleteOption(${i}, ${j + 1})`;
-    }
-  }
+		for (let j = 0; j < 10; j++) {
+			let optionDiv = parent.children[j];
+			let anchor = optionDiv.querySelector("a");
+			if (parent.children[j + 1] == undefined) {
+				anchor.href = `javascript:addNewOption(${i}, ${j + 1})`;
+				j = 10;
+			}
+			anchor.href = `javascript:deleteOption(${i}, ${j + 1})`;
+		}
+	}
 }
 
 function submitSurveyQuestions() {
-  let url;
-  sid != null ? (url = `/survey/edit/${sid}`) : (url = "/survey/create");
-  let http = new XMLHttpRequest();
-  let description = document.getElementById("description").value;
-  let surveyQuestions = [];
-  let questionsDiv = document.getElementsByName("question");
+	let url;
+	sid != null ? (url = `/survey/edit/${sid}`) : (url = "/survey/create");
+	let http = new XMLHttpRequest();
+	let description = document.getElementById("description").value;
+	let surveyQuestions = [];
+	let questionsDiv = document.getElementsByName("question");
 
-  questionsDiv.forEach((question) => {
-    let surveyQuestion = {};
-    surveyQuestion["question"] = question.value;
-    surveyQuestion["choices"] = [];
+	questionsDiv.forEach((question) => {
+		let surveyQuestion = {};
+		surveyQuestion["question"] = question.value;
+		surveyQuestion["choices"] = [];
 
-    let options = document.getElementsByName(question.id);
-    options.forEach((option) => {
-      option.type != "textarea"
-        ? surveyQuestion.choices.push(option.value)
-        : true;
-    });
-    if (surveyQuestion.choices.length == 0) {
-      surveyQuestion["type"] = "Short Answer";
-    } else {
-      surveyQuestion["type"] = "Multiple Choice";
-    }
-    surveyQuestions.push(surveyQuestion);
-  });
-  let select = document.getElementById("active");
-  let isActive = select.options[select.selectedIndex].value;
-  let payload = {
-    title: document.getElementById("survey-title").value,
-    description: description,
-    questions: surveyQuestions,
-    startDate: document.getElementById("startDate").value,
-    expiry: document.getElementById("expiry").value,
-    active: isActive,
-  };
-  sid != null ? (payload.create = false) : (payload.create = true);
-  http.open("POST", url, true);
-  http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-  http.onreadystatechange = function () {
-    if (http.readyState == 4 && http.status == 200) {
-      window.location = http.responseURL + "survey/private";
-    }
-  };
-  http.send(JSON.stringify(payload));
+		let options = document.getElementsByName(question.id);
+		options.forEach((option) => {
+			option.type != "textarea"
+				? surveyQuestion.choices.push(option.value)
+				: true;
+		});
+		if (surveyQuestion.choices.length == 0) {
+			surveyQuestion["type"] = "Short Answer";
+		} else {
+			surveyQuestion["type"] = "Multiple Choice";
+		}
+		surveyQuestions.push(surveyQuestion);
+	});
+	let select = document.getElementById("active");
+	let isActive = select.options[select.selectedIndex].value;
+	let payload = {
+		title: document.getElementById("survey-title").value,
+		description: description,
+		questions: surveyQuestions,
+		startDate: document.getElementById("startDate").value,
+		expiry: document.getElementById("expiry").value,
+		active: isActive,
+	};
+	sid != null ? (payload.create = false) : (payload.create = true);
+	http.open("POST", url, true);
+	http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+	http.onreadystatechange = function () {
+		if (http.readyState == 4 && http.status == 200) {
+			window.location = http.responseURL + "survey/private";
+		}
+	};
+	http.send(JSON.stringify(payload));
 }
+
+let displayModalButtons = document
+	.querySelectorAll("#displayModal")
+	.forEach(function (el) {
+		el.addEventListener("click", function () {
+			document.getElementById("modal_body").innerHTML = `Survey description: 
+				${el.getAttribute("data-description")}<br>Survey start date: ${el.getAttribute(
+				"data-startDate"
+			)}<br>Survey expiry date: ${el.getAttribute("data-expiry")}`;
+		});
+	});
