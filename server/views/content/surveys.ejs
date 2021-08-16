@@ -1,29 +1,29 @@
 <!-- MAIN CONTENT -->
 <div class="row">
-  <h1><%= title %>
+  <h1 style="max-width:1000px; margin: auto;"><%= title %>
     <a href="/survey/create"
       class="btn btn-primary"
       role="button"
       style="width: 15rem; float: right; margin: 1rem 0;">
       <i class="fa fa-plus"></i> Create New Survey</a>
   </h1>
-  <div class="table-responsive-md">
+  <div class="table-responsive-md" style="max-width:1200px; margin: auto;">
     <table class="table table-fixed table-bordered table-striped table-hover table-dark">
       <thead>
         <tr class="text-light bg-dark">
           <% if( display != '' && title.includes('My')) { %>
           <th class="text-center"></th>
           <% } %>
-          <th class="text-center">Survey Title</th>
-          <th class="text-center">Brief description</th>
- 
+          <th class="text-center" style="width: 30%;">Survey Title</th>
+          <% if( display != '' && title.includes('My')) { %>
+            <th class="text-center" style="min-width: 150px;">Date</th>
+          <% } else { %>
+            <th class="text-center" style="min-width: 150px;">Closing date</th>
+            <th class="text-center">Brief description</th>
+          <% } %>
+          <th class="text-center"></th>
           <th class="text-center"></th>
           <% if( display != '' && title.includes('My')) { %>
-            <th class="text-center" style="min-width: 120px;">Start date</th>
-            <% } %>
-            <th class="text-center" style="min-width: 120px;">Closing date</th>
-          <% if( display != '' && title.includes('My')) { %>
-          <th class="text-center"></th>
           <th class="text-center"></th>
           <th class="text-center"></th>
           <% } %>
@@ -36,40 +36,54 @@
         <tr class="text-light bg-dark">
           <% if( display != '' && title.includes('My')) { %>
             <% if ( surveys[count].active ) { %>
-              <td><i class="far fa-check-circle fa-lg"></i></td>
+              <td>
+                  <i class="far fa-check-circle fa-lg" style="color:greenyellow;"></i>
+              </td>
             <% } else { %>
-              <td><i class="fas fa-ban fa-lg"></i></td>
+              <td><i class="fas fa-ban fa-lg" style="color:red;"></i></td>
             <% } %>
           <% } %>
-          <td class="text-center" data-label="Survey Title"><%= surveys[count].title %>
-          </td>
-          <td class="text-center" data-label="Brief description"><%= surveys[count].description %></td>
-             
-          <td class="text-center">
-            <a id="displayModal" data-description=<%= surveys[count].description %> data-startDate=<%= (surveys[count].startDate).toISOString().slice(0, 10); %> data-expiry=<%= (surveys[count].expiry).toISOString().slice(0, 10); %> data-bs-toggle="modal" href="#descriptionModal" class="btn btn-warning btn-sm" role="button">
-              <i class="fas fa-info-circle"></i><p class="mobile-invisible-text"> Details</p></a>
-          </td>
+          <td class="text-center" data-label="Survey Title"><%= surveys[count].title %></td>
           <% if( display != '' && title.includes('My')) { %>
-            <td class="text-center" data-label="Start date"><%= (surveys[count].startDate).toISOString().slice(0, 10); %></td>
-            <% } %>
-            <td class="text-center" data-label="Closing date"><%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
-            
-          <td class="text-center">
+            <td class="text-center" data-label="Date"><%= (surveys[count].startDate).toDateString();%></br>to</br><%=(surveys[count].expiry).toDateString();%></td>
+          <% } else { %>
+            <td class="text-center" data-label="Closing Date"><%= (surveys[count].expiry).toDateString(); %></td>
+            <td class="text-center" data-label="Brief Description">
+              <p style="text-align: left;">
+                <% if(surveys[count].description.length > 100) { %>
+                  <%= surveys[count].description.substring(0, 100) %>...
+                <% } else { %>
+                  <%= surveys[count].description %>
+                <% } %>
+              </p>
+            </td>
+          <% } %>
+          
+          <td class="text-center align-middle">
+            <a id="displayModal" 
+                data-description="<%= surveys[count].description %>" data-startDate="<%= (surveys[count].startDate).toDateString(); %>" data-expiry="<%= (surveys[count].expiry).toDateString(); %>" data-bs-toggle="modal" href="#descriptionModal" class="btn btn-warning btn-sm" role="button">
+              <i class="fas fa-info-circle"></i>
+              <p class="mobile-invisible-text"> Details</p>
+            </a>
+          </td>
+          <% if(!title.includes('My')) { %>
+          <td class="text-center align-middle">
             <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-success btn-sm">
               <i class="fas fa-user-edit"></i><p class="mobile-invisible-text"> Respond</p></a>
           </td>
+          <% } %>
 
           <% if( display != '' && title.includes('My')) { %>
-            <td class="text-center">
+            <td class="text-center align-middle">
               <a href="/survey/analysis/<%= surveys[count]._id %>" class="btn btn-info btn-sm">
                 <i class="fas fa-chart-bar fa-lg"></i><p class="mobile-invisible-text"> Analysis</p></a>
             </td>
 
-            <td class="text-center">
+            <td class="text-center align-middle">
               <a href="/survey/edit/<%= surveys[count]._id %>" class="btn btn-primary btn-sm">
                 <i class="fas fa-pencil-alt"></i><p class="mobile-invisible-text"> Edit</p></a>
             </td>
-            <td class="text-center">
+            <td class="text-center align-middle">
               <a href="/survey/delete/<%= surveys[count]._id %>" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash-alt"></i><p class="mobile-invisible-text"> Delete</p></a>
             </td> 

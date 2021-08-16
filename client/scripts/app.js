@@ -316,9 +316,9 @@ let displayModalButtons = document
 	.querySelectorAll("#displayModal")
 	.forEach(function (el) {
 		el.addEventListener("click", function () {
-			document.getElementById("modal_body").innerHTML = `Survey description: 
-				${el.getAttribute("data-description")}<br>Survey start date: ${el.getAttribute(
-				"data-startDate"
-			)}<br>Survey expiry date: ${el.getAttribute("data-expiry")}`;
+			let body = `<div>Full Description: ${el.getAttribute("data-description")} </div>` + 
+						`<div class="mt-2">Start Date: ${el.getAttribute("data-startDate")} </div>` +
+						`<div class="mt-2">Closing Date: ${el.getAttribute("data-expiry")} </div>`
+			document.getElementById("modal_body").innerHTML = body;
 		});
 	});
