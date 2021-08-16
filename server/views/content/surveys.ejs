@@ -15,7 +15,13 @@
           <th class="text-center"></th>
           <% } %>
           <th class="text-center">Survey Title</th>
+          <th class="text-center">Brief description</th>
+ 
           <th class="text-center"></th>
+          <% if( display != '' && title.includes('My')) { %>
+            <th class="text-center" style="min-width: 120px;">Start date</th>
+            <% } %>
+            <th class="text-center" style="min-width: 120px;">Closing date</th>
           <% if( display != '' && title.includes('My')) { %>
           <th class="text-center"></th>
           <th class="text-center"></th>
@@ -37,13 +43,20 @@
           <% } %>
           <td class="text-center" data-label="Survey Title"><%= surveys[count].title %>
           </td>
+          <td class="text-center" data-label="Brief description"><%= surveys[count].description %></td>
+             
           <td class="text-center">
             <a id="displayModal" data-description=<%= surveys[count].description %> data-startDate=<%= (surveys[count].startDate).toISOString().slice(0, 10); %> data-expiry=<%= (surveys[count].expiry).toISOString().slice(0, 10); %> data-bs-toggle="modal" href="#descriptionModal" class="btn btn-warning btn-sm" role="button">
               <i class="fas fa-info-circle"></i><p class="mobile-invisible-text"> Details</p></a>
           </td>
+          <% if( display != '' && title.includes('My')) { %>
+            <td class="text-center" data-label="Start date"><%= (surveys[count].startDate).toISOString().slice(0, 10); %></td>
+            <% } %>
+            <td class="text-center" data-label="Closing date"><%= (surveys[count].expiry).toISOString().slice(0, 10); %></td>
+            
           <td class="text-center">
             <a href="/survey/answer/<%= surveys[count]._id %>" class="btn btn-success btn-sm">
-              <i class="fas fa-user-edit"></i><p class="mobile-invisible-text"> Participate</p></a>
+              <i class="fas fa-user-edit"></i><p class="mobile-invisible-text"> Respond</p></a>
           </td>
 
           <% if( display != '' && title.includes('My')) { %>
